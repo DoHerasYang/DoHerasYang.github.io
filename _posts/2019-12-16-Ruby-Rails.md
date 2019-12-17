@@ -66,7 +66,15 @@ Use Ctrl-C to stop
 
 #### 1.2  Pages
 
+**Static Pages**
+
 + It's very easy to build the static pages by youself. The only one you have to konw is the location where the static pages store is `/public` folder.
+
+**HTML Dynamically with `erb` **
+
+```
+
+```
 
 
 
