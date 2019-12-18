@@ -31,6 +31,15 @@ tags: Ruby-Rails
 >    ```shell
 >    $ brew install sqlite3
 >    ```
+>    
+> 3. Install the `Yarn` and `ChromeDriver` 
+>
+>    ```shell
+>    $ brew install yarn
+>    $ brew cask install chromedriver
+>    ```
+
+
 
 ### 1. Hello Rails
 
@@ -41,9 +50,10 @@ tags: Ruby-Rails
 # 
 $ pwd
 $ rails new testprojects
-$ cd testprojects
+$ cd testproject
 $ rails db:migrate
 $ rails server
+$ 
 ```
 
 + Finishing the previous steps, you can receive there messages from the terminal.
