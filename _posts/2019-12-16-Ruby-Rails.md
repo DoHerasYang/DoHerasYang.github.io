@@ -81,8 +81,6 @@ Use Ctrl-C to stop
 $ rails server -b 0.0.0.0
 ```
 
-#### 1.2 Controller
-
 + The command `generate` logs the files and directions. When you create the controller, you can also create the static pages by this command. It means you can build your website by Ruby script.
 
 ```shell
@@ -94,29 +92,20 @@ $ cd .. && cd ./views/say && ls
 goodbye.html.erb	hello.html.erb
 ```
 
-+ From the previous
++ From the previous steps we have created the `kernel components` for the Rails project.
 
-
-
-
-
-
-
-
-
-
+> `kernel_controller.rb`  -  the kermel module to control the view layer.
+>
+> `hello.html.erb` and `goodbye.html.erb` for show the first static page in Rails.
 
 #### 1.2  Pages
 
 **Static Pages**
 
-+ It's very easy to build the static pages by youself. The only one you have to konw is the location where the static pages store is `/public` folder.
++ It's very easy to build the **static pages** by youself. The only one you have to konw is the location where the static pages store is `/public`  and `/app/view`folder.
++ Insert the 
 
-**HTML Dynamically with erb **
 
-```
-
-```
 
 
 
