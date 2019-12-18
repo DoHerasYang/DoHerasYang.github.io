@@ -53,7 +53,8 @@ $ rails new testprojects
 $ cd testproject
 $ rails db:migrate
 $ rails server
-$ 
+$ rails about # show the details of created Rails project
+# $ bundle exec rails about
 ```
 
 + Finishing the previous steps, you can receive there messages from the terminal.
@@ -74,13 +75,44 @@ Use Ctrl-C to stop
 
 ![helloRails](/Pictures/Blog Pictures/helloRails.png)
 
++ If you want blind the network address, you can specify the Ip address `0.0.0.0`.
+
+```shell
+$ rails server -b 0.0.0.0
+```
+
+#### 1.2 Controller
+
++ The command `generate` logs the files and directions. When you create the controller, you can also create the static pages by this command. It means you can build your website by Ruby script.
+
+```shell
+$ rails generate controller kernel hello goodbye
+$ cd /app/controllers & ls 
+application_controller.rb	kernel_controller.rb
+concerns
+$ cd .. && cd ./views/say && ls
+goodbye.html.erb	hello.html.erb
+```
+
++ From the previous
+
+
+
+
+
+
+
+
+
+
+
 #### 1.2  Pages
 
 **Static Pages**
 
 + It's very easy to build the static pages by youself. The only one you have to konw is the location where the static pages store is `/public` folder.
 
-**HTML Dynamically with `erb` **
+**HTML Dynamically with erb **
 
 ```
 
