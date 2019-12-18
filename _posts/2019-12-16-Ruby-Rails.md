@@ -94,16 +94,38 @@ goodbye.html.erb	hello.html.erb
 
 + From the previous steps we have created the `kernel components` for the Rails project.
 
-> `kernel_controller.rb`  -  the kermel module to control the view layer.
+> `kernel_controller.rb`  -  the kermel module to control the view layer. The pages the rb file controls are in the path `/views/kernel`. And the ruby files have created two methods to pass the parameters.
 >
-> `hello.html.erb` and `goodbye.html.erb` for show the first static page in Rails.
+> `hello.html.erb` and `goodbye.html.erb` are created by the script and they are static page in Rails.
 
 #### 1.2  Pages
 
-**Static Pages**
+**Static and Dynamic Pages**
 
 + It's very easy to build the **static pages** by youself. The only one you have to konw is the location where the static pages store is `/public`  and `/app/view`folder.
-+ Insert the 
++ Insert the `Ruby` sentences into `erb` files. Now you have built your first dynamic page.
+
+```shell
+$ vim /app/views/kernel/hello.html.erb
+<h1>Say#hello</h1>
+<p>
+    Find me in app/views/say/hello.html.erb
+    The year is <%= @time.year %> # To insert the variables from the controller
+</p>
+
+$ vim /app/controller/kernel_controller.rb
+class KernelController < ApplicationController
+  def hello
+    @time = Time.new
+  end
+
+  def goodbye
+  end
+end
+# This example indicates the ways for users to control the website pages by ruby files.
+```
+
+### 2. First Application
 
 
 
