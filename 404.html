@@ -1,11 +1,10 @@
 ---
 layout: default
 ---
-
 <style type="text/css" media="screen">
   .container {
     margin: 10px auto;
-    max-width: 600px;
+    max-width: available;
     text-align: center;
   }
   h1 {
@@ -14,11 +13,28 @@ layout: default
     line-height: 1;
     letter-spacing: -1px;
   }
+  .container-right{
+    font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    font-size: 3px;
+    float: right;
+  }
+  .container-left{
+    width: auto;
+    height: auto;
+    float: left;
+  }
 </style>
 
-<div class="container">
-  <h1>404</h1>
+{% include header.html %}
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
+<div class="container">
+  <div class = "container-left">
+    <img src="./assets/cry404.jpg" alt="the cartoon 404 image"/>
+  </div>
+
+  <div class="container-right">
+    <h1>404</h1>
+    <p><strong>Page not found :(</strong></p>
+    <p>The requested page could not be found.</p>
+  </div>
 </div>

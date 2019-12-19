@@ -125,7 +125,13 @@ end
 # This example indicates the ways for users to control the website pages by ruby files.
 ```
 
-### 2. First Application
+### 2. First Application(Models,Views and Controllers)
+
+**Models** : maintaining the state of the application. It can handle with the various interface and communication.
+
+**View** : generate the user interface and is based on the data in the model.
+
+**Controller** : orchestrate the application and schedule the process of the application.
 
 
 
