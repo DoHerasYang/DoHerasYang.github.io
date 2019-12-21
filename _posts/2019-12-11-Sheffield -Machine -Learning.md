@@ -37,11 +37,11 @@ tags: python pytorch
 
 **Normal Vector** : the mean of normal is an object such as the line and vector thay is perpendicular to a given object such as the line and dimensions. The normal vector of a manifold is the set of the vectors which are orthogonal to the targeted space.
 
-**Hyperplane** : a hyperplane is the subspace whose the dimensions is one less than that of its ambient space. For the 2-dimensional planes, the hyperplane is the sigle line.
+**Hyperplane** : a <a name='hyperplane'>hyperplane</a> is the subspace whose the dimensions is one less than that of its ambient space. For the 2-dimensional planes, the hyperplane is the sigle line.
 
 #### 1.2 Operation
 
-+   <a name="sign"> sign </a>
++   **sign**
     in mathematics,the *sign* function or *signum* function (from signum, Latin for "sign") is an odd mathematical function that extracts the sign of a real number. In mathematical expressions the sign function is often represented as sgn.
     The signum function at a real number $x$ is defined as follows:
   $$
@@ -102,9 +102,10 @@ $$
   We obtain the data set which contains the class label $y_i$ and data point $x_i$ and use this prediction function:
 $$
 f(x_i) = \text{sign}(\mathbf{w}^\top \mathbf{x}_i + b)
+\Rightarrow \text{sign}(\mathbf{w_1})
 $$
 
-  So the <a href="#sign"> hyperplance </a> 
+  So the <a href="#hyperplane"> hyperplane </a> can be described by $\mathbf{w^\top x} = -b$  and we use $b=w_0$.<br>  
 
 
 
