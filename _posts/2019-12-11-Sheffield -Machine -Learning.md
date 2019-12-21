@@ -31,6 +31,10 @@ tags: python pytorch
 
 **Normalization**:  The way to avoid the overfitting for the training dataset.
 
+**Multivatiate differentiating and Integration** : . The derivative of a function at a chosen input value describes the rate of change of the function near that input value. The process of finding a derivative is called *differentiation*. For more details. follow this [link](http://www.columbia.edu/itc/sipa/math/calc_rules_multivar.html).
+
+
+
 ### 2. Bayes Rules
 
 #### 2.1 Some Review about Bayes and Probality
@@ -58,9 +62,15 @@ $$
   + Secondly, substract the mean from each data point(product of label and probability), square the each result and sum the up.
   + Thirdly, divide the sum by $n-1$ where the $n$ is the number of data points.
 
+  *Questions*: what is the difference between the unbiased variance and variance?
+
+  For more details, click this [link](https://en.wikipedia.org/wiki/Bias_of_an_estimator).
+
 + **First moment and Scond moment **: In short, the first moment of a set of numbers is just the mean (that is, the average) and the second moment is usually just the variance. 
 
 + **Excepted Value**: in other words, "mean". 
+
++ 
 
 
 
