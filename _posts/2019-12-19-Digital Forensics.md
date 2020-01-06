@@ -41,16 +41,21 @@ The physical and electronic evidence may include:
 > > Your line manager has assigned this case to you and you are required to: 
 > >
 > > 1. Collect the evidence from the evidence lockup and maintain a chain of custody
-> > 2. Create a disk image of the evidence while ensuring that the integrity of the evidence 
-> >    is not compromised in any way.
+> > 2. Create a disk image of the evidence while ensuring that the integrity of the evidence is not compromised in any way.
 > > 3. Fill out the preliminary evidence examination report.
 
 **Tools**:
 
 `USB_Write_Blocker_All_Windows` is the software to prevent the writing the information to target portable device from the host machine. It's very easy to use, before you plug in the device, you should open this batch file and follow the instruction from the console. 
 
-`MD5` is the hash function which is widely use to produce a 128-bit hash value to verify the integrity of file. In digital forensics, it's very essential to keep the integrity and create
+`MD5` is the hash function which is widely use to produce a 128-bit hash value to verify the integrity of file. In digital forensics, it's very essential to keep the integrity and creditability of evidence.
 
+`AccessData FTK Imager` is the software to preview and imaging tool used to acquire data (evidence) in a forensically sound manner by creating copies of data without making changes to the original evidence.
 
+**Process and Analyse**:
 
+1)Open the AccessData FTK and click File -> Create Disk Image and select Physical Drive which can allow you to recover more information than others options such as the hidden information.
 
+![01](/Pictures/Digital Forensics/01.png)
+
+2)Select the targeted device and click ``
