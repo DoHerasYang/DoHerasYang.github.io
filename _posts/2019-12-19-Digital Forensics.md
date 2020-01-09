@@ -54,7 +54,7 @@ The physical and electronic evidence may include:
 
 **Process and Analyse**:
 
-1)Open the AccessData FTK and click `File -> Create Disk Image` and select `Physical Drive` which can allow you to recover more information than others options such as the hidden information.
+1)Open the `AccessData FTK` and click `File -> Create Disk Image` and select `Physical Drive` which can allow you to recover more information than others options such as the hidden information.
 
 ![01](/Pictures/Digital Forensics/FTK/01.png)
 
@@ -133,7 +133,7 @@ Then save the new create Hex file by `ctrl+S` and choose the file type as `doc`.
 
 ![05](/Pictures/Digital Forensics/Drug Dealer Case/05.png)
 
-4.For the **second question**, if we want to lock and recover the `JPG` file we should find the Hex signature of `JPG` file which is `FF D8`. We can locate the beginning of jpg file and also it is very easy to find the end of Hex value.<br>By finishing the searching for Hex signature, you can find the beginning location should be `00009200`.  By scrolling down the Hex file, we can find `pw = goodtimes` which is located at the line of `0000CF20`. Because `50 4B` is the Hex signature for `DOCX PPTX XLSX`, we can konw that `0000CFF0` is the end of `JPG` file. Then, we save the Hex value file as the `JPG` file.
+4.For the **second question**, if we want to locate and recover the `JPG` file we should find the Hex signature of `JPG` file which is `FF D8`. We can locate the beginning of jpg file and also it is very easy to find the end of Hex value.<br>By finishing the searching for Hex signature, you can find the beginning location should be `00009200`.  By scrolling down the Hex file, we can find `pw = goodtimes` which is located at the line of `0000CF20`. Because `50 4B` is the Hex signature for `DOCX PPTX XLSX`, we can konw that `0000CFF0` is the end of `JPG` file. Then, we save the Hex value file as the `JPG` file.
 
 ![06](/Pictures/Digital Forensics/Drug Dealer Case/06.jpg)
 
@@ -153,4 +153,33 @@ Then save the new create Hex file by `ctrl+S` and choose the file type as `doc`.
 
 **Tools**:
 
-`Autospy` : 
+`Autospy` : Autospy is a computer software to make easier for investigators to flag pertinent sections of data. It can support major file systems (NTFS, FAT, ExFAT, HFS+, Ext2/Ext3/Ext4, YAFFS2) by hashing all files, unpacking standard archives (ZIP, JAR etc.), extracting any EXIF values and putting keywords in an index. Some file types like standard email formats or contact files are also parsed and cataloged. For more information, please click [here](http://www.sleuthkit.org/autopsy/).
+
+**Process**:
+
+1.Open the `Autospy` software, click the `File` → `New case`→ Input `Case Number` → Finish the `Optional Information` → `Finish`
+
+![01](/Pictures/Digital Forensics/Credit Card Fraud/01.png)
+
+2.Click `Add Data Source` → Choose `Disk Image or VM File` → Click `Next`.
+
+![02](/Pictures/Digital Forensics/Credit Card Fraud/02.png)
+
+3.Browse the image path → Click `Open` → Click `Next` → Click `Next`, you will get the loading interface. You have to wait for the programme which is analysing all the system files.
+
+![03](/Pictures/Digital Forensics/Credit Card Fraud/03.jpg)
+
+**Analysis**:
+
+1.What is the name of the company where Frank works?
+
+The thoughts to solve this question is to find the useful files which could contain the information about the company.
+
+
+
+
+
+
+
+
+
