@@ -137,11 +137,13 @@ Then save the new create Hex file by `ctrl+S` and choose the file type as `doc`.
 
 ![06](/Pictures/Digital Forensics/Drug Dealer Case/06.jpg)
 
-5.We have recognized that `50 4B` is the Hex value of `XLSX` or `ZIP`file. But the `XLSX`'s Hex value should be more specific which is `50 4B 03 04 14 00 06 00`. But we can see the original Hex value is different from that. So we can make sure that We can easily extract the final file by imitating previous steps.<br>`0000D000` is the beginning Hex value of the `ZIP` file and also we can locate the end Hex value of file should be `0000D9FF`. We will obtain the encrypted `XLS` file. And the password we have known is `goodtimes`.
+5.We have recognized that `50 4B` is the Hex value of `XLSX` or `ZIP`file. However the `XLSX`'s Hex value should be more specific which is `50 4B 03 04 14 00 06 00`. We can see the original Hex value is different from that. So we can make sure that We can easily extract the final file by imitating previous steps.<br>`0000D000` is the beginning Hex value of the `ZIP` file and also we can locate the end Hex value of file should be `0000D9FF`. We will obtain the encrypted `XLS` file. And the password we have known is `goodtimes`.
 
 ![07](/Pictures/Digital Forensics/Drug Dealer Case/07.png)
 
 6.For **Q6**, The `JPG` file just includes the values for color space, I don't know how to confirm the tools to generate it.
+
+
 
 ---
 
@@ -173,11 +175,19 @@ Then save the new create Hex file by `ctrl+S` and choose the file type as `doc`.
 
 1.What is the name of the company where Frank works?
 
-The thoughts to solve this question is to find the useful files which could contain the information about the company.
+The thoughts to solve this question is to discover the useful files which could contain the company information. So maybe the email could include the inforamtion like the email signature. Furhetmore, the documents may also include the company information, the `Autospy` have given you the results about all the files which is orderd by `File Types` beneth the `view` directory. You can find a file named `letter head.doc` which you can make sure that the name of company is BoxiPay.
 
+![04](/Pictures/Digital Forensics/Credit Card Fraud/04.png)
 
+2.Where is the location and name of the file where Frank stores his password?
 
+We just follow our normal mind, we may not sotre our password in plaintext, so we tend to find something which can hide the text information. The `media files`, such as `pictures`, `music` and  `vedios`, should come to our mind at first. Meanwhile, we can check whether there is any documents file which provide hint for the location of passwrod. After we checj all the document file, we tend to search the result folder which has collected all the media files. Unfortunately, It seems that Frank is clever than we think. 
 
+The file structure in Windows has one prominent features that each users has their unique forlder in `C:\users`. For the image of Windos system, it keeps this feature and the path should be `vol2\users`. We head down to this repositority and check all the folders such as `Document` and `Music`.  After the carefully searching, we can find our answer is under the folder `Personal Biz`.
+
+![05](/Pictures/Digital Forensics/Credit Card Fraud/05.png)
+
+3.Which operating system and version was Frank's laptop running?
 
 
 
