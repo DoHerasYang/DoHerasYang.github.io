@@ -58,4 +58,8 @@ The physical and electronic evidence may include:
 
 ![01](/Pictures/Digital Forensics/01.png)
 
-2)Select the targeted device and click ``
+2)Select the targeted device and click `finish` , we will obtain the new windows. And click the `Add` in the image destination.
+
+![02](/Pictures/Digital Forensics/02.png)
+
+3)After that we can obtain a new windows which 
