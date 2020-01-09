@@ -151,15 +151,31 @@ Then save the new create Hex file by `ctrl+S` and choose the file type as `doc`.
 
 **Background**:
 
+>Frank works for a fintech company based in London. He has a laptop he uses when he
+>works from home which automatically connects to the company network via a VPN.
+>
+>He has recently submitted his resignation to leave in the next month. However, within the
+>last 2 weeks, the Security Operation Centre (SOC team) had noticed unusual traffic from
+>Frank’s laptop around 11.30pm and 2am every day.
+>
+>He is suspected to be stealing creditcard details of customers of the compay. In order to
+>avoid all evidence being erased, the SOC team instructed the IT team to tactically offer Frank a new laptopso that the laptop could be imaged and potential evidence analysed.
+>
+>The IT team was able to disable his access to the VPN and as such when Frank got into
+>work on Thursday, he reported that he was unable to access the network. IT offered him a
+>new laptop and directed that his old laptop will be looked at wuthin the next few days. By
+>doing this, Frank could not delete or tamper with any evidence on the device.
+>
+>The Security Team Leader has now created a disk image of Frank's laptopj^hich has been assigned to you to analyse. Using `Autopsy` to analyse the evidence.
 >
 
 **Tools**:
 
-`Autospy` : Autospy is a computer software to make easier for investigators to flag pertinent sections of data. It can support major file systems (NTFS, FAT, ExFAT, HFS+, Ext2/Ext3/Ext4, YAFFS2) by hashing all files, unpacking standard archives (ZIP, JAR etc.), extracting any EXIF values and putting keywords in an index. Some file types like standard email formats or contact files are also parsed and cataloged. For more information, please click [here](http://www.sleuthkit.org/autopsy/).
+`Autopsy` : Autopsy is a computer software to make easier for investigators to flag pertinent sections of data. It can support major file systems (NTFS, FAT, ExFAT, HFS+, Ext2/Ext3/Ext4, YAFFS2) by hashing all files, unpacking standard archives (ZIP, JAR etc.), extracting any EXIF values and putting keywords in an index. Some file types like standard email formats or contact files are also parsed and cataloged. For more information, please click [here](http://www.sleuthkit.org/autopsy/).
 
 **Process**:
 
-1.Open the `Autospy` software, click the `File` → `New case`→ Input `Case Number` → Finish the `Optional Information` → `Finish`
+1.Open the `Autopsy` software, click the `File` → `New case`→ Input `Case Number` → Finish the `Optional Information` → `Finish`
 
 ![01](/Pictures/Digital Forensics/Credit Card Fraud/01.png)
 
