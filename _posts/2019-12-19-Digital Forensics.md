@@ -213,8 +213,11 @@ So I tried to open the Registry to find the information of my host machine's ope
 
 ![06](/Pictures/Digital Forensics/Credit Card Fraud/06.png)
 
-After I find the name of the operating system in registry, so I tried to search the name `ProductName` and we would obtain the answer.
+After I find the name of the operating system value in registry, so try to search the name `ProductName` in Autopsy and we would obtain the answer.
 
 ![07](/Pictures/Digital Forensics/Credit Card Fraud/07.png)
 
-4.At which location did
+4.At which location did Lewis ask to meet Frank?
+
+If you have any information to search, you just need to input the information in `Keyword Search` in Autopsy.
+
