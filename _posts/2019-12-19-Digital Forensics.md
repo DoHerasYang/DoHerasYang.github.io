@@ -166,7 +166,7 @@ Then save the new create Hex file by `ctrl+S` and choose the file type as `doc`.
 >new laptop and directed that his old laptop will be looked at wuthin the next few days. By
 >doing this, Frank could not delete or tamper with any evidence on the device.
 >
->The Security Team Leader has now created a disk image of Frank's laptopj^hich has been assigned to you to analyse. Using `Autopsy` to analyse the evidence.
+>The Security Team Leader has now created a disk image of Frank's laptop which has been assigned to you to analyse. Using `Autopsy` to analyse the evidence.
 >
 
 **Tools**:
@@ -189,13 +189,13 @@ Then save the new create Hex file by `ctrl+S` and choose the file type as `doc`.
 
 **Analysis**:
 
-1.What is the name of the company where Frank works?
+**1.What is the name of the company where Frank works?**
 
 The thoughts to solve this question is to discover the useful files which could contain the company information. So maybe the email could include the inforamtion like the email signature. Furhetmore, the documents may also include the company information, the `Autospy` have given you the results about all the files which is orderd by `File Types` beneth the `view` directory. You can find a file named `letter head.doc` which you can make sure that the name of company is BoxiPay.
 
 ![04](/Pictures/Digital Forensics/Credit Card Fraud/04.png)
 
-2.Where is the location and name of the file where Frank stores his password?
+**2.Where is the location and name of the file where Frank stores his password?**
 
 We just follow our normal mind, we may not sotre our password in plaintext, so we tend to find something which can hide the text information. The `media files`, such as `pictures`, `music` and  `vedios`, should come to our mind at first. Meanwhile, we can check whether there is any documents file which provide hint for the location of passwrod. After we checj all the document file, we tend to search the result folder which has collected all the media files. Unfortunately, It seems that Frank is clever than we think. 
 
@@ -203,7 +203,7 @@ The file structure in Windows has one prominent features that each users has the
 
 ![05](/Pictures/Digital Forensics/Credit Card Fraud/05.png)
 
-3.Which operating system and version was Frank's laptop running?
+**3.Which operating system and version was Frank's laptop running?**
 
 As the Microsoft technical standard, for the older operating system like `Windows NT/2000/XP/2k`, the system information is stored in the file named `boot.ini` which can provide the operating system installed on a particular system partition. This file could show various boot options that are available to user, including the multiple operating systems on the different partitions. The forensics can check the Windows setup logs (eg. `C:\windows\setuplog.txt` `C:\windows\debug\netsetup.log`) which includes can provide useful information.
 
@@ -217,7 +217,49 @@ After I find the name of the operating system value in registry, so try to searc
 
 ![07](/Pictures/Digital Forensics/Credit Card Fraud/07.png)
 
-4.At which location did Lewis ask to meet Frank?
+**4.At which location did Lewis ask to meet Frank?**
 
-If you have any information to search, you just need to input the information in `Keyword Search` in Autopsy.
+If you have any information to search, you just need to input the information in `Keyword Search` in Autopsy. You will obtain the answer directly.
+
+![08](/Pictures/Digital Forensics/Credit Card Fraud/08.png)
+
+**5.Who are the top 3 customers Frank sold the most cards to in Decemeber 2017 and how many cards did he sell to them?**
+
+It is very easy to find the relevant files named `2017 December Sales.xls` by following the the `Views` subbar and proceeding to the correlative file collection.
+
+![09](/Pictures/Digital Forensics/Credit Card Fraud/09.png)
+
+**6.What is the password for smokingGun.zip?**
+
+We have gained the clue for the `smokingGun.zip`'s password which is `MYFOOTBALL TEAM AV`. 
+
+
+
+**7.What websites has Frank Visited using the laptop?**
+
+You can easily find the website history and cookies from the `Results` subbar. And also use the `Timeline` to sort out all the web activity.
+
+![11](/Pictures/Digital Forensics/Credit Card Fraud/11.png)
+
+![12](/Pictures/Digital Forensics/Credit Card Fraud/12.png)
+
+
+
+
+
+---
+
+### 5.Linux Forensics
+
+**Background**:
+
+>
+
+**Tools:**
+
+
+
+
+
+
 
