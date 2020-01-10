@@ -13,7 +13,7 @@ tags: Lectures
 
 > The content of this blog is based on the course CM6016 (Cyber Threat Hunting and Digital Forensics (AUTUMN 2019~20)) from the University of Sheffield.
 >
-> **@All the onowledge rights reserved by the owner of this course's materials and Nesrine Kaaniche at the University of Sheffield.**
+> **@All the konowledge rights are reserved by the owner of this course's materials and Nesrine Kaaniche at the University of Sheffield.**
 
 ### 1. Hacking Incident
 
@@ -199,7 +199,7 @@ The thoughts to solve this question is to discover the useful files which could 
 
 We just follow our normal mind, we may not sotre our password in plaintext, so we tend to find something which can hide the text information. The `media files`, such as `pictures`, `music` and  `vedios`, should come to our mind at first. Meanwhile, we can check whether there is any documents file which provide hint for the location of passwrod. After we checj all the document file, we tend to search the result folder which has collected all the media files. Unfortunately, It seems that Frank is clever than we think. 
 
-The file structure in Windows has one prominent features that each users has their unique forlder in `C:\users`. For the image of Windos system, it keeps this feature and the path should be `vol2\users`. We head down to this repositority and check all the folders such as `Document` and `Music`.  After the carefully searching, we can find our answer is under the folder `Personal Biz`.
+The file structure in Windows has one prominent features that each users has their unique forlder in `C:\users`. For the image of Windos system, it keeps this feature and the path should be `vol2\users`. We head down to this repositority and check all the folders such as `Document` and `Music`.  After the carefully searching, we can find our answer is under the directory named `Personal Biz`.
 
 ![05](/Pictures/Digital Forensics/Credit Card Fraud/05.png)
 
@@ -263,13 +263,41 @@ You can easily find the website history and cookies from the `Results` subbar. A
 
 `Autopsy`
 
-- The image we use for 
+- The image we use for this Lecture is `2 Disc Image File`.
 
 **Analysis:**
 
 **1.What service and what account triggered the alert for network administrator?**
 
-Firstly, I think we should have some knowledge of Linux system logs and file structure which can help us better to search for the
+Firstly, I think we should have some knowledge of Linux system logs and file structure which can help us better to search for useful information which we can base on to analyse what happened in target machine.    If your system or server has been suffered from the cyber attack, go check the system log and you will find some clues.
+
+The system log is managed by a service called `syslog`:<br>`/var/log/boot.log` : Records the events that occur during the boot process of the system, which is the information displayed during the POST process of the Linux system.<br>`/var/log/lastlog`  ：Record the time of the last successful user login, login IP and other information.<br>`/var/log/secure`    ：Linux system security log, recording user and workgroup deterioration, user login authentication.<br>`/var/log/btmp`        ：Record users, time and remote IP address of Linux login failure.<br>
+
+For some commericial operating system like `Debian` and `Ubuntu`, they use `/var/log/auth.log` to store the stores logs from the pluggable authentication module (PAM), including successful logins, failed login attempts, and authentication methods. 
+
+For the details of system admin, the information is stored in `/etc/passwd` and `/etc/shadow`. Also you could obtain the hostname from `/etc/hostname`. For the `/etc/passwd` file formate, we can see that `/etc/passwd` contains one entry per line for each user (user account) of the system. All fields are separated by a colon `(:)` symbol. Total of seven fields as follows. The formate is the `Username:Password:User ID(UID):Group ID(GID):User ID Info:Home Directory:Command/Shell`.  From the below pictures, we can see that only one user named `root` is the system admin.
+
+![01](/Pictures/Digital Forensics/Linux Forensics/01.png)
+
+Next we go to check the system log file, we can see that the remote attacker wanted to create a new users in  attacked system via `ssh`. In addition, the port name `22` is reserved for the `ssh` service. That means the service named `ssh` trigerrd the alert for network administrators. Ant the account's name is `ttyl`.
+
+![02](/Pictures/Digital Forensics/Linux Forensics/02.png)
+
+**2.What kind of system runs on targeted server? (OS, CPU, etc)**
+
+It is very easy to use the Unix commands to operate the Linux system as you want. 
+
+We can obtain the system information by checking this file `/etc/issue`. For the information about the CPU, you can access the `/proc/cpuinfo` to obtain it. Also, you can find them from the log file at `/var/log/install/hardware-summary`.
+
+![03](/Pictures/Digital Forensics/Linux Forensics/03.png)
+
+**3.What processes were running on targeted server?**
+
+There is no log that logs the processes. They only way you would find it is if there was something written to the syslog . So the alternative way is to find the relevant log file which may have the crucial informartion about the process. We can try these log files `/var/logs/syslog` and ` /var/logs/messag`.
+
+**4.What are attackers IP and target IP addresses?**
+
+
 
 
 
