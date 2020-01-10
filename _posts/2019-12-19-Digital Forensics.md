@@ -54,7 +54,7 @@ The physical and electronic evidence may include:
 
 **Process and Analyse**:
 
-1)Open the `AccessData FTK` and click `File -> Create Disk Image` and select `Physical Drive` which can allow you to recover more information than others options such as the hidden information.
+1)Open the `AccessData FTK` and click `File -> Create Disk Image` and select `Physical Drive` which can allow you to recover more information than the other options such as the hidden information.
 
 ![01](/Pictures/Digital Forensics/FTK/01.png)
 
@@ -293,7 +293,7 @@ We can obtain the system information by checking this file `/etc/issue`. For the
 
 **3.What processes were running on targeted server?**
 
-There is no log that logs the processes. They only way you would find it is if there was something written to the syslog . So the alternative way is to find the relevant log file which may have the crucial informartion about the process. We can try these log files `/var/logs/syslog` and ` /var/logs/messag`.
+There is no log that logs the processes. The only way you would find is that perhaps there was something has written to the `syslog` . So the alternative way is to find the relevant log file which may have the crucial informartion about the process. We can try these log files `/var/logs/syslog` and ` /var/logs/messag`.
 
 **4.What are attackers IP and target IP addresses?**
 
