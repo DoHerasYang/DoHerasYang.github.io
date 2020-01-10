@@ -205,7 +205,16 @@ The file structure in Windows has one prominent features that each users has the
 
 3.Which operating system and version was Frank's laptop running?
 
+As the Microsoft technical standard, for the older operating system like `Windows NT/2000/XP/2k`, the system information is stored in the file named `boot.ini` which can provide the operating system installed on a particular system partition. This file could show various boot options that are available to user, including the multiple operating systems on the different partitions. The forensics can check the Windows setup logs (eg. `C:\windows\setuplog.txt` `C:\windows\debug\netsetup.log`) which includes can provide useful information.
 
+Considering the newest operating system like `Windows 7/8/10` , the forensics can use the register subkey to find the useful information from the `Registry`. Just query the `SOFTWARE\Microsoft\Windows NT\Current Version` by a standard registry editor such as `regedit`. But it's very difficult to find the exact information about the system from a image without running it.
 
+So I tried to open the Registry to find the information of my host machine's operating system version as shown in below pictures. Although it costs so much time to find the information in a system image, you can still search for the subkey's name to find the cached value which could be hiden in somewhere from the target image file.
 
+![06](/Pictures/Digital Forensics/Credit Card Fraud/06.png)
 
+After I find the name of the operating system in registry, so I tried to search the name `ProductName` and we would obtain the answer.
+
+![07](/Pictures/Digital Forensics/Credit Card Fraud/07.png)
+
+4.At which location did
