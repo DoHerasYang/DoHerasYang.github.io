@@ -241,6 +241,8 @@ You can easily find the website history and cookies from the `Results` subbar. A
 
 ![11](/Pictures/Digital Forensics/Credit Card Fraud/11.png)
 
+
+
 ![12](/Pictures/Digital Forensics/Credit Card Fraud/12.png)
 
 
@@ -253,9 +255,21 @@ You can easily find the website history and cookies from the `Results` subbar. A
 
 **Background**:
 
+>Ali the network administrator of company “AliBest” recently witnessed strange activities in one of his Linux machines! He is quite panicked since that machine plays a vital role in his network and he has heard lots of hacking bad-news happened for other companies recently. Therefore, he decided to contact you as a forensics investigator to resolve the issue.
 >
+>You have guided him to take an image of the hard disk, and system memory snapshots and post them to you. You need to do a complete forensics investigation and compile a full-forensics report. Your report should address all the following questions:
 
 **Tools:**
+
+`Autopsy`
+
+- The image we use for 
+
+**Analysis:**
+
+**1.What service and what account triggered the alert for network administrator?**
+
+Firstly, I think we should have some knowledge of Linux system logs and file structure which can help us better to search for the
 
 
 
