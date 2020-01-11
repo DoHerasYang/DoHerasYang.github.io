@@ -303,7 +303,7 @@ For the target IP address, You can find this crucial information from `/etc/var/
 
 **5.What service was attacked?**
 
-We can see that before the attacker stealed the files from the server, the system tried to establish the `SMTP` service. SMTP is a set of rules that allow data to be sent from one email server to another and allows the exchange of online messages. For the more details about the `SMTP` services, please click [here](https://whatis.techtarget.com/definition/SMTP-Simple-Mail-Transfer-Protocol).
+We can see that before the attacker stealed the files from the server, the system tried to establish the `SMTP` service. `SMTP` is a set of rules that allow data to be sent from one email server to another and allows the exchange of online messages. For the more details about the `SMTP` services, please click [here](https://whatis.techtarget.com/definition/SMTP-Simple-Mail-Transfer-Protocol).
 
 ![05](/Pictures/Digital Forensics/Linux Forensics/05.png)
 
@@ -343,7 +343,7 @@ The firewall can prevent most of cyber attack.
 
 **11.What network connections were opened and in which state?**
 
-From the previous analysis, we can find the ports for connection such as `ssh` , `SMTP` are open. 
+From the previous questions and its answer, we can find the ports for connection such as `ssh` , `SMTP` are open. 
 
 From the log file `/etc/var/log/daemonlog`, we can find the connections like `DHCP` is open. From the `/etc/var/log/dmesg.0`, we can see that the `TCP` and `IP` connection is open.
 
@@ -352,6 +352,8 @@ From the log file `/etc/var/log/daemonlog`, we can find the connections like `DH
 
 
 ---
+
+### 6.Bad PDF
 
 
 
