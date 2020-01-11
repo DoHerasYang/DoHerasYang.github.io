@@ -331,7 +331,7 @@ After you extract the `mainlog` from the `Autopsy`, you can open it by `Notepad`
 
 **9.Do you think these attacks were automated? Why?**
 
-Yes, the attacker use the automated script to steal the files via the SMTP server. We can see the time gap between each attacks is pretty small.
+No, the attacker manullly steal the files via the SMTP server. We can see the time gap between each attacks is larger than two minutes.
 
 ![08](/Pictures/Digital Forensics/Linux Forensics/08.png)
 
@@ -434,27 +434,54 @@ We can check the clipboard information by command `clipboard`, we can find the h
 
 **4.Are there any processes that contain URLs that may point to banking troubles? If so, what are these processes and what are the URLs?**
 
-We have locked the target is the web application whose name is `firefox` and also the service named `AcroRd32.exe` which is supported by the Adobe. Let's go check the `dumpfiles` and `memdump`. You should download the `Strings` command line from [here](https://docs.microsoft.com/en-us/sysinternals/downloads/strings). And copy all the files into the 
+We have locked the target is the web application whose name is `firefox` and also the service named `AcroRd32.exe` which is supported by the Adobe. Let's go check the `dumpfiles` and `memdump`. You should download the `Strings` command line from [here](https://docs.microsoft.com/en-us/sysinternals/downloads/strings). And copy all the files into the repostity named `result`.
 
 ```powershell
 > python vol.py memdump -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -p 888 --dump-dir ./result
 > python vol.py memdump -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -p 1752 --dump-dir ./result
-> cd result | dir
+> cd result | dir | chdir
 888.dmp
 1752.dmp
-> strings 888.dmp > 888.txt | strings 11752.dmp > 1752.txt
+strings.exe
+strings64.exe
+C:\volatility-2.6\volatility-master\result
+> strings 888.dmp > 888.txt | strings 1752.dmp > 1752.txt
 > dir
 888.dmp
 1752.dmp
 888.txt
 1752.txt
+strings.exe
+strings64.exe
 ```
 
+From the generated file named `888.txt` and `1752.txt` , we can find the URL like `search-network-plus.com` and `https://onlineeast#.bankofamerica.com/`. 
+
+**5.List suspicious files that were loaded by any processes on the victim’s machine. From this information, what was a possible payload of the initial exploit be that would be affecting the victim’s bank account?**
+
+For the files in the system memory, we should use the command named `filescan` to find the FILE_OBJECT handles. We should compare the content betwenn the `file.txt` and `888.txt` to find which files were loaded by the process. We can find the `PDF.php` which has been used by the `search-network-plus.com`.
+
+```powershell
+> python vol.py filescan -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" > ./result/file.txt
+> python vol.py malfind -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -p 1752 --dump-dir ./result
+```
+
+![04](/Pictures/Digital Forensics/Bad PDF/04.png)
+
+Next, we should check the `dumpfiles` to check the possibality of virus files. 
+
+```powershell
+> python vol.py dumpfiles -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -Q 0x0000000001ffadf0 --dump-dir ./result
+> cd result | strings file.None.0x82091008 > PDF.txt
+```
+
+**6.Are there any related registry entries associated with the payload?** 
+
+**7.What technique was used in the initial exploit to inject code in to the other processes?** 
 
 
 
+---
 
-
-
-
+### 7.Network Forensics
 
