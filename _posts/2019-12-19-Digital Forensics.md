@@ -259,7 +259,7 @@ You can easily find the website history and cookies from the `Results` subbar. A
 
 **Tools:**
 
-`Autopsy`
++ `Autopsy`
 
 - The image we use for this Lecture is `2 Disc Image File`.
 
@@ -354,6 +354,101 @@ From the log file `/etc/var/log/daemonlog`, we can find the connections like `DH
 ---
 
 ### 6.Bad PDF
+
+**Background**:
+
+> Ali is a famous banking system forensics investigator with lots of successful financial case investigation! Ali is recently contacted by a financial company called "Best Finance (BF)" to perform forensics work on a recent incident that occurred. One of BF employees had received an email from a fellow co-worker that pointed to a PDF file. Upon opening the file, the employee did not seem to notice anything, however recently they have had unusual activity in their bank account. BF was able to obtain a memory image of the employee’s virtual machine upon suspected infection. BF Asked Ali to analyze the virtual memory and report on any suspected activities found. Since Ali is very busy these days he has asked you to complete this investigation.
+
+**Tools**:
+
+In this section, we use the  well-known open source  forensics framework `volatility` which can be used for `Memory Forensics and Analysis`. It can analyse the raw dumps, crash dumps, VMware dumps (vmem), virtual box dumps, and many others. For the installation information about the `volatility`, you can check [here](https://github.com/volatilityfoundation/volatility). For the information about how to use this tools and downloading the Memory Forensics Cheat Sheet, please click [here](https://digital-forensics.sans.org/media/volatility-memory-forensics-cheat-sheet.pdf).
+
+[Volatility - The Volatility Foundation](https://downloads.volatilityfoundation.org/releases/2.4/CheatSheet_v2.4.pdf)
+
+**Process**:
+
+Open the `Command Prompt` as the administraor, and proceed to the installation folder `C:\volatility-2.6\volatility-master`.
+
+```powershell
+> cd C:\volatility-2.6\volatility-master
+> chdir 
+C:\volatility-2.6\volatility-master
+# You can check the usable plugin of volatity 
+> python vol.py -h
+Supported Plugin Commands:
+atoms           Print session and window station atom tables
+atomscan        Pool scanner for atom tables
+bigpools        Dump the big page pools using BigPagePoolScanner
+bioskbd         Reads the keyboard buffer from Real Mode memory
+callbacks       Print system-wide notification routines
+clipboard       Extract the contents of the windows clipboard
+cmdline         Display process command-line arguments
+cmdscan         Extract command history by scanning for _COMMAND_HISTORY
+connections     Print list of open connections [Windows XP and 2003 Only]
+connscan        Pool scanner for tcp connections
+consoles        Extract command history by scanning for _CONSOLE_INFORMATION
+crashinfo       Dump crash-dump information
+deskscan        Poolscaner for tagDESKTOP (desktops)
+devicetree      Show device tree
+dlldump         Dump DLLs from a process address space
+dlllist         Print list of loaded dlls for each process
+driverirp       Driver IRP hook detection
+drivermodule    Associate driver objects to kernel modules
+driverscan      Pool scanner for driver objects
+dumpcerts       Dump RSA private and public SSL keys
+dumpfiles       Extract memory mapped and cached files
+editbox         Displays information about Edit controls. (Listbox experimental.)
+eventhooks      Print details on windows event hooks
+filescan        Pool scanner for file objects
+gahti           Dump the USER handle type information
+...
+```
+
+**Analysis**:
+
+**1.List the processes that were running on the victim’s machine. Which process was most likely responsible for the initial exploit?** 
+
+You can check the state of the target memory by the following command, and you will obtain the useful information. We can find that the process `firefox.exe` runs one child process named `AcroRd32.exe` whose pid is `1752`.
+
+```powershell
+> python vol.py pstree -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem"
+```
+
+![01](/Pictures/Digital Forensics/Bad PDF/01.png)
+
+**2.List the sockets that were open on the victim’s machine during infection. Are there any suspicious processes that have sockets open?**
+
+Use the command `sockscan` for checking the information about the processes which use the sockets. From the picture, we can see that the pid `1752` which is `AcroRd32.exe` and pid `888` which is `firefox.exe`.
+
+```powershell
+> python vol.py sockscan -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem"
+```
+
+![02](/Pictures/Digital Forensics/Bad PDF/02.png)
+
+**3.List any suspicious URLs that may be in the suspected process’s memory.**
+
+We can check the clipboard information by command `clipboard`, we can find the history Data `search-network-plus.com/...ternet%20Explorer%206.0`. Next, we will check the dump files.
+
+![03](/Pictures/Digital Forensics/Bad PDF/03.png)
+
+**4.Are there any processes that contain URLs that may point to banking troubles? If so, what are these processes and what are the URLs?**
+
+We have locked the target is the web application whose name is `firefox` and also the service named `AcroRd32.exe` which is supported by the Adobe. Let's go check the `dumpfiles` and `memdump`. You should download the `Strings` command line from [here](https://docs.microsoft.com/en-us/sysinternals/downloads/strings). And copy all the files into the 
+
+```powershell
+> python vol.py memdump -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -p 888 --dump-dir ./result
+> python vol.py memdump -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -p 1752 --dump-dir ./result
+> cd result | dir
+888.dmp
+1752.dmp
+> strings 888.dmp > 888.txt | strings 11752.dmp > 1752.txt
+> dir
+888.dmp
+1752.dmp
+888.txt
+1752.txt
+```
 
 
 
