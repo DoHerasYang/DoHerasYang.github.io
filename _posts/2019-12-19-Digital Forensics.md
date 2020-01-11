@@ -225,7 +225,7 @@ If you have any information to search, you just need to input the information in
 
 **5.Who are the top 3 customers Frank sold the most cards to in Decemeber 2017 and how many cards did he sell to them?**
 
-It is very easy to find the relevant files named `2017 December Sales.xls` by following the the `Views` subbar and proceeding to the correlative file collection.
+It is very easy to find the relevant files named `2017 December Sales.xls` by following the `Views` subbar and proceeding to the correlative file collection.
 
 ![09](/Pictures/Digital Forensics/Credit Card Fraud/09.png)
 
@@ -233,7 +233,7 @@ It is very easy to find the relevant files named `2017 December Sales.xls` by fo
 
 We have gained the clue for the `smokingGun.zip`'s password which is `MYFOOTBALL TEAM AV`. 
 
-
+So we try to find one audio file which contains the password for `smokingGun.zip`.We can finally find that the target audio file named `creative.mp3` contains the password.
 
 **7.What websites has Frank Visited using the laptop?**
 
@@ -244,8 +244,6 @@ You can easily find the website history and cookies from the `Results` subbar. A
 
 
 ![12](/Pictures/Digital Forensics/Credit Card Fraud/12.png)
-
-
 
 
 
@@ -296,6 +294,64 @@ We can obtain the system information by checking this file `/etc/issue`. For the
 There is no log that logs the processes. The only way you would find is that perhaps there was something has written to the `syslog` . So the alternative way is to find the relevant log file which may have the crucial informartion about the process. We can try these log files `/var/logs/syslog` and ` /var/logs/messag`.
 
 **4.What are attackers IP and target IP addresses?**
+
+For the attacker IP address, we can deduce it from the `/etc/auth.log`, and should be `192.168.56.101`.
+
+For the target IP address, You can find this crucial information from `/etc/var/log/exim4/rejectlog` where the host IP should be `192.168.56.1`.
+
+![04](/Pictures/Digital Forensics/Linux Forensics/04.png)
+
+**5.What service was attacked?**
+
+We can see that before the attacker stealed the files from the server, the system tried to establish the `SMTP` service. SMTP is a set of rules that allow data to be sent from one email server to another and allows the exchange of online messages. For the more details about the `SMTP` services, please click [here](https://whatis.techtarget.com/definition/SMTP-Simple-Mail-Transfer-Protocol).
+
+![05](/Pictures/Digital Forensics/Linux Forensics/05.png)
+
+**6.What attacks were launched against targeted server?**
+
+From the `mainlog` and `rejectlog` , we can see that there are plenty of rejection messages which indicate that "message is too big". So attacker carried out the buffer overflow to attack the target server.
+
+![06](/Pictures/Digital Forensics/Linux Forensics/06.png)
+
+**7.What flaws or vulnerabilities did the attacker exploit?**
+
+The attacker exploited the vulnerabilities in `Sendmail` which is widely used  `Mail Transfer Agent (MTA) `for Unix and Microsoft Windows systtem.
+
+A remotely exploitable vulnerability has been discovered in Sendmail. The vulnerability is due to a buffer overflow condition in the SMTP header parsing component. Remote attackers may exploit this vulnerability by connecting to target SMTP servers and transmitting to them malformed SMTP data.
+
+The overflow condition occurs when Sendmail processes incoming e-mail messages containing malformed address parameters in a field such as "From:" or "CC:". One of the checks to ensure that the addresses are valid is flawed, resulting in a buffer overflow condition. Successful attackers may exploit this vulnerability to gain root privileges on affected servers remotely.
+
+**8.Did the attacker download files? Which ones? Give an analysis of those files.**
+
+We can analyse the `/etc/log/mainlog` to find the message about the files which were stealed by remote attacker. `wget` is one of the Linux commands which can allow the other to download files from the Internet or remote server. It can support  HTTP, HTTPS and FTP protocols, and can use HTTP proxy. For more details, please click [here](https://shapeshed.com/unix-wget/).
+
+After you extract the `mainlog` from the `Autopsy`, you can open it by `Notepad` and analyse it. You can find the `wget` command , target file names and target storing location.
+
+![05](/Pictures/Digital Forensics/Linux Forensics/07.png)
+
+**9.Do you think these attacks were automated? Why?**
+
+Yes, the attacker use the automated script to steal the files via the SMTP server. We can see the time gap between each attacks is pretty small.
+
+![08](/Pictures/Digital Forensics/Linux Forensics/08.png)
+
+**10.What could have prevented the attacks?**
+
+The system admin should update the `SMTP` and its components into the latest version. Also for the internal network or secret network, the internal network should be directly disconnected from the external network or a firewall should be set up between the local network and the external network. 
+
+The firewall can prevent most of cyber attack.
+
+**11.What network connections were opened and in which state?**
+
+From the previous analysis, we can find the ports for connection such as `ssh` , `SMTP` are open. 
+
+From the log file `/etc/var/log/daemonlog`, we can find the connections like `DHCP` is open. From the `/etc/var/log/dmesg.0`, we can see that the `TCP` and `IP` connection is open.
+
+![09](/Pictures/Digital Forensics/Linux Forensics/09.png)
+
+
+
+---
 
 
 
