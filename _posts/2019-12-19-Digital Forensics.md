@@ -420,7 +420,7 @@ You can check the state of the target memory by the following command, and you w
 
 Use the command `sockscan` for checking the information about the processes which use the sockets. From the picture, we can see that the pid `1752` which is `AcroRd32.exe` and pid `888` which is `firefox.exe`.
 
-```powershell
+```shell
 > python vol.py sockscan -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem"
 ```
 
@@ -436,7 +436,7 @@ We can check the clipboard information by command `clipboard`, we can find the h
 
 We have locked the target is the web application whose name is `firefox` and also the service named `AcroRd32.exe` which is supported by the Adobe. Let's go check the `dumpfiles` and `memdump`. You should download the `Strings` command line from [here](https://docs.microsoft.com/en-us/sysinternals/downloads/strings). And copy all the files into the repostity named `result`.
 
-```powershell
+```shell
 > python vol.py memdump -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -p 888 --dump-dir ./result
 > python vol.py memdump -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -p 1752 --dump-dir ./result
 > cd result | dir | chdir
@@ -459,29 +459,73 @@ From the generated file named `888.txt` and `1752.txt` , we can find the URL lik
 
 **5.List suspicious files that were loaded by any processes on the victim’s machine. From this information, what was a possible payload of the initial exploit be that would be affecting the victim’s bank account?**
 
-For the files in the system memory, we should use the command named `filescan` to find the FILE_OBJECT handles. We should compare the content betwenn the `file.txt` and `888.txt` to find which files were loaded by the process. We can find the `PDF.php` which has been used by the `search-network-plus.com`.
+For the files in the system memory, we should use the command named `filescan` to find the FILE_OBJECT handles. We should compare the content betwenn the `file.txt` and `888.txt` to find which files were loaded by the process. We can try to find the virus file which can steal the confidential information.
 
-```powershell
+```shell
 > python vol.py filescan -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" > ./result/file.txt
 > python vol.py malfind -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -p 1752 --dump-dir ./result
 ```
 
 ![04](/Pictures/Digital Forensics/Bad PDF/04.png)
 
-Next, we should check the `dumpfiles` to check the possibality of virus files. 
+![05](/Pictures/Digital Forensics/Bad PDF/05.png)
 
-```powershell
-> python vol.py dumpfiles -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -Q 0x0000000001ffadf0 --dump-dir ./result
+Next, we should check the `dumpfiles` to check the possibality of virus files. We can find the target file which is suspicious for the virus file should be a excutable programme named `sdra64.exe`
+
+```shell
+> python vol.py dumpfiles -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -Q 0x000000000230ff28 --dump-dir ./result
 > cd result | strings file.None.0x82091008 > PDF.txt
 ```
 
+We can find this virus file which can steal the information from the host computer and can be embedd in the email, for more details, please click [here](https://www.file.net/process/sdra64.exe.html).
+
 **6.Are there any related registry entries associated with the payload?** 
 
+
+
 **7.What technique was used in the initial exploit to inject code in to the other processes?** 
+
+The Trojan virus file named `sdra64.exe`, this is the backdoor programme which the hacker use to steal the information.
+
+---
+
+### 7.Network Forensics
+
+**Bacnground:**
+
+> Ali the network administrator of “Best Bankers” bank recently witnessed strange activities in several machines of his network! He is quite panicked since the network is used for lots of online transactions everyday and the last thing that he wants to have hackers around! Therefore, he decided to contact you as a forensics investigator to help him in investigating the issue. Unfortunately, you were not able to personally attend to the bank and therefore advised Mr. Ali to sniff all network traffic, collect them as a PCAP file and send to you. Please refer to the provided PCAP file and do a complete forensics investigation.
+
+**Tools**:
+
+`Wireshark`: **Wireshark** is a must-have (and free) network protocol analyzer for any security professional or systems administrator. It's like Jaws, only for packets. ... This free software lets you analyze network traffic in real time, and is often the best tool for troubleshooting issues on your network. For more details, please click 
+
+**Analysis**:
+
+**1.List the protocols found in the capture. What protocol do you think the attack(s) is/are based on?**
+
+
+
+
+
+
+
+
 
 
 
 ---
 
-### 7.Network Forensics
+### 8. Mobile Forensics
+
+**Background**:
+
+> 
+
+
+
+
+
+
+
+
 
