@@ -25,7 +25,7 @@ Information Retrieval (IR): concerned with developing algorithms and models for 
 + Text collection = some set of ‘documents’ / Query: user indication of what s/he want。
 + Purpose:  Finding pages that contain the words in the query by “relevance” to the query and clever indexing.
 
-**Issues:**
+#### Issues:
 
 + How can I formulate a query? 
 
@@ -47,7 +47,37 @@ Information Retrieval (IR): concerned with developing algorithms and models for 
 
   evalution
 
-**Indexing**:
+#### Indexing:
+
+The task of finding terms that describe documents well
+
++ Manual: indexing by humans (using fixed vocabularies) / labour and training intensive
++ Automatic: Term manipulation (certain words count as the same term) / Term weighting (certain terms are more important than others) / Index terms must only derive from text
+
+> MeSH — Medical Subject Headings
+>
+> a very large controlled vocabulary for describing/indexing medical documents, e.g. journal papers and books. It provides a hierarchy of descriptors (a.k.a. subject headings).
+>
+> hierarchy has a number of top-level categories, e.g.:
+>  	Anatomy [A]
+>  	Organisms [B]
+>  	Diseases [C]
+> 	 Chemicals and Drugs [D]
+>  	Analytical, Diagnostic and Therapeutic Techniques and Equipment [E]
+>  	Psychiatry and Psychology [F]
+>  	Biological Sciences [G]
+>
+> And a number of subcategories (more specific/detailed terms):
+>
+> And a number of subsubcategories (even more specific/detailed
+> terms):
+>
+> Evalution:
+>
+> + Advantage:  1)High precision searches 2)Works well for closed collections (books in a library).
+> + Disadvantage: 1)Searchers need to know terms to achieve high precision. 2)Labellers need to be trained to achieve consistency. 3)Collections are dynamic → schemes change constantly.
+
+
 
 
 
