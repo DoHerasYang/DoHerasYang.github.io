@@ -54,7 +54,7 @@ The task of finding terms that describe documents well
 + Manual: indexing by humans (using fixed vocabularies) / labour and training intensive
 + Automatic: Term manipulation (certain words count as the same term) / Term weighting (certain terms are more important than others) / Index terms must only derive from text
 
-> MeSH — Medical Subject Headings
+> MeSH — Medical Subject Headings (Manuall indexing)
 >
 > a very large controlled vocabulary for describing/indexing medical documents, e.g. journal papers and books. It provides a hierarchy of descriptors (a.k.a. subject headings).
 >
@@ -67,15 +67,44 @@ The task of finding terms that describe documents well
 >  	Psychiatry and Psychology [F]
 >  	Biological Sciences [G]
 >
-> And a number of subcategories (more specific/detailed terms):
->
-> And a number of subsubcategories (even more specific/detailed
-> terms):
->
 > Evalution:
 >
 > + Advantage:  1)High precision searches 2)Works well for closed collections (books in a library).
 > + Disadvantage: 1)Searchers need to know terms to achieve high precision. 2)Labellers need to be trained to achieve consistency. 3)Collections are dynamic → schemes change constantly.
+
+> Automatic Indexing:
+>
+> + Use the <u>natural language</u> as indexing language
+>
+> + Implementation:  <u>inverted files</u> 
+>
+>   + record each term, the <u>ids</u> of thedocuments in which it appears
+>   + only matters if it <u>does</u> or <u>does not</u> appear - not how many times
+>   + (doc_id)
+>
+>   ![01](/Pictures/Text Processing/01.png)
+>
+>   + also recoed the count of occurrences within each document.
+>   + help find documents more relevant to query.
+>   + (doc_id : occurance_number )
+>
+>   ![02](/Pictures/Text Processing/02.png)
+
+### Automated retrieval models:
+
+#### Bag-of-words Approach
+
++ Standard approach to represent the documents
+  + record what words are present
+  + Usually, plus count of term in each document
++ Ignore the relation between words
+  + order of the words / permutation of the words
+
+#### IR Method
+
+
+
+
 
 
 
