@@ -290,9 +290,9 @@ Common to just use the words, but pre-process them for generalisation.
 >   + more common terms are less useful to finding relevant documents
 >
 > + Compute
->   $$
+>  $$
 >   \frac{\left|D\right|}{df_w}
->   $$
+>  $$
 >
 >   + Value reduces as $df_w$ gets larger, tending to 1 as $df_w$ approaches $|D|$
 >
@@ -455,13 +455,179 @@ Common to just use the words, but pre-process them for generalisation.
 >   + Traditional data and visualisation tools can be used to slice, dice and visualise the results.
 >   + Qualitative and quantitative analysis can be done.
 
+#### Binary (lexicon-based)
+
++ Rule-based subjectivity classifier:  a sentence/document is subjective. 
+
+  if it has at least n (say 2) words from the emotion words lexicon; a sentence/document is objective otherwise.
+
++ Rule-based sentiment classifier:  for subjective sentences/documents, count positive and negative words/phrases in the sentence/document.
+
+  If more negative than positive words/phrases, then negative; otherwise, positive (if equal, neutral).
+
++ Rule-based sentiment classifier (feature-level): 
+
+  + Assume features can be identified in previous step by information extraction techniques, e.g., battery, phone, screen.
+  + For each feature, count positive and negative emotion words/phrases from the lexicon.
+  + If <u>more negative than positive words/phrases, then negative; otherwise, positive (if equal, neutral).</u>
+
++ Rule-based sentiment classifier (feature-based)
+
+  ![21](/Pictures/Text Processing/21.png)
+
+#### Caveats
+
++ Other emotion words have context-dependent orientations, e.g.
+  + small power consumption = positive
+  + small screen = negative
++ Can store more fine-grained sentiment information in lexicon and add additional rules.
 
 
 
+#### Gradable 
 
+> + Use of ranges of sentiment instead of a binary system, to deal with intensifiers like:
+>   + absolutely, utterly, completely, totally, nearly, virtually, essentially, mainly, almost, e.g.: absolutely awful
+> + And grading adverbs like:
+>   + Very, little, dreadfully, extremely, fairly, hugely, immensely, intensely, rather, reasonably, slightly, unusually, e.g.: a little bit cold
 
++ Rule-based gradable sentiment classifier
 
+  + The lexicon: word-lists with pre-assigned emotional weights, e.g:
 
+    Neg. dimension ($\text{C_neg}$ ): {-5,...,-1},  Pos. dimension ($\tect{C_pos}$ ): {+1,...,+5}
+
+    ![22](/Pictures/Text Processing/22.png)
+
+  + Additional general rules to change the original weights:
+
+    + Negation rule: <br>E.g.: “I am not good today”.
+      Emotion(good)= +3; <br>“not” is detected in neighbourhood (of 5 words around); <br>so emotional valence of “good” is decreased by 1 and sign is inverted → Emotion(good) = −2
+    + Capitalization rule:<br> E.g. “I am GOOD today”.<br>Emotion(good)= +3; Add +1 to positive words → Emotion(GOOD) = +4<br>Likewise, in “I am AWFUL today”.<br>
+
+  + <u>**Intensifier rule**</u>:
+
+    + Needs a list of intensifiers: “definitely”, “very”, “extremely”, etc. 
+    + Each intensifiers has a weight
+    + The weight is added to positive terms
+    + The weight is subtracted from negative terms
+    + E.g.: “I am feeling very good”.<br>Emotion(good)= +3; emotional valence of “good” increased by 1<br>→ Emotion(good) = +4
+    + E.g. “This was an extremely boring game”<br>Emotion(boring)=−3; emotional valence of “boring” decreased by −2<br>→ Emotion(boring) = −5
+
+  + **<u>Diminisher rule</u>**:
+
+    + Need a list: “somewhat”, “barely”, “rarely”, etc.
+    + Each intensifiers has a weight
+    + The weight is subtracted from positive terms
+    + The weight is added to negative terms
+    + E.g.: “I am somewhat good”.
+      Emotion(good)= +3; emotional valence of “good” decreased by 1 → Emotion(good) = +2
+    + E.g. “This was a slightly boring game”
+      Emotion(boring)=−3; emotional valence of “boring” increased by 1 → Emotion(boring) = −2
+
+  + <u>**Exclamation rule**</u>: 
+
+    + Functions like intensifiers. 
+    + E.g.: “Great show!!!”.
+      Emotion(great)= +3; Weight(!!!) = 2
+      → Emotion(great) = 5
+
+  + **<u>Emoticon rule</u>**:
+
+    + Each has its own emotional weight, like an emotion word.
+
+    + E.g.: Emotion(🙂) = +2; Emotion(🙁) = −2. 
+
+      E.g.: “I can’t believe this
+      product 😣
+
+  + Decision
+
+    + ![23](/Pictures/Text Processing/23.png)
+
+      ![24](/Pictures/Text Processing/24.png)
+
+  + Evalution:
+
+    + Advantages:
+      + Works effectively with different texts: forums, blogs, etc.
+      + Language independent - as long as an up-to-date lexicon of emotion words is available
+      + Doesn’t require data for training
+      + Can be extended with additional lexica, e.g. for new emotion words/symbols as they become popular, esp. in social media
+    + Disadvantages:
+      + Requires a lexicon of emotion words, which should be fairly comprehensive, covering new words, abbreviations (LOL, m8, etc.), misspelled words, etc.
+
+  + Collect relevant words/phrases that can be used to express sentiment. Determine the emotion of these subjective word/phrases.
+
+    + Manually: word lists with pre-assigned emotional weights
+    + Semi-automatically
+      + Dictionary-based: find synonyms/antonyms of seed emotion words in dictionaries like WordNet
+      + Corpus-based: find synonyms/antonyms of seed emotion words in corpora
+    + Semi-automatically created from seed words: start with seed positive and
+      negative words:
+      + Search for synonyms/antonyms in dictionaries like WordNet; OR
+      + Build patterns from seed words/phrases to search on large corpora,
+        like the Web:
+        + “beautiful and” (+)
+        + "low cost but"(-)
+        + "very nice and"(+)
+    + Machine Learning 
+      + Subjectivity classifier: first run binary classifier to identify and then eliminate objective segments
+      + Sentiment classifier with remaining segments: learn how to combine and weight different attributes to make predictions. E.g. Naive Bayes
+
+#### Corpus-based (Machine Learning)
+
+> **Basic Knowledge**:
+>
+> ![25](/Pictures/Text Processing/25.png)
+>
+> ![26](/Pictures/Text Processing/26.png)
+>
+> ![27](/Pictures/Text Processing/27.png)
+>
+> ![28](/Pictures/Text Processing/28.png)
+>
+> ![29](/Pictures/Text Processing/29.png)
+>
+> ![30](/Pictures/Text Processing/30.png)
+>
+> ![31](/Pictures/Text Processing/31.png)
+
++ Example
+
+  + ![32](/Pictures/Text Processing/32.png)
+
+  + Prior:
+
+    + P(positive) = count(positive)/N = 3/7 = 0.43
+    + P(negative) = count(negative)/N = 4/7 = 0.57
+
+  + Likelihoods
+
+    + $$
+      \mathbf{P(t_j|c_i) = \frac{count(t_j,c_i)}{count(c_i)}}
+      $$
+
+    + ![33](/Pictures/Text Processing/33.png)
+
+  + Relative frequencies for prior (P(ci)) and likelihood($P(t_j|c_i$) makethe model in a Naive Bayes classifier.
+
+  + At decision (test) time, given a new segment to classify, this model is applied to find the most likely class for the segment
+    $$
+    \mathbf{argmax\,P(c_i) = \prod\limits_{j=1}^nP(t_j|c_i) }
+    $$
+    
+
+  + e.g.
+
+    + ![34](/Pictures/Text Processing/34.png)
+      + P(positive) ∗ P(fantastic|positive) ∗ P(good|positive) ∗ P(lovely|positive)
+        3/7 ∗ 1/10 ∗ 1/10 ∗ 1/10 = 0.00043
+      + P(negative) ∗ P(fantastic|negative) ∗ P(good|negative) ∗ P(lovely|negative)
+        4/7 ∗ 0/8 ∗ 0/8 ∗ 0/8 = 0
+      + sentiment = positive
+    + ![35](/Pictures/Text Processing/35.png)
+      + 
 
 
 
