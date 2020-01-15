@@ -100,9 +100,42 @@ The task of finding terms that describe documents well
 + Ignore the relation between words
   + order of the words / permutation of the words
 
+#### Terms
+
+Common to just use the words, but pre-process them for generalisation.
+
++ Tokenisation: split words from punctuation (get rid of punctuation)
+
+  + e.g. word-based. → word based   three-issues: → three issues
+
++ Capitalisation: normalise all words to lower (or upper) case
+
+  + e.g. Cat and cat should be seen as the same term, but should we conflate Turkey and turkey?
+
++ Lemmatisation: conflate different inflected forms of a word to their basic form (singular, present tense, 1st person):
+
+  + e.g. cats, cat → cat  have, has, had → have  worried, worries → worry
+
++ Stemming:
+
+  + conflate morphological variants by chopping their affix
+
++ Normalisation: heuristics to conflate variants due to spelling, hyphenation, spaces, etc.
+
+  e.g. USA and U.S.A. and U S A → USA
+
+  e.g. chequebook and cheque book → cheque book
+
+  e.g. word-sense and word sense → word-sense
+
+#### Stop List
+
++ Use Stop list removal to exclude “non-content” words
++ 
+
 #### IR Method
 
-> Boolean Method
+> Boolean Method(Binary)
 >
 > + Purpose: 
 >   + evaluate the relevance and suffience of term for match
@@ -178,13 +211,46 @@ The task of finding terms that describe documents well
 >     $\vec{d^i} = (\vec{d_1^i},\vec{d_2^i},\vec{d_3^i}, \cdots,\vec{d_n^i} )$         $\vec{q} = (q_1,q_2,q_3, \cdots , q_n)$
 >
 >   + Similarity:
->
->     $\sqrt{\sum\limits_{k=1}^N}(q_k - d_k)^2$
+>     $$
+>     \sqrt{\sum\limits_{k=1}^N}(q_k - d_k)^2
+>     $$
+>     
 >
 >     + E.g.:
->       + Doc
+>
+>       + Doc1 and Q
+>
+>         $\sqrt{(9-0)^2 + (0-1)^2 + (1-0)^2 + (0-1)^2} = 9.15$
+>
+>       + Doc2 and Q
+>
+>         $\sqrt{(0-0)^2 + (1-1)^2 + (0-0)^2 + (10-1)^2} = 9.15$
+>
+>   + Evalution:
+>
+>     + distance is large for vectors of different lengths, even if by only one
+>       term (e.g. Doc2 and Q)
+>
+>     + means frequency of terms given too much impact
+>
+>     + Better similarity metric, used in vector-space model: cosine of the angle between two vectors $\vec{x}$ and $\vec{y}$: ( For the each value of text and query, when the term occurs, the value should be $1$ and if not, the value should be $0$ for each $x_i$ and $y_i$ )
+>       $$
+>       cos(\vec{x},\vec{y}) = \frac{\vec{x} \cdot \vec{y}}{\left|\vec{x}\right|    \left|\vec{y}\right|} = \frac{\sum\limits_{i=1}^{n}x_iy_i}{\sqrt{\sum\limits_{i=1}^{n}x^2}\sqrt{\sum\limits_{i=1}^{n}y^2}}
+>       $$
+>
+>       + It can be interpreted as the <u>normalised correlation coefficient</u>:
+>
+>         i.e. it computes how well the $x_i$ and $y_i$ correlate, and then divides by the
+>         length of the vectors, to scale for their magnitude.
+>
+>       + Value:
+>
+>         + range from:
+>           + 1, for vectors pointing in the same direction, to
+>           + 0, for orthogonal vectors, 
+>           + -1, for vectors pointing in opposite directions
 
- 
+> 
 
 
 
