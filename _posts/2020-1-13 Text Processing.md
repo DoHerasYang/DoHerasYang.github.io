@@ -102,7 +102,89 @@ The task of finding terms that describe documents well
 
 #### IR Method
 
+> Boolean Method
+>
+> + Purpose: 
+>   + evaluate the relevance and suffience of term for match
+>   + provides a simple logical basis for deciding whether any document should be returned.
+>     + whether basic terms of query do/do not appear in the document
+>     + the meaning of the logical operators
+>
+> + Algorithm:
+>
+>   + frequency of document terms
+>   + not all search terms necessarily present in document
+>   + vector space model
+>
+> + Approach:
+>
+>   + Basic search terms(keywords)
+>   + using boolean operators
+>
+> + Boolean Operators:
+>
+>   + AND, OR, NOT, BUT, XOR (exclusive OR)
+>   + E.g.:  Monte-Carlo AND (importance OR stratification) BUT gambling
+>
+> + Set-theoretic interpretation:
+>
+>   + $d(E)$ denote the document set for expression E
+>   + $E$ either a basic term or boolean expression
+>     + $d(E1 \,AND\, E2) = d(E1) ∩ d(E2)$
+>     + $d(E1 \,OR\, E2) = d(E1) ∪ d(E2)$
+>     + $d(NOT\, E) = d(E)^c$
+>     + $d(E1 \,BUT\, E2) = d(E1) − d(E2)$
+>   + Some example:
+>     + ![03](/Pictures/Text Processing/03.png)
+>     + ![04](/Pictures/Text Processing/04.png)
+>     + ![05](/Pictures/Text Processing/05.png)
+>
+> + Conclusion:
+>
+>   + Advantage:
+>     + Higher requirements for user: Expert knowledge needed to create high-precision queries
+>     + Often used by bibliographic search engines (library)
+>
+>   + Disadvantage:
+>     + Most users not familiar with writing Boolean queries → not natural
+>     + Most users don’t want to wade through 1000s unranked result lists →
+>       unless very specific search in small collections
+>     + This is particularly true of web search → large set of docs
 
+> Vector Space Model
+>
+> + Description:
+>
+>   + Documents are points in high-dimensional vector space
+>     + each term in index is a dimension → sparse vectors
+>     + values are frequencies of terms in documents, or variants of frequency
+>   + Queries are also represented as vectors (for terms that exist in index)
+>
+> + Priori:
+>
+>   + Select document(s) with highest document–query similarity
+>   + Document–query similarity is a model for relevance (ranking)
+>   + With ranking, the number of returned documents is less relevant → users start at the top and stop when satisfied
+>
+> + Approach:
+>
+>   + compare vector of query against vector of each document
+>
+>     + to rank documents according to their similarity to the query
+>     + ![06](/Pictures/Text Processing/06.png)
+>
+>   + Each document and query are represented as a vector of $n$ values:
+>
+>     $\vec{d^i} = (\vec{d_1^i},\vec{d_2^i},\vec{d_3^i}, \cdots,\vec{d_n^i} )$         $\vec{q} = (q_1,q_2,q_3, \cdots , q_n)$
+>
+>   + Similarity:
+>
+>     $\sqrt{\sum\limits_{k=1}^N}(q_k - d_k)^2$
+>
+>     + E.g.:
+>       + Doc
+
+ 
 
 
 
