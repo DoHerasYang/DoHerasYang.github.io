@@ -621,13 +621,40 @@ Common to just use the words, but pre-process them for generalisation.
   + e.g.
 
     + ![34](/Pictures/Text Processing/34.png)
-      + P(positive) ∗ P(fantastic|positive) ∗ P(good|positive) ∗ P(lovely|positive)
+
+      + $P(positive) ∗ P(fantastic|positive) ∗ P(good|positive) ∗ P(lovely|positive)$
         3/7 ∗ 1/10 ∗ 1/10 ∗ 1/10 = 0.00043
-      + P(negative) ∗ P(fantastic|negative) ∗ P(good|negative) ∗ P(lovely|negative)
+      + $P(negative) ∗ P(fantastic|negative) ∗ P(good|negative) ∗ P(lovely|negative)$
         4/7 ∗ 0/8 ∗ 0/8 ∗ 0/8 = 0
       + sentiment = positive
+
     + ![35](/Pictures/Text Processing/35.png)
-      + 
+
+      + $P(positive) ∗ P(great|positive) ∗ P(great|positive) ∗ P(great|positive)$
+
+        3/7 ∗ 1/10 ∗ 1/10 ∗ 1/10 = 0.00043
+
+      + $P(negative) ∗ P(great|negative) ∗ P(great|negative) ∗ P(great|negative)$
+
+        4/7 ∗ 2/8 ∗ 2/8 ∗ 2/8 = 0.00893
+
+      + sentiment = negative
+
+    + what if both the positive and negative value equals to zero
+
+
+
++ Add smoothing to feature counts (add 1 to every count).
+
+  + Likelihoods
+    $$
+    \mathbf{P(t_j|c_i) = \frac{count(t_j,c_i)+1}{count(c_i)+\left|V\right|}}
+    $$
+    where the $\left|V\right|$ is the number of distinct attributes in training(all classes)
+
+  + example
+
+    + 
 
 
 
