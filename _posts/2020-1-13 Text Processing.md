@@ -652,9 +652,58 @@ Common to just use the words, but pre-process them for generalisation.
     $$
     where the $\left|V\right|$ is the number of distinct attributes in training(all classes)
 
+    number fo classes is the number of the total documents
+
   + example
 
-    + 
+    + ![36](/Pictures/Text Processing/36.png)
 
+    + $P(positive) ∗ P(boring|positive) ∗ P(annoying|positive) ∗ P(unimaginative|positive)$
 
+      3/7 ∗ ((0 + 1)/(10 + 12)) ∗ ((0 + 1)/(10 + 12)) ∗ ((0 + 1)/(10 + 12)) = 0.000040
+
+    + $P(negative) ∗ P(boring|negative) ∗ P(annoying|negative) ∗ P(unimaginative|negative)$
+
+      4/7 ∗ ((0 + 1)/(8 + 12)) ∗ ((0 + 1)/(8 + 12)) ∗ ((1 + 1)/(8 + 12)) = 0.000143
+
+    + sentiment = negative
+
++ Evaluation:
+
+  + It’s simple and will work well if data is not sparse
+
+  + How can we improve?
+
+    + Using all words (in Naive Bayes) works well in some tasks
+    + Finding subsets of words may help in other tasks
+    + Using only adjectives can be limiting. Verbs like hate, dislike; nouns like love; words for inversion like not; intensifiers like very
+    + Pre-built polarity lexicons can be helpful
+    + Negation is important
+
+  + Can contrast direct opinions versus more complex comparative opinions:
+
+    + Direct sentiment expressions on target objects
+      + “the picture quality of this camera is great.”
+    + Comparisons expressing similarities or differences between objects,
+      + e.g., “car x is cheaper than car y.”
+
+  + How do we quantify how well our Sentiment Analysis systems work?
+
+    + Create experimental datasets (aka test corpora)
+
+    + Compare (positive vs negative) system to human classifications
+
+    + Compute metrics like
+
+      ![37](/Pictures/Text Processing/37.png)
+
+---
+
+### Natural Language Generation
+
+>Scanerio:
+>
+>![38](/Pictures/Text Processing/38.png)
+>
+>
 
