@@ -3,9 +3,9 @@ layout: post
 title: 'Text Processing'
 date: 2020-01-14
 author: DoHerasYang
-color: rgb(255,210,32)
+color: rgb(255,222,32)
 cover: ''
-tags: Lecture
+tags: Lecture-Course
 
 
 ---
