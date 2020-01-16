@@ -1,712 +1,567 @@
 ---
 layout: post
-title: 'Text Processing'
-date: 2020-01-13
+title: 'Digital Forensics'
+date: 2019-12-19
 author: DoHerasYang
-color: rgb(255,222,32)
-cover: ''
-tags: Lecture-Course
+color: rgb(255,210,32)
+cover: '/Pictures/forensics.jpg'
+tags: Lectures
+
+---
+
+# Digital Forensics - Lecture
+
+> The content of this blog is based on the course CM6016 (Cyber Threat Hunting and Digital Forensics (AUTUMN 2019~20)) at the University of Sheffield.
+>
+> **@All the konowledge rights are reserved by the owner of this course's materials and Nesrine Kaaniche at the University of Sheffield.**
+
+### 1. Hacking Incident
+
+**Chain of custody**: in legal contexts, is the chronological documentation or paper trail that records the sequence of custody of physical or electronic evidence. It is very essential to maintain the chain of custody to preserve the interity of the evidence and prevent it from the contamination.
+
+The physical and electronic evidence may include:
+
++ Hard driver (Maybe in the computer or external driver) / portable storage driver / SD card
++ Devices( computer / laptop / mobile phone/ Tablet computer)
++ Floppy disk / Compact disc(CD) 
++ ID card / chest tag
++ The network-access items(Robot / wireless router )
+
+---
+
+### 2. FTK Imager
+
+**Background:** 
+
+> XYZ forensics is a data recovery and forensics company that offers data recovery, incident response, and forensic services to various financial institutions and Police forces in the UK. 
+> One of their clients, Right Pharmaceuticals, has recently sent some evidence for an 
+> Intellectual Property (IP) theft case that has been expedited to court within the week.
+> The case is unique as it involves the CFO (one of the Co-Founders of the company) who is suspected to be involved in selling the company’s innovative drug formula for Diabetics to its competitors. However, Right Pharmaceuticals has just been acquired for £100 million by one of the top five pharmaceutical companies in the world. Right Pharmaceuticals was valued at £100 million primarily because of the Diabetics drug, which is proprietary to them.Knowing he is a few weeks from being rich, the Co-Founder suspected of this wrongdoing has submitted himself to the investigation by the acquiring company. Initial forensic analysis of the computer where the drug formula is stored has indicated that four USB drives were plugged into the computer by the CFO within the last two weeks. He has surrendered these USB drives to XYZ for analysis.
+>
+> > Your line manager has assigned this case to you and you are required to: 
+> >
+> > 1. Collect the evidence from the evidence lockup and maintain a chain of custody
+> > 2. Create a disk image of the evidence while ensuring that the integrity of the evidence is not compromised in any way.
+> > 3. Fill out the preliminary evidence examination report.
+
+**Tools**:
+
+`USB_Write_Blocker_All_Windows` is the software to prevent the writing the information to target portable device from the host machine. It's very easy to use, before you plug in the device, you should open this batch file and follow the instruction from the console. 
+
+`MD5` is the hash function which is widely use to produce a 128-bit hash value to verify the integrity of file. In digital forensics, it's very essential to keep the integrity and creditability of evidence.
+
+`AccessData FTK Imager` is the software to preview and imaging tool used to acquire data (evidence) in a forensically sound manner by creating copies of data without making changes to the original evidence.
+
+**Process and Analyse**:
+
+1)Open the `AccessData FTK` and click `File -> Create Disk Image` and select `Physical Drive` which can allow you to recover more information than the other options such as the hidden information.
+
+![01](/Pictures/Digital Forensics/FTK/01.png)
+
+2)Select the targeted device and click `Finish` , we will obtain the new windows. And click the `Add` in the image destination.
+
+![02](/Pictures/Digital Forensics/FTK/02.png)
+
+3)After that we can obtain a new windows which want us to select the type of image destination. `Raw(dd)` is the exact copy of disk, `SMART` is the uncommon option, `E01` is the expert witness formate and has the all raw data from the suspect system and checksum of raw data and encrytion or something like this, `AFF` maybe will not supported anymore. So we select the `Raw`and click `next`.
+
+![03](/Pictures/Digital Forensics/FTK/03.png)
+
+4)The next windows shows the details of the copy, just fix them by yourself or requirements in the exam.
+
+![04](/Pictures/Digital Forensics/FTK/04.png)
+
+5)Next, we will be asked to select the `Image Destination Folder`, and `Image Fragment size` allows us to split up the large file into different size data and sotre them on the other store media. If you want to encrypt the raw data, just tick `Use AD Encryption`. After we have decided the previous information, we can click the `Finish`.
+
+![05](/Pictures/Digital Forensics/FTK/05.png) 
+
+6) We just wait the software to creatw image, after that we will finish our task.
+
+![06](/Pictures/Digital Forensics/FTK/06.png)
+
+---
+
+### 3. Drug Dealer Case
+
+**Background**:
+
+> **Drug Dealer Case:**
+>
+> Based on the following case-study, you need to compile a FULL forensics report that answers following questions (please note that you can only use any Hex editor program for this investigation):
+>
+> 1. Who is Joe Jacob's supplier of marijuana and what is the address listed for the supplier?
+> 2. What crucial data is available within the coverpage.jpg file and why is this data crucial?
+> 3. What (if any) other high schools besides Smith Hill does Joe Jacobs frequent?
+> 4. For each file, what processes were taken by the suspect to mask them from others?
+> 5. What processes did you (the investigator) use to successfully examine the entire contents of each file?
+> 6. What program was used to create the Cover Page file. What is your proof (Proof is the key to getting this question right, not just making a guess).
+>
+> Joe Jacobs, 28, was arrested yesterday on charges of selling illegal drugs to high school students. A local police officer posed as a high school student was approached by Jacobs in the parking lot of Smith Hill High School. Jacobs asked the undercover cop if he would like to buy some marijuana. Before the undercover cop could answer, Jacobs pulled some out of his pocket and showed it to the officer. Jacobs said to the officer "Look at this stuff, Colombians couldn't grow it better! My supplier not only sells it direct to me, he grows it himself." 
+>
+> Jacobs has been seen on numerous occasions hanging out at various local high school parking lots around 2:30pm, the time school usually ends for the day. School officials from multiple high schools have called the police regarding Jacobs' presence at their school and noted an increase in drug use among students, since his arrival.
+>
+> The police need your help. They want to try and determine if Joe Jacobs has been selling drugs to students at other schools besides Smith Hill. The problem is no students will come forward and help the police. Based on Joe's comment regarding the Colombians, the police are interested in finding Joe Jacob's supplier/producer of marijuana. 
+>
+> Jacobs has denied selling drugs at any other school besides Smith Hill and refuses to provide the police with the name of his drug supplier/producer. Jacobs also refuses to validate the statement that he made to the undercover officer right before his arrest. Upon issuing a search warrant and searching of the suspect's house the police were able to obtain a small amount of marijuana. The police also seized a single floppy disk, but no computer and/or other media was present in the house. 
+>
+> The police have imaged the suspect's floppy disk and have provided you with a copy. They would like you to examine the floppy disk and provide answers to the previous questions. The police would like you to pay special attention to any information that might prove that Joe Jacobs was in fact selling drugs at other high schools besides Smith Hill. They would also like you to try and determine if possible who Joe Jacob's supplier is. Jacob's posted bail set at $10,000.00. Afraid he may skip town, the police would like to get him locked up as soon as possible. To do so, the police have asked that you have the results fully completed and submitted by October 25, 2002. Please provide the police with a strong case consisting of your specific findings related to the questions, where the findings are located on the disk, processes and techniques used, and any actions that the suspect may have taken to intentionally delete, hide and/or alter data on the floppy disk.
+
+**Tools**:
+
+`HxD` is the software which is used to edit binary files and find the binary information and rebuild the file from the Hex file. It can open the raw image file to change the content of file,modify main memory (RAM) and handle size of any file. For more information, please click [here](https://mh-nexus.de/en/hxd/).
+
+**Process and Analyse**:
+
+1.Open the `HxD` software, click `File`, then click `Open` and select the image file you want to analyse.
+
+![01](/Pictures/Digital Forensics/Drug Dealer Case/01.png)
+
+2.It is very convenient to use the `Find` tool which has been embedded in the software to find the file signature (Hex Value) and recover the file from the Hex value. Follow below instruction. <br>`Search` → `Find`
+
+![02](/Pictures/Digital Forensics/Drug Dealer Case/02.png)
+
+For `Search for` blank you should input the value of file signature, I will introduce them in next steps. Besides, you can find the usable text information by selecting the `Text-string` and input the key words.
+
+3.For the **first question**, we tend to find the relevant file which can record the clues for question. I guess this file's type is `doc` or `docx`. For the file type like `DOC DOT PPS PPT XLA XLS WIZ` the Hex signature is `D0 CF 11 E0 A1 B1 IA EI`, and we input `D0 CF` into the blank of `Search for` and click `OK`, you will be directed into the beginning of the targeted file(`00004200`).
+
+![03](/Pictures/Digital Forensics/Drug Dealer Case/03.png)
+
+Next,  we should find the end Hex value and location of this file, the clue we can guess is that content should occur the information for `Microsoft Document type` and we select the location where the zero is end(000091F0).<br>And we should select all the Hex value between the beginning and end. We have the easy way yo select this target block,  right-click the Hex value and click `Select block` and input the corresponding offset and you will obtain all the Hex value. After that, copy these Hex value and create a new blank file and paste copied value into that new file.
+
+![04](/Pictures/Digital Forensics/Drug Dealer Case/04.jpg)
+
+Then save the new create Hex file by `ctrl+S` and choose the file type as `doc`. You will get the result. It seems like a email or letter.
+
+![05](/Pictures/Digital Forensics/Drug Dealer Case/05.png)
+
+4.For the **second question**, if we want to locate and recover the `JPG` file we should find the Hex signature of `JPG` file which is `FF D8`. We can locate the beginning of jpg file and also it is very easy to find the end of Hex value.<br>By finishing the searching for Hex signature, you can find the beginning location should be `00009200`.  By scrolling down the Hex file, we can find `pw = goodtimes` which is located at the line of `0000CF20`. Because `50 4B` is the Hex signature for `DOCX PPTX XLSX`, we can konw that `0000CFF0` is the end of `JPG` file. Then, we save the Hex value file as the `JPG` file.
+
+![06](/Pictures/Digital Forensics/Drug Dealer Case/06.jpg)
+
+5.We have recognized that `50 4B` is the Hex value of `XLSX` or `ZIP`file. However the `XLSX`'s Hex value should be more specific which is `50 4B 03 04 14 00 06 00`. We can see the original Hex value is different from that. So we can make sure that We can easily extract the final file by imitating previous steps.<br>`0000D000` is the beginning Hex value of the `ZIP` file and also we can locate the end Hex value of file should be `0000D9FF`. We will obtain the encrypted `XLS` file. And the password we have known is `goodtimes`.
+
+![07](/Pictures/Digital Forensics/Drug Dealer Case/07.png)
+
+6.For **Q6**, The `JPG` file just includes the values for color space, I don't know how to confirm the tools to generate it.
 
 
 
 ---
 
-# Text Processing - Lecture
+### 4. Credit Card Fraud
 
->The content of this blog is based on the course COM6115(Text Processing (AUTUMN 2019~20)) at the University of Sheffield.
+**Background**:
+
+>Frank works for a fintech company based in London. He has a laptop he uses when he
+>works from home which automatically connects to the company network via a VPN.
 >
->**@All the konowledge rights are reserved by the owner of this course's materials,Dr Mark Hepple and Dr Chenghua Lin at the University of Sheffield.**
+>He has recently submitted his resignation to leave in the next month. However, within the
+>last 2 weeks, the Security Operation Centre (SOC team) had noticed unusual traffic from
+>Frank’s laptop around 11.30pm and 2am every day.
+>
+>He is suspected to be stealing creditcard details of customers of the compay. In order to
+>avoid all evidence being erased, the SOC team instructed the IT team to tactically offer Frank a new laptopso that the laptop could be imaged and potential evidence analysed.
+>
+>The IT team was able to disable his access to the VPN and as such when Frank got into
+>work on Thursday, he reported that he was unable to access the network. IT offered him a
+>new laptop and directed that his old laptop will be looked at wuthin the next few days. By
+>doing this, Frank could not delete or tamper with any evidence on the device.
+>
+>The Security Team Leader has now created a disk image of Frank's laptop which has been assigned to you to analyse. Using `Autopsy` to analyse the evidence.
+>
+
+**Tools**:
+
+`Autopsy` : Autopsy is a computer software to make easier for investigators to flag pertinent sections of data. It can support major file systems (NTFS, FAT, ExFAT, HFS+, Ext2/Ext3/Ext4, YAFFS2) by hashing all files, unpacking standard archives (ZIP, JAR etc.), extracting any EXIF values and putting keywords in an index. Some file types like standard email formats or contact files are also parsed and cataloged. For more information, please click [here](http://www.sleuthkit.org/autopsy/).
+
+**Process**:
+
+1.Open the `Autopsy` software, click the `File` → `New case`→ Input `Case Number` → Finish the `Optional Information` → `Finish`
+
+![01](/Pictures/Digital Forensics/Credit Card Fraud/01.png)
+
+2.Click `Add Data Source` → Choose `Disk Image or VM File` → Click `Next`.
+
+![02](/Pictures/Digital Forensics/Credit Card Fraud/02.png)
+
+3.Browse the image path → Click `Open` → Click `Next` → Click `Next`, you will get the loading interface. You have to wait for the programme which is analysing all the system files.
+
+![03](/Pictures/Digital Forensics/Credit Card Fraud/03.jpg)
+
+**Analysis**:
+
+**1.What is the name of the company where Frank works?**
+
+The thoughts to solve this question is to discover the useful files which could contain the company information. So maybe the email could include the inforamtion like the email signature. Furhetmore, the documents may also include the company information, the `Autospy` have given you the results about all the files which is orderd by `File Types` beneth the `view` directory. You can find a file named `letter head.doc` which you can make sure that the name of company is BoxiPay.
+
+![04](/Pictures/Digital Forensics/Credit Card Fraud/04.png)
+
+**2.Where is the location and name of the file where Frank stores his password?**
+
+We just follow our normal mind, we may not sotre our password in plaintext, so we tend to find something which can hide the text information. The `media files`, such as `pictures`, `music` and  `vedios`, should come to our mind at first. Meanwhile, we can check whether there is any documents file which provide hint for the location of passwrod. After we checj all the document file, we tend to search the result folder which has collected all the media files. Unfortunately, It seems that Frank is clever than we think. 
+
+The file structure in Windows has one prominent features that each users has their unique forlder in `C:\users`. For the image of Windos system, it keeps this feature and the path should be `vol2\users`. We head down to this repositority and check all the folders such as `Document` and `Music`.  After the carefully searching, we can find our answer is under the directory named `Personal Biz`.
+
+![05](/Pictures/Digital Forensics/Credit Card Fraud/05.png)
+
+**3.Which operating system and version was Frank's laptop running?**
+
+As the Microsoft technical standard, for the older operating system like `Windows NT/2000/XP/2k`, the system information is stored in the file named `boot.ini` which can provide the operating system installed on a particular system partition. This file could show various boot options that are available to user, including the multiple operating systems on the different partitions. The forensics can check the Windows setup logs (eg. `C:\windows\setuplog.txt` `C:\windows\debug\netsetup.log`) which includes can provide useful information.
+
+Considering the newest operating system like `Windows 7/8/10` , the forensics can use the register subkey to find the useful information from the `Registry`. Just query the `SOFTWARE\Microsoft\Windows NT\Current Version` by a standard registry editor such as `regedit`. But it's very difficult to find the exact information about the system from a image without running it.
+
+So I tried to open the Registry to find the information of my host machine's operating system version as shown in below pictures. Although it costs so much time to find the information in a system image, you can still search for the subkey's name to find the cached value which could be hiden in somewhere from the target image file.
+
+![06](/Pictures/Digital Forensics/Credit Card Fraud/06.png)
+
+After I find the name of the operating system value in registry, so try to search the name `ProductName` in Autopsy and we would obtain the answer.
+
+![07](/Pictures/Digital Forensics/Credit Card Fraud/07.png)
+
+**4.At which location did Lewis ask to meet Frank?**
+
+If you have any information to search, you just need to input the information in `Keyword Search` in Autopsy. You will obtain the answer directly.
+
+![08](/Pictures/Digital Forensics/Credit Card Fraud/08.png)
+
+**5.Who are the top 3 customers Frank sold the most cards to in Decemeber 2017 and how many cards did he sell to them?**
+
+It is very easy to find the relevant files named `2017 December Sales.xls` by following the `Views` subbar and proceeding to the correlative file collection.
+
+![09](/Pictures/Digital Forensics/Credit Card Fraud/09.png)
+
+**6.What is the password for smokingGun.zip?**
+
+We have gained the clue for the `smokingGun.zip`'s password which is `MYFOOTBALL TEAM AV`. 
+
+So we try to find one audio file which contains the password for `smokingGun.zip`.We can finally find that the target audio file named `creative.mp3` contains the password.
+
+**7.What websites has Frank Visited using the laptop?**
+
+You can easily find the website history and cookies from the `Results` subbar. And also use the `Timeline` to sort out all the web activity.
+
+![11](/Pictures/Digital Forensics/Credit Card Fraud/11.png)
+
+
+
+![12](/Pictures/Digital Forensics/Credit Card Fraud/12.png)
 
 
 
 ---
 
-### 1. IR(Information Retrieval)
+### 5.Linux Forensics
 
-Information Retrieval (IR): concerned with developing algorithms and models for retrieving relevent documents from text collections.
+**Background**:
 
-+ Text collection = some set of ‘documents’ / Query: user indication of what s/he want。
-+ Purpose:  Finding pages that contain the words in the query by “relevance” to the query and clever indexing.
-
-#### Issues:
-
-+ How can I formulate a query? 
-
-  Normally keywords, could be natural language.
-
-+ How are the documents represented? 
-
-  indexing
-
-+ How does the system find the best-matching document? 
-
-  retrieval model
-
-+ How are the results presented to me?
-
-  unsorted list, ranked list, clusters
-
-+ How do we know whether the system is any good?
-
-  evalution
-
-#### Indexing:
-
-The task of finding terms that describe documents well
-
-+ Manual: indexing by humans (using fixed vocabularies) / labour and training intensive
-+ Automatic: Term manipulation (certain words count as the same term) / Term weighting (certain terms are more important than others) / Index terms must only derive from text
-
-> MeSH — Medical Subject Headings (Manuall indexing)
->
-> a very large controlled vocabulary for describing/indexing medical documents, e.g. journal papers and books. It provides a hierarchy of descriptors (a.k.a. subject headings).
->
-> hierarchy has a number of top-level categories, e.g.:
->  	Anatomy [A]
->  	Organisms [B]
->  	Diseases [C]
-> 	 Chemicals and Drugs [D]
->  	Analytical, Diagnostic and Therapeutic Techniques and Equipment [E]
->  	Psychiatry and Psychology [F]
->  	Biological Sciences [G]
->
-> Evalution:
->
-> + Advantage:  1)High precision searches 2)Works well for closed collections (books in a library).
-> + Disadvantage: 1)Searchers need to know terms to achieve high precision. 2)Labellers need to be trained to achieve consistency. 3)Collections are dynamic → schemes change constantly.
-
-> Automatic Indexing:
->
-> + Use the <u>natural language</u> as indexing language
->
-> + Implementation:  <u>inverted files</u> 
+>Ali the network administrator of company “AliBest” recently witnessed strange activities in one of his Linux machines! He is quite panicked since that machine plays a vital role in his network and he has heard lots of hacking bad-news happened for other companies recently. Therefore, he decided to contact you as a forensics investigator to resolve the issue.
 >
->   + record each term, the <u>ids</u> of thedocuments in which it appears
->   + only matters if it <u>does</u> or <u>does not</u> appear - not how many times
->   + (doc_id)
->
->   ![01](/Pictures/Text Processing/01.png)
->
->   + also recoed the count of occurrences within each document.
->   + help find documents more relevant to query.
->   + (doc_id : occurance_number )
->
->   ![02](/Pictures/Text Processing/02.png)
-
-### Automated retrieval models:
-
-#### Bag-of-words Approach
-
-+ Standard approach to represent the documents
-  + record what words are present
-  + Usually, plus count of term in each document
-+ Ignore the relation between words
-  + order of the words / permutation of the words
-
-#### Terms
-
-Common to just use the words, but pre-process them for generalisation.
-
-+ Method:
-
-  + Tokenisation: split words from punctuation (get rid of punctuation)
-
-    + e.g. word-based. → word based   three-issues: → three issues
+>You have guided him to take an image of the hard disk, and system memory snapshots and post them to you. You need to do a complete forensics investigation and compile a full-forensics report. Your report should address all the following questions:
 
-  + Capitalisation: normalise all words to lower (or upper) case
+**Tools:**
 
-    + e.g. Cat and cat should be seen as the same term, but should we conflate Turkey and turkey
++ `Autopsy`
 
-  + Lemmatisation: conflate different inflected forms of a word to their basic form (singular, present tense, 1st person):
+- The image we use for this Lecture is `2 Disc Image File`.
 
-    + e.g. cats, cat → cat  have, has, had → have  worried, worries → worry
+**Analysis:**
 
-  + Stemming:
+**1.What service and what account triggered the alert for network administrator?**
 
-    + conflate morphological variants by chopping their affix
+Firstly, I think we should have some knowledge of Linux system logs and file structure which can help us better to search for useful information which we can base on to analyse what happened in target machine.    If your system or server has been suffered from the cyber attack, go check the system log and you will find some clues.
 
-  + Normalisation: heuristics to conflate variants due to spelling, hyphenation, spaces, etc.
+The system log is managed by a service called `syslog`:<br>`/var/log/boot.log` : Records the events that occur during the boot process of the system, which is the information displayed during the POST process of the Linux system.<br>`/var/log/lastlog`  ：Record the time of the last successful user login, login IP and other information.<br>`/var/log/secure`    ：Linux system security log, recording user and workgroup deterioration, user login authentication.<br>`/var/log/btmp`        ：Record users, time and remote IP address of Linux login failure.<br>
 
-    + e.g. USA and U.S.A. and U S A → USA
+For some commericial operating system like `Debian` and `Ubuntu`, they use `/var/log/auth.log` to store the stores logs from the pluggable authentication module (PAM), including successful logins, failed login attempts, and authentication methods. 
 
-      e.g. chequebook and cheque book → cheque book
+For the details of system admin, the information is stored in `/etc/passwd` and `/etc/shadow`. Also you could obtain the hostname from `/etc/hostname`. For the `/etc/passwd` file formate, we can see that `/etc/passwd` contains one entry per line for each user (user account) of the system. All fields are separated by a colon `(:)` symbol. Total of seven fields as follows. The formate is the `Username:Password:User ID(UID):Group ID(GID):User ID Info:Home Directory:Command/Shell`.  From the below pictures, we can see that only one user named `root` is the system admin.
 
-      e.g. word-sense and word sense → word-sense
+![01](/Pictures/Digital Forensics/Linux Forensics/01.png)
 
-+ Problem of Single and Multi-words
+Next we go to check the system log file, we can see that the remote attacker wanted to create a new users in  attacked system via `ssh`. In addition, the port name `22` is reserved for the `ssh` service. That means the service named `ssh` trigerrd the alert for network administrators. Ant the account's name is `ttyl`.
 
-  + To aid recognition of phrases, might allow multi-word terms
-  + Solution
-    + identify multi-word phrases during retrieval
-    + Positional indexes, storing position terms in documents, can help
+![02](/Pictures/Digital Forensics/Linux Forensics/02.png)
 
-- Positional indexs:
-  + ![07](/Pictures/Text Processing/07.png)
-  + Approach:
-    + Binary weights - 0/1: whether or not term is present in document
-      + But documents with multiple occurrences of query keyword may be more relevant
-    + Frequency of term in document: like the examples we have seen
-      + Common terms: not very useful for discriminating relevant documents
-    + Frequency in document vs in collection: weight terms highly if
-      + They are frequent in relevant documents . . . but
-      + They are infrequent in collection as a whole
+**2.What kind of system runs on targeted server? (OS, CPU, etc)**
 
-#### Stop List
+It is very easy to use the Unix commands to operate the Linux system as you want. 
 
-+ Use Stop list removal to exclude “non-content” words
-+ Usually most frequent (and least useful for retrieval)
-+ Effect:
-  + greatly reduces the size of the inverted index
+We can obtain the system information by checking this file `/etc/issue`. For the information about the CPU, you can access the `/proc/cpuinfo` to obtain it. Also, you can find them from the log file at `/var/log/install/hardware-summary`.
 
-#### IR Method
-
-> Boolean Method(Binary)
->
-> + Purpose: 
->   + evaluate the relevance and suffience of term for match
->   + provides a simple logical basis for deciding whether any document should be returned.
->     + whether basic terms of query do/do not appear in the document
->     + the meaning of the logical operators
->
-> + Algorithm:
->
->   + frequency of document terms
->   + not all search terms necessarily present in document
->   + vector space model
->
-> + Approach:
->
->   + Basic search terms(keywords)
->   + using boolean operators
->
-> + Boolean Operators:
->
->   + AND, OR, NOT, BUT, XOR (exclusive OR)
->   + E.g.:  Monte-Carlo AND (importance OR stratification) BUT gambling
->
-> + Set-theoretic interpretation:
->
->   + $d(E)$ denote the document set for expression E
->   + $E$ either a basic term or boolean expression
->     + $d(E1 \,AND\, E2) = d(E1) ∩ d(E2)$
->     + $d(E1 \,OR\, E2) = d(E1) ∪ d(E2)$
->     + $d(NOT\, E) = d(E)^c$
->     + $d(E1 \,BUT\, E2) = d(E1) − d(E2)$
->   + Some example:
->     + ![03](/Pictures/Text Processing/03.png)
->     + ![04](/Pictures/Text Processing/04.png)
->     + ![05](/Pictures/Text Processing/05.png)
->
-> + Conclusion:
->
->   + Advantage:
->     + Higher requirements for user: Expert knowledge needed to create high-precision queries
->     + Often used by bibliographic search engines (library)
->
->   + Disadvantage:
->     + Most users not familiar with writing Boolean queries → not natural
->     + Most users don’t want to wade through 1000s unranked result lists →
->       unless very specific search in small collections
->     + This is particularly true of web search → large set of docs
-
-> Vector Space Model
->
-> + Description:
->
->   + Documents are points in high-dimensional vector space
->     + each term in index is a dimension → sparse vectors
->     + values are frequencies of terms in documents, or variants of frequency
->   + Queries are also represented as vectors (for terms that exist in index)
->
-> + Priori:
->
->   + Select document(s) with highest document–query similarity
->   + Document–query similarity is a model for relevance (ranking)
->   + With ranking, the number of returned documents is less relevant → users start at the top and stop when satisfied
->
-> + Approach:
->
->   + compare vector of query against vector of each document
->
->     + to rank documents according to their similarity to the query
->     + ![06](/Pictures/Text Processing/06.png)
->
->   + Each document and query are represented as a vector of $n$ values:
->
->     $\vec{d^i} = (\vec{d_1^i},\vec{d_2^i},\vec{d_3^i}, \cdots,\vec{d_n^i} )$         $\vec{q} = (q_1,q_2,q_3, \cdots , q_n)$
->
->   + Similarity:
->     $$
->     \sqrt{\sum\limits_{k=1}^N}(q_k - d_k)^2
->     $$
->
->     + E.g.:
->
->       + Doc1 and Q
->
->         $\sqrt{(9-0)^2 + (0-1)^2 + (1-0)^2 + (0-1)^2} = 9.15$
->
->       + Doc2 and Q
->
->         $\sqrt{(0-0)^2 + (1-1)^2 + (0-0)^2 + (10-1)^2} = 9.15$
->
->   + Evalution:
->
->     + distance is large for vectors of different lengths, even if by only one
->       term (e.g. Doc2 and Q)
->
->     + means frequency of terms given too much impact
->
->     + Better similarity metric, used in vector-space model: cosine of the angle between two vectors $\vec{x}$ and $\vec{y}$: ( For the each value of text and query, when the term occurs, the value should be $1$ and if not, the value should be $0$ for each $x_i$ and $y_i$ )
->       $$
->       cos(\vec{x},\vec{y}) = \frac{\vec{x} \cdot \vec{y}}{\left|\vec{x}\right|    \left|\vec{y}\right|} = \frac{\sum\limits_{i=1}^{n}x_iy_i}{\sqrt{\sum\limits_{i=1}^{n}x^2}\sqrt{\sum\limits_{i=1}^{n}y^2}}
->       $$
->
->       + It can be interpreted as the <u>normalised correlation coefficient</u>:
->
->         i.e. it computes how well the $x_i$ and $y_i$ correlate, and then divides by the
->         length of the vectors, to scale for their magnitude.
->
->       + Value:
->
->         + range from:
->           + 1, for vectors pointing in the same direction, to
->           + 0, for orthogonal vectors, 
->           + -1, for vectors pointing in opposite directions
-
->  Inverse document frequency( <u>**IDF**</u> )
->
->  Term Weighting
->
->  + ![08](/Pictures/Text Processing/08.png)
->
->  + informativeness of terms
->
->   + Idea that less common terms are more useful to finding relevant docs
->   + document frequency(df) reflects this difference
->   + collection frequency(cf) fails to distinguish them (i.e. very similar counts)
->
->  + Informativeness is inversely related to (document) frequency
->
->   + less common terms are more useful to finding relevant documents
->   + more common terms are less useful to finding relevant documents
->
->  + Compute
->
->  $$
->   \frac{\left|D\right|}{df_w}
->  $$
->
->   + Value reduces as $df_w$ gets larger, tending to 1 as $df_w$ approaches $|D|$
->
->   + Value very large for small dfw— over-weights such cases
->
->   + To moderate this, take $\textbf{log}$: Inverse document frequency( <u>**IDF**</u> )
->     $$
->     idf_{w,D} = log\frac{\left|D\right|}{df_w}
->     $$
->
->     + ![09](/Pictures/Text Processing/09.png)
->     + ![10](/Pictures/Text Processing/10.png)
->
->   + BUT Not all terms describe a document equally well
->
->     + Putting it all together: **tf.idf**
->
->       + Terms which are frequent in a document are better:
->         $$
->         \mathbf{tf_{w,d} = freq_{w,d}}
->         $$
->
->       + Combine the two to give tf.idf term weighting:
->         $$
->         \mathbf{tf.idf_{w,d,D} = tf_{w,d}\cdot\,idf_{w,D}}
->         $$
->
->       + e.g.
->
->         ![11](/Pictures/Text Processing/11.png)
->
->       + e.g.
->
->         ![12](/Pictures/Text Processing/12.png)
->
->         ![13](/Pictures/Text Processing/13.png)
+![03](/Pictures/Digital Forensics/Linux Forensics/03.png)
 
-> PageRank Algorithm
->
-> + Key method to exploit link structure of web: PageRank algorithm
->   + Assigns a score to each page on web: its PageRank score
->   + can be seen to represent the page’s authority (or quality)
-> + Idea:
->   + Link from page A to page B confers authority on B
->   + how much authority is conferred depends on:
->     + the authority (PageRank score) of A, and its number of out-going links
->     + i.e. A’s authority is shared out amongst its out-going links
->   + note that this measure is recursively defined
->     + i.e. score of any page depends on score of every other page
->   + PageRank scores have an alternative interpretation:
->     + probability that a random surfer will visit that page
->   + its PageRank score: a measure of its authority
+**3.What processes were running on targeted server?**
 
-#### Evalution:
+There is no log that logs the processes. The only way you would find is that perhaps there was something has written to the `syslog` . So the alternative way is to find the relevant log file which may have the crucial informartion about the process. We can try these log files `/var/logs/syslog` and ` /var/logs/messag`.
 
-+ Component / technique
+**4.What are attackers IP and target IP addresses?**
 
-  + Ranking (cosine, dot-product, . . . )
-  + Term selection  (stopword removal, stemming, . . . )
-  + Term weighting  (binary, TF, TF.IDF, . . . )
+For the attacker IP address, we can deduce it from the `/etc/auth.log`, and should be `192.168.56.101`.
 
-+ Relevance
+For the target IP address, You can find this crucial information from `/etc/var/log/exim4/rejectlog` where the host IP should be `192.168.56.1`.
 
-  + Evaluation of effectiveness in relation to the relevance of the documents retrieved
-  + Relevance is judged in a binary way, even if it is in fact a continuous judgement
-    + Impossible when the task is to rank thousands or millions of options: too subjective, too difficult
-  + In IR research/development scenarios, one cannot afford humans looking at results of every system/variant of system
-  + Instead, performance measured/compared using a pre-created benchmarking corpus, a.k.a. gold-standard dataset, which provides:
-    + a standard set of documents, and queries
-    + a list of documents judged relevant for each query, by human subjects
-    + relevance scores, usually treated as binary
+![04](/Pictures/Digital Forensics/Linux Forensics/04.png)
 
-+ Evaluation of IR systems – Metrics
+**5.What service was attacked?**
 
-  + AIM
+We can see that before the attacker stealed the files from the server, the system tried to establish the `SMTP` service. `SMTP` is a set of rules that allow data to be sent from one email server to another and allows the exchange of online messages. For the more details about the `SMTP` services, please click [here](https://whatis.techtarget.com/definition/SMTP-Simple-Mail-Transfer-Protocol).
 
-    + get as much good stuff as possible
-    + get as little junk as possible
+![05](/Pictures/Digital Forensics/Linux Forensics/05.png)
 
-  + The two aspects of this aim are addressed by two separate measures — <u>recall</u> and <u>precision</u>.
+**6.What attacks were launched against targeted server?**
 
-    ![14](/Pictures/Text Processing/14.png)
+From the `mainlog` and `rejectlog` , we can see that there are plenty of rejection messages which indicate that "message is too big". So attacker carried out the buffer overflow to attack the target server.
 
-    + Recall : $\frac{A}{A+C}$ proportion of relevant documents returned
-    + Precision: $\frac{A}{A+B}$ proportion of retrieved documents that are relevant
-    + Both measures have range: [0 . . . 1]
-    + Precision and Recall address the relation between the retrieved and relevant sets of documents
+![06](/Pictures/Digital Forensics/Linux Forensics/06.png)
 
-  + Trade-off Between Recall and Precision
+**7.What flaws or vulnerabilities did the attacker exploit?**
 
-    + ![15](/Pictures/Text Processing/15.png)
+The attacker exploited the vulnerabilities in `Sendmail` which is widely used  `Mail Transfer Agent (MTA) `for Unix and Microsoft Windows systtem.
 
-  + Recall and Precision - Which is the better system?
+A remotely exploitable vulnerability has been discovered in Sendmail. The vulnerability is due to a buffer overflow condition in the SMTP header parsing component. Remote attackers may exploit this vulnerability by connecting to target SMTP servers and transmitting to them malformed SMTP data.
 
-    + ![16](/Pictures/Text Processing/16.png)
+The overflow condition occurs when Sendmail processes incoming e-mail messages containing malformed address parameters in a field such as "From:" or "CC:". One of the checks to ensure that the addresses are valid is flawed, resulting in a buffer overflow condition. Successful attackers may exploit this vulnerability to gain root privileges on affected servers remotely.
 
-    + F-measure
+**8.Did the attacker download files? Which ones? Give an analysis of those files.**
 
-      + F measure (also called F1):
+We can analyse the `/etc/log/mainlog` to find the message about the files which were stealed by remote attacker. `wget` is one of the Linux commands which can allow the other to download files from the Internet or remote server. It can support  HTTP, HTTPS and FTP protocols, and can use HTTP proxy. For more details, please click [here](https://shapeshed.com/unix-wget/).
 
-        + combines precision and recall into a single figure, and it is a harmonic mean
+After you extract the `mainlog` from the `Autopsy`, you can open it by `Notepad` and analyse it. You can find the `wget` command , target file names and target storing location.
 
-        + gives equal weight to both:
+![05](/Pictures/Digital Forensics/Linux Forensics/07.png)
 
-          P = Precision     R = Retrievaled 
-          $$
-          \mathbf {F = \frac{2PR}{P + R}}
-          $$
+**9.Do you think these attacks were automated? Why?**
 
-        + penalises low performance in one value more than arithmethic mean:
+No, the attacker manullly steal the files via the SMTP server. We can see the time gap between each attacks is larger than two minutes.
 
-          ![17](/Pictures/Text Processing/17.png)
+![08](/Pictures/Digital Forensics/Linux Forensics/08.png)
 
-    + $F_\beta$
+**10.What could have prevented the attacks?**
 
-      + allows user to determine relative importance of P vs. R, by varying β
-      + F1 is a special case of Fβ (where β = 1)
+The system admin should update the `SMTP` and its components into the latest version. Also for the internal network or secret network, the internal network should be directly disconnected from the external network or a firewall should be set up between the local network and the external network. 
 
-  + Precision at a cutoff
+The firewall can prevent most of cyber attack.
 
-    + Measures how well a method ranks relevant documents before non-relevant documents。
+**11.What network connections were opened and in which state?**
 
-      ![18](/Pictures/Text Processing/18.png)
+From the previous questions and its answer, we can find the ports for connection such as `ssh` , `SMTP` are open. 
 
-  + Average Precision
+From the log file `/etc/var/log/daemonlog`, we can find the connections like `DHCP` is open. From the `/etc/var/log/dmesg.0`, we can see that the `TCP` and `IP` connection is open.
 
-    + Aggregates many precision numbers into one evaluation figure
+![09](/Pictures/Digital Forensics/Linux Forensics/09.png)
 
-    + Precision computed for each point a relevant document is found, and figures averaged
 
-      ![19](/Pictures/Text Processing/19.png)
 
 ---
 
-### 2. Sentiment Analysis
+### 6.Bad PDF
+
+**Background**:
+
+> Ali is a famous banking system forensics investigator with lots of successful financial case investigation! Ali is recently contacted by a financial company called "Best Finance (BF)" to perform forensics work on a recent incident that occurred. One of BF employees had received an email from a fellow co-worker that pointed to a PDF file. Upon opening the file, the employee did not seem to notice anything, however recently they have had unusual activity in their bank account. BF was able to obtain a memory image of the employee’s virtual machine upon suspected infection. BF Asked Ali to analyze the virtual memory and report on any suspected activities found. Since Ali is very busy these days he has asked you to complete this investigation.
+
+**Tools**:
+
+In this section, we use the  well-known open source  forensics framework `volatility` which can be used for `Memory Forensics and Analysis`. It can analyse the raw dumps, crash dumps, VMware dumps (vmem), virtual box dumps, and many others. For the installation information about the `volatility`, you can check [here](https://github.com/volatilityfoundation/volatility). For the information about how to use this tools and downloading the Memory Forensics Cheat Sheet, please click [here](https://digital-forensics.sans.org/media/volatility-memory-forensics-cheat-sheet.pdf).
+
+[Volatility - The Volatility Foundation](https://downloads.volatilityfoundation.org/releases/2.4/CheatSheet_v2.4.pdf)
+
+**Process**:
+
+Open the `Command Prompt` as the administraor, and proceed to the installation folder `C:\volatility-2.6\volatility-master`.
 
-> **Abstract**
->
-> + Explain the relevance of the topic
-> + Differentiate between objective and subjective texts
-> + List the main elements in a sentiment analysis system
-> + Provide a critical summary of the main approaches to the problem
-> + Explain how sentiment analysis systems are evaluated.
->
-> **General Goal**:
->
-> + Extract opinions, sentiments and emotions expressed by humans in texts and use this information for business, intelligence, etc. purposes. Can’t be done manually: huge volumes of opinionated text (esp. Big Data on the Web).
->   + Product review mining: Which features of the iPhone 11 customers like and which do they dislike?
->   + Review classification: Is a movie review positive or negative?
->   + Tracking sentiments toward topics over time: Is anger about the government policies growing or cooling down?
->   + Prediction (election outcomes, market trends): Will the Tories win the next election?
->
-> **Sentient Analysis**
->
-> ![20](/Pictures/Text Processing/20.png)
->
-> + The task of opinion mining is: given an opinionated document:
->   + Discover all quintuples
->   + Discover some of these components
-> + With that, one can structure the unstructured:
->   + Traditional data and visualisation tools can be used to slice, dice and visualise the results.
->   + Qualitative and quantitative analysis can be done.
+```powershell
+> cd C:\volatility-2.6\volatility-master
+> chdir 
+C:\volatility-2.6\volatility-master
+# You can check the usable plugin of volatity 
+> python vol.py -h
+Supported Plugin Commands:
+atoms           Print session and window station atom tables
+atomscan        Pool scanner for atom tables
+bigpools        Dump the big page pools using BigPagePoolScanner
+bioskbd         Reads the keyboard buffer from Real Mode memory
+callbacks       Print system-wide notification routines
+clipboard       Extract the contents of the windows clipboard
+cmdline         Display process command-line arguments
+cmdscan         Extract command history by scanning for _COMMAND_HISTORY
+connections     Print list of open connections [Windows XP and 2003 Only]
+connscan        Pool scanner for tcp connections
+consoles        Extract command history by scanning for _CONSOLE_INFORMATION
+crashinfo       Dump crash-dump information
+deskscan        Poolscaner for tagDESKTOP (desktops)
+devicetree      Show device tree
+dlldump         Dump DLLs from a process address space
+dlllist         Print list of loaded dlls for each process
+driverirp       Driver IRP hook detection
+drivermodule    Associate driver objects to kernel modules
+driverscan      Pool scanner for driver objects
+dumpcerts       Dump RSA private and public SSL keys
+dumpfiles       Extract memory mapped and cached files
+editbox         Displays information about Edit controls. (Listbox experimental.)
+eventhooks      Print details on windows event hooks
+filescan        Pool scanner for file objects
+gahti           Dump the USER handle type information
+...
+```
 
-#### Binary (lexicon-based)
+**Analysis**:
 
-+ Rule-based subjectivity classifier:  a sentence/document is subjective. 
+**1.List the processes that were running on the victim’s machine. Which process was most likely responsible for the initial exploit?** 
 
-  if it has at least n (say 2) words from the emotion words lexicon; a sentence/document is objective otherwise.
+You can check the state of the target memory by the following command, and you will obtain the useful information. We can find that the process `firefox.exe` runs one child process named `AcroRd32.exe` whose pid is `1752`.
 
-+ Rule-based sentiment classifier:  for subjective sentences/documents, count positive and negative words/phrases in the sentence/document.
+```powershell
+> python vol.py pstree -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem"
+```
 
-  If more negative than positive words/phrases, then negative; otherwise, positive (if equal, neutral).
+![01](/Pictures/Digital Forensics/Bad PDF/01.png)
 
-+ Rule-based sentiment classifier (feature-level): 
+**2.List the sockets that were open on the victim’s machine during infection. Are there any suspicious processes that have sockets open?**
 
-  + Assume features can be identified in previous step by information extraction techniques, e.g., battery, phone, screen.
-  + For each feature, count positive and negative emotion words/phrases from the lexicon.
-  + If <u>more negative than positive words/phrases, then negative; otherwise, positive (if equal, neutral).</u>
+Use the command `sockscan` for checking the information about the processes which use the sockets. From the picture, we can see that the pid `1752` which is `AcroRd32.exe` and pid `888` which is `firefox.exe`.
 
-+ Rule-based sentiment classifier (feature-based)
+```shell
+> python vol.py sockscan -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem"
+```
 
-  ![21](/Pictures/Text Processing/21.png)
+![02](/Pictures/Digital Forensics/Bad PDF/02.png)
 
-#### Caveats
+**3.List any suspicious URLs that may be in the suspected process’s memory.**
 
-+ Other emotion words have context-dependent orientations, e.g.
-  + small power consumption = positive
-  + small screen = negative
-+ Can store more fine-grained sentiment information in lexicon and add additional rules.
+We can check the clipboard information by command `clipboard`, we can find the history Data `search-network-plus.com/...ternet%20Explorer%206.0`. Next, we will check the dump files.
 
+![03](/Pictures/Digital Forensics/Bad PDF/03.png)
 
+**4.Are there any processes that contain URLs that may point to banking troubles? If so, what are these processes and what are the URLs?**
 
-#### Gradable 
+We have locked the target is the web application whose name is `firefox` and also the service named `AcroRd32.exe` which is supported by the Adobe. Let's go check the `dumpfiles` and `memdump`. You should download the `Strings` command line from [here](https://docs.microsoft.com/en-us/sysinternals/downloads/strings). And copy all the files into the repostity named `result`.
 
-> + Use of ranges of sentiment instead of a binary system, to deal with intensifiers like:
->   + absolutely, utterly, completely, totally, nearly, virtually, essentially, mainly, almost, e.g.: absolutely awful
-> + And grading adverbs like:
->   + Very, little, dreadfully, extremely, fairly, hugely, immensely, intensely, rather, reasonably, slightly, unusually, e.g.: a little bit cold
+```shell
+> python vol.py memdump -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -p 888 --dump-dir ./result
+> python vol.py memdump -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -p 1752 --dump-dir ./result
+> cd result | dir | chdir
+888.dmp
+1752.dmp
+strings.exe
+strings64.exe
+C:\volatility-2.6\volatility-master\result
+> strings 888.dmp > 888.txt | strings 1752.dmp > 1752.txt
+> dir
+888.dmp
+1752.dmp
+888.txt
+1752.txt
+strings.exe
+strings64.exe
+```
 
-+ Rule-based gradable sentiment classifier
-
-  + The lexicon: word-lists with pre-assigned emotional weights, e.g:
+From the generated file named `888.txt` and `1752.txt` , we can find the URL like `search-network-plus.com` and `https://onlineeast#.bankofamerica.com/`. 
 
-    Neg. dimension ($\text{C_neg}$ ): {-5,...,-1},  Pos. dimension ($\text{C_pos}$ ): {+1,...,+5}
+**5.List suspicious files that were loaded by any processes on the victim’s machine. From this information, what was a possible payload of the initial exploit be that would be affecting the victim’s bank account?**
 
-    ![22](/Pictures/Text Processing/22.png)
+For the files in the system memory, we should use the command named `filescan` to find the FILE_OBJECT handles. We should compare the content betwenn the `file.txt` and `888.txt` to find which files were loaded by the process. We can try to find the virus file which can steal the confidential information.
 
-  + Additional general rules to change the original weights:
+```shell
+> python vol.py filescan -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" > ./result/file.txt
+> python vol.py malfind -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -p 1752 --dump-dir ./result
+```
 
-    + Negation rule: <br>E.g.: “I am not good today”.
-      Emotion(good)= +3; <br>“not” is detected in neighbourhood (of 5 words around); <br>so emotional valence of “good” is decreased by 1 and sign is inverted → Emotion(good) = −2
-    + Capitalization rule:<br> E.g. “I am GOOD today”.<br>Emotion(good)= +3; Add +1 to positive words → Emotion(GOOD) = +4<br>Likewise, in “I am AWFUL today”.<br>
+![04](/Pictures/Digital Forensics/Bad PDF/04.png)
 
-  + <u>**Intensifier rule**</u>:
+![05](/Pictures/Digital Forensics/Bad PDF/05.png)
 
-    + Needs a list of intensifiers: “definitely”, “very”, “extremely”, etc. 
-    + Each intensifiers has a weight
-    + The weight is added to positive terms
-    + The weight is subtracted from negative terms
-    + E.g.: “I am feeling very good”.<br>Emotion(good)= +3; emotional valence of “good” increased by 1<br>→ Emotion(good) = +4
-    + E.g. “This was an extremely boring game”<br>Emotion(boring)=−3; emotional valence of “boring” decreased by −2<br>→ Emotion(boring) = −5
+Next, we should check the `dumpfiles` to check the possibality of virus files. We can find the target file which is suspicious for the virus file should be a excutable programme named `sdra64.exe`
 
-  + **<u>Diminisher rule</u>**:
+```shell
+> python vol.py dumpfiles -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -Q 0x000000000230ff28 --dump-dir ./result
+> cd result | strings file.None.0x82091008 > PDF.txt
+```
 
-    + Need a list: “somewhat”, “barely”, “rarely”, etc.
-    + Each intensifiers has a weight
-    + The weight is subtracted from positive terms
-    + The weight is added to negative terms
-    + E.g.: “I am somewhat good”.
-      Emotion(good)= +3; emotional valence of “good” decreased by 1 → Emotion(good) = +2
-    + E.g. “This was a slightly boring game”
-      Emotion(boring)=−3; emotional valence of “boring” increased by 1 → Emotion(boring) = −2
+We can find this virus file which can steal the information from the host computer and can be embedd in the email, for more details, please click [here](https://www.file.net/process/sdra64.exe.html).
 
-  + <u>**Exclamation rule**</u>: 
+**6.Are there any related registry entries associated with the payload?** 
 
-    + Functions like intensifiers. 
-    + E.g.: “Great show!!!”.
-      Emotion(great)= +3; Weight(!!!) = 2
-      → Emotion(great) = 5
 
-  + **<u>Emoticon rule</u>**:
 
-    + Each has its own emotional weight, like an emotion word.
+**7.What technique was used in the initial exploit to inject code in to the other processes?** 
 
-    + E.g.: Emotion(🙂) = +2; Emotion(🙁) = −2. 
-
-      E.g.: “I can’t believe this
-      product 😣
-
-  + Decision
-
-    + ![23](/Pictures/Text Processing/23.png)
-
-      ![24](/Pictures/Text Processing/24.png)
-
-  + Evalution:
-
-    + Advantages:
-      + Works effectively with different texts: forums, blogs, etc.
-      + Language independent - as long as an up-to-date lexicon of emotion words is available
-      + Doesn’t require data for training
-      + Can be extended with additional lexica, e.g. for new emotion words/symbols as they become popular, esp. in social media
-    + Disadvantages:
-      + Requires a lexicon of emotion words, which should be fairly comprehensive, covering new words, abbreviations (LOL, m8, etc.), misspelled words, etc.
-
-  + Collect relevant words/phrases that can be used to express sentiment. Determine the emotion of these subjective word/phrases.
-
-    + Manually: word lists with pre-assigned emotional weights
-    + Semi-automatically
-      + Dictionary-based: find synonyms/antonyms of seed emotion words in dictionaries like WordNet
-      + Corpus-based: find synonyms/antonyms of seed emotion words in corpora
-    + Semi-automatically created from seed words: start with seed positive and
-      negative words:
-      + Search for synonyms/antonyms in dictionaries like WordNet; OR
-      + Build patterns from seed words/phrases to search on large corpora,
-        like the Web:
-        + “beautiful and” (+)
-        + "low cost but"(-)
-        + "very nice and"(+)
-    + Machine Learning 
-      + Subjectivity classifier: first run binary classifier to identify and then eliminate objective segments
-      + Sentiment classifier with remaining segments: learn how to combine and weight different attributes to make predictions. E.g. Naive Bayes
-
-#### Corpus-based (Machine Learning)
-
-> **Basic Knowledge**:
->
-> ![25](/Pictures/Text Processing/25.png)
->
-> ![26](/Pictures/Text Processing/26.png)
->
-> ![27](/Pictures/Text Processing/27.png)
->
-> ![28](/Pictures/Text Processing/28.png)
->
-> ![29](/Pictures/Text Processing/29.png)
->
-> ![30](/Pictures/Text Processing/30.png)
->
-> ![31](/Pictures/Text Processing/31.png)
-
-+ Example
-
-  + ![32](/Pictures/Text Processing/32.png)
-
-  + Prior:
-
-    + P(positive) = count(positive)/N = 3/7 = 0.43
-    + P(negative) = count(negative)/N = 4/7 = 0.57
-
-  + Likelihoods
-
-    + $$
-      \mathbf{P(t_j|c_i) = \frac{count(t_j,c_i)}{count(c_i)}}
-      $$
-
-    + ![33](/Pictures/Text Processing/33.png)
-
-  + Relative frequencies for prior (P(ci)) and likelihood($P(t_j|c_i$) makethe model in a Naive Bayes classifier.
-
-  + At decision (test) time, given a new segment to classify, this model is applied to find the most likely class for the segment
-    $$
-    \mathbf{argmax\,P(c_i) = \prod\limits_{j=1}^nP(t_j|c_i) }
-    $$
-
-  + e.g.
-
-    + ![34](/Pictures/Text Processing/34.png)
-
-      + $P(positive) ∗ P(fantastic|positive) ∗ P(good|positive) ∗ P(lovely|positive)$
-        3/7 ∗ 1/10 ∗ 1/10 ∗ 1/10 = 0.00043
-      + $P(negative) ∗ P(fantastic|negative) ∗ P(good|negative) ∗ P(lovely|negative)$
-        4/7 ∗ 0/8 ∗ 0/8 ∗ 0/8 = 0
-      + sentiment = positive
-
-    + ![35](/Pictures/Text Processing/35.png)
-
-      + $P(positive) ∗ P(great|positive) ∗ P(great|positive) ∗ P(great|positive)$
-
-        3/7 ∗ 1/10 ∗ 1/10 ∗ 1/10 = 0.00043
-
-      + $P(negative) ∗ P(great|negative) ∗ P(great|negative) ∗ P(great|negative)$
-
-        4/7 ∗ 2/8 ∗ 2/8 ∗ 2/8 = 0.00893
-
-      + sentiment = negative
-
-    + what if both the positive and negative value equals to zero
-
-
-
-+ Add smoothing to feature counts (add 1 to every count).
-
-  + Likelihoods
-    $$
-    \mathbf{P(t_j|c_i) = \frac{count(t_j,c_i)+1}{count(c_i)+\left|V\right|}}
-    $$
-    where the $\left|V\right|$ is the number of distinct attributes in training(all classes)
-
-    number fo classes is the number of the total documents
-
-  + example
-
-    + ![36](/Pictures/Text Processing/36.png)
-
-    + $P(positive) ∗ P(boring|positive) ∗ P(annoying|positive) ∗ P(unimaginative|positive)$
-
-      3/7 ∗ ((0 + 1)/(10 + 12)) ∗ ((0 + 1)/(10 + 12)) ∗ ((0 + 1)/(10 + 12)) = 0.000040
-
-    + $P(negative) ∗ P(boring|negative) ∗ P(annoying|negative) ∗ P(unimaginative|negative)$
-
-      4/7 ∗ ((0 + 1)/(8 + 12)) ∗ ((0 + 1)/(8 + 12)) ∗ ((1 + 1)/(8 + 12)) = 0.000143
-
-    + sentiment = negative
-
-+ Evaluation:
-
-  + It’s simple and will work well if data is not sparse
-
-  + How can we improve?
-
-    + Using all words (in Naive Bayes) works well in some tasks
-    + Finding subsets of words may help in other tasks
-    + Using only adjectives can be limiting. Verbs like hate, dislike; nouns like love; words for inversion like not; intensifiers like very
-    + Pre-built polarity lexicons can be helpful
-    + Negation is important
-
-  + Can contrast direct opinions versus more complex comparative opinions:
-
-    + Direct sentiment expressions on target objects
-      + “the picture quality of this camera is great.”
-    + Comparisons expressing similarities or differences between objects,
-      + e.g., “car x is cheaper than car y.”
-
-  + How do we quantify how well our Sentiment Analysis systems work?
-
-    + Create experimental datasets (aka test corpora)
-
-    + Compare (positive vs negative) system to human classifications
-
-    + Compute metrics like
-
-      ![37](/Pictures/Text Processing/37.png)
+The Trojan virus file named `sdra64.exe`, this is the backdoor programme which the hacker use to steal the information.
 
 ---
 
-### Natural Language Generation
+### 7.Network Forensics
 
->Scanerio:
->
->![38](/Pictures/Text Processing/38.png)
->
->
+**Bacnground:**
+
+> Ali the network administrator of “Best Bankers” bank recently witnessed strange activities in several machines of his network! He is quite panicked since the network is used for lots of online transactions everyday and the last thing that he wants to have hackers around! Therefore, he decided to contact you as a forensics investigator to help him in investigating the issue. Unfortunately, you were not able to personally attend to the bank and therefore advised Mr. Ali to sniff all network traffic, collect them as a PCAP file and send to you. Please refer to the provided PCAP file and do a complete forensics investigation.
+
+**Tools**:
+
+`Wireshark`: **Wireshark** is a must-have (and free) network protocol analyzer for any security professional or systems administrator. It's like Jaws, only for packets. ... This free software lets you analyze network traffic in real time, and is often the best tool for troubleshooting issues on your network. For more details, please click 
+
+**Analysis**:
+
+**1.List the protocols found in the capture. What protocol do you think the attack(s) is/are based on?**
+
+
+
+
+
+
+
+
+
+
+
+---
+
+### 8. Mobile Forensics
+
+**Background**:
+
+> 
+
+
+
+---
+
+### 9. Icon Newwork
+
+**Background**:
+
+> Icon networks is a network consulting and security company based in Bristol. The
+> organisation provides network installation and security consulting services to businesses
+> based in South West England and Wales. 90% of their customers are small businesses who
+> often do not have an in house IT team and as such Icon offers IT support, Incident response,
+> computer network maintenance and IT management services as well.
+> Prism manufacturing, one of Icon networks* long standing customers has contacted your line
+> manager that two of their servers has been infected with malware. Your supervisor has
+> assigned this task to you.\
+
+> Using your knowledge of malware analysis, you are expected to
+> 1. Conduct static malware analysis on the file brbbot.exe
+> 	a. Provide more information about the static properties of malware such as an
+> MD5 hash, file size, file type, targeted operating system.
+> 	b. Find out more information about the malware from Virustotal.com
+> 2. Conduct Behavioural (host Only) malware analysis on the file brbbot.exe
+>       a. Using tools such as RegShot, ProcessMonitor and Processhacker, explain
+>     the effect of the malware on the registry and processes
+> 3. Conduct Behavioural (Network) malware analysis on the file brbbot.exe
+>       a. Using tools such as Wireshark, ApateDNS, REMNux and Fakedns explain
+>     the effect of malware on the network.
+
+> Your analysis should provide answers to the following questions
+> • What is the MD5 Hash value of the malware?
+> • What IP addresses and TCP ports it is trying to connect to?
+> • What changes are made to the Registry?
+> • What changes are made to the file system?
+> • What domain(s) this malware is trying to connect to?
+> • What dll files are loaded and run by malware?
+> • What files are created?
+> • What is the ,php file that malware is looking for on the server?
+> • What would have happened if the malware found the .php file on the server?
+
+**Analysis**:
+
+1.
 
