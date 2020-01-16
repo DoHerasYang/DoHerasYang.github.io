@@ -474,30 +474,30 @@ From the previous steps, we can find the suspicious files named `sdra64.exe` whi
 
 ![06](/Pictures/Digital Forensics/Bad PDF/06.png)
 
-Next, we should check the `dumpfiles` to check the possibality of virus files. The first 
+Next, we should check the `dumpfiles` to check the possibality of virus files. The first file's offset is `0x000000000230ff28`, and the second file's offset is `0x0000000002464028`, you can check the dump files which may contain the crucial information.
 
 ```shell
 >python vol.py dumpfiles -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -Q 0x000000000230ff28 --dump-dir ./result
-> cd result | strings file.None.0x82091008 > PDF.txt
+>python vol.py dumpfiles -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -Q 0x0000000002464028 --dump-dir ./result
+> cd result | strings file.None.0x82091008 > PDF_1.txt | strings file.None.0x82091008 > PDF_2.txt
 ```
 
 We can find this virus file which can steal the information from the host computer and can be embedd in the email, for more details, please click [here](https://www.file.net/process/sdra64.exe.html).
 
 **6.Are there any related registry entries associated with the payload?** 
 
+First, we should print all the registry key to display all the registry key, subways, abd values from the registry hives.
 
+```shell
+> python vol.py -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" printkey --profile = WinXPSP2x86 > ./result/rekey.txt
+> python vol.py -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" hivedump --profile = WinXPSP2x86 > ./result/revalue.txt
+```
 
-
-
-
-
-
-
-
+With the professor's help, we should check the logging information which located. at `Microsoft\WindowsNT\Currentversion\Winlogon` . And the vaule should be the current value of the virus file.
 
 **7.What technique was used in the initial exploit to inject code in to the other processes?** 
 
-The Trojan virus file named `sdra64.exe`, this is the backdoor programme which the hacker use to steal the information.
+The Trojan virus file named `sdra64.exe`, this is the backdoor programme which the hacker use to steal the information. For more information, please click [here](https://www.virustotal.com/gui/file/e68610cb55747763d40537c0ebd1bf20844413d6285f5661414e409e7e3cfab7/detection).
 
 ---
 
@@ -514,8 +514,6 @@ The Trojan virus file named `sdra64.exe`, this is the backdoor programme which t
 **Analysis**:
 
 **1.List the protocols found in the capture. What protocol do you think the attack(s) is/are based on?**
-
-
 
 
 
