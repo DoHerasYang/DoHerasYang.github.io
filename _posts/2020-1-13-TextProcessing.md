@@ -979,9 +979,9 @@ Common to just use the words, but pre-process them for generalisation.
 
 #### Named Entity Recognition
 
-+ Tasks
++ **Tasks**
   + for each textual mention of an entity of one of a fixed set of types identify its <u>extent</u> and its <u>type</u>.
-+ Recap
++ **Recap**
   + Types of entities which have been addressed by IE systems
     + Named individuals 
       + Organisations, persons, locations, books, films, ships, restaurants . . .
@@ -1004,4 +1004,59 @@ Common to just use the words, but pre-process them for generalisation.
 > + Such systems typically use
 >   + named entity lexicons and
 >   + Manually authored pattern / action rules or regular expression
-> + 
+> + System has three main stages:
+>   + Lexical processing
+>   + NE parsing
+>   + Discourse interpretation
+> + Lexical processing
+>   + Many rule-based NER systems made extensive use of specialised lexicons of proper names, such as <u>gazetteers</u> – lists of place names
+>   + Why not use even larger gazetteers?
+>     + Many NEs occur in multiple categories - the larger the lexicons the greater ambiguity
+>     + the listing of names is never complete, so need some mechanism to type unseen NEs in any case
+>   + Principles
+>     + Tokenisation, sentence splitting, morphological analysis
+>     + Part-of-speech tagging 
+>       + tags known proper name words andunknown uppercase-initial words as proper names (NNP, NNPS)  NNP = Proper nouns
+>     + Name List / Gazetter Lookup and Tagging (organisations, locations, persons, company designators. person titles)
+>     + Trigger Word Tagging
+>       + certain words in multi-word names function as trigger words, permitting classification of the name
+>       + system has trigger words for various orgs,gov't institutions,locations
+> + NE Parsing
+>   + Using the presetrules to identify the unclassified proper name 
+>   + ![50](/Pictures/Text Processing/50.png)
+> + Discourcse Interpretation - Coreference Resolution
+>   + When the name class of an antecedent (anaphor) is known thenestablishing coreference allows the name class of the anaphor (antecedent) to be established.
+>   + An unclassified PN may be co-referential with a variant form of a classified PN. (PN = Pronoun)
+>     +  Ford – Ford Motor Co.
+>   + An unclassified PN may be co-referential with a definite NP which permits the PN’s class to be inferred
+>     + E.g. Kellogg ... the breakfast cereal manufacturer
+>   + Semantic type information
+>     + noun-noun qualification
+>       + When an unclassified PN qualifies an organisation-related object then the PN is classified as an organisation; e.g. Erickson stocks
+>     + Possessives
+>       + when an unclassified PN stands in a possessive relationto an organisation post, then the PN is classified as an organisation; e.g. vice president of ABC, ABC’s vice president
+>     + Apposition
+>       + when an unclassified PN is apposed with a known orgnisation post, the former name is classified as a person name; e.g. Miodrag Jones, president of XYZ
+> + Evaluation
+>   + Strengths
+>     + High performance - only several points behind human annotators
+>     + Transparent - easy to understand what system is doing/why
+>   + Weakness
+>     + Porting to another domain requires substantial rule re-engineering
+>     + Acquisition of domain-specific lexicons
+>     + Rule writing requires high levels of expertise
+
+> **Supervised learning approaches to NER**
+>
+> + **Task**
+>   + Supervised learning approaches aim to address the portability problems inherent in knowledge engineering NER
+>     + Instead of manually authoring rules, systems learn from annotated examples
+>     + Moving to new domain requires only annotated data in the domain – can be supplied by domain expert without need for expert computational linguist
+> + Sequence Labelling
+>   + Systems may learn
+>     + <u>patterns</u> that match extraction targets
+>     + <u>classifiers</u> that label tokens as beginning/inside/outside a tage type
+>   + In sequence labelling for NER, each token is given one of three label
+>     types:
+>     + ![51](//Pictures/Text Processing/51.png)
+>   + 
