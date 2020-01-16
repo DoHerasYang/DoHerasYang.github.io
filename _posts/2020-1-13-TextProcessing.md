@@ -17,7 +17,9 @@ tags: Lecture-Course
 >
 >**@All the konowledge rights are reserved by the owner of this course's materials,Dr Mark Hepple and Dr Chenghua Lin at the University of Sheffield.**
 
+---
 
+[toc]
 
 ---
 
@@ -349,7 +351,7 @@ Common to just use the words, but pre-process them for generalisation.
 >     + probability that a random surfer will visit that page
 >   + its PageRank score: a measure of its authority
 
-#### Summary:
+#### Summary
 
 + Component / technique
 
@@ -846,7 +848,7 @@ Common to just use the words, but pre-process them for generalisation.
 
 ---
 
-### 4.Information Extraction
+### 4.Information Extraction(IE)
 
 > **Definition**
 >
@@ -967,7 +969,15 @@ Common to just use the words, but pre-process them for generalisation.
 + **responses**
   + Scoring of system results, called responses, against keys is done automatically.
 + **interannotator agreement**
-  + 
+  + At least some portion of the answer keys are multiply produced by different humans so that interannotator agreement figures can be computed.
++ Principal metrics – borrowed from information retrieval
+  + Precision (how much of what system returns is correct)
+  + Recall(how much of what is correcrt system returns)
+  + F-measure(a weighted combination of precision and recall)
++ **Shared Task challenges**
+  + Shared Task challenges are community wide exercises in which groups of researchers engage in a friendly competition to build systems to address a common task.
+
+
 
 
 
