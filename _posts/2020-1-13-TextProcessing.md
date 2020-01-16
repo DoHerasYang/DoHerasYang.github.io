@@ -878,19 +878,96 @@ Common to just use the words, but pre-process them for generalisation.
 >   + Systems tend to be genre/domain specific and porting to new genres and domains can be time-consuming/requires expertise
 >   + Limited accuracy
 >   + Computationally demanding, so performance issues on very large collections
-> + 
 
+#### Entity Extraction
 
++ For each textual mention of an entity of one of a fixed set of types identify its extent and its type
++ Coreference
+  + Multiple references to the same entity in a text are rarely made using the same string:
+    + Pronouns – Tony Blair . . . he
+    + Names/definite descriptions - Tony Blair
+    + Abbreviated forms
+    + Orthographic variants
+  + Different textual expressions that refer to the same real world entity are said to corefer.
+  + Clearly IE systems are more useful if they can recognise which text mentions are coreferential.
+  + **Coreference Task**: link togther all textual references to the same real world entity, regardless of whether the surface form is a name or not
 
+#### Relation Extraction
 
++ Task:
+  + identify all assertions of relations, usually binary, between entities identified in entity extraction
++ May be divided into two subtasks:
+  + <u>Relation detection</u>: find pairs of entities between which a relation holds
+  + <u>Relation classification</u>: for pairs of entities between which a relation holds, determine what the relation is
++ Challenging 
+  + Discovering relations frequently depends upon being able to follow coreference links.
+  + The same relation may be expressed in many different ways:
 
+#### Event Detection
 
++ Task
+  + identify all reports of event instances, typically of a small set of classes
++ May be divided into two subtasks
+  + Event detection: find mentions of events in text
+  + Event classification: assign detected events to one of a set of classes
++ Events may be simply viewed as relations. However they are typically complex relations that
+  + Are temporally situated and often of relatively short duration
+  + Involve multiple role players
+  + Are often expressed across multiple sentences
 
+#### Aproach
 
++ Knowledge Engineering Approaches
++ Supervised Learning Approaches
++ Bootstrapping Approaches
++ Distant Supervision Approaches
 
+> **Knowledge Engineering Approaches**
+>
+> ![49](/Pictures/Text Processing/49.png)
 
+> **Supervised Learning Approach**
+>
+> + Systems are given texts with manually annotated entities + relations
+> + For each entity/relation create a training instance
+>   + k words either side of an entity mention
+>   + k words to the left of entity 1 and to the right of entity 2 plus the words in between
+> + Training instances represented in terms of features
+>   + words, parts of speech, orthographic characteristics, syntactic info
+> + Systems may learn
+>   + patterns that match extraction targets
+>   + Classifiers that classify tokens as beginning / inside / outside a tage type
+> + Learning techniques include: covering algorithms, HMMs, SVMs
 
+> **Bootstrapping Approaches**
+>
+> + A technique for relation extraction that requires only minimal supervision
+> + Systems are given
+>   + seed tuples
+>   + seed patterns
+> + System searches in large corpus for 
+>   + occurences of seed tuples and then extracts a pattern that matches the context of the seed tuple
+>   + matches of seed patterns from which it harvests new tuples
+> + New tuples are assumed to stand in the required relation and are added to the tuple store
 
+> **Distant Supervision Approaches**
+>
+> + Sometimes also called “weakly labelled” approaches
+> + Assumes a (semi-)structured data source, such as
+>   + which contains tuples of entities standing in the relation of interest and, ideally, a pointer to a source text
+> + Tuples from data source are used to label
+>   + the text with which they are associated, if available
+>   + documents from the web, if not
+> + Labelled data is used to train a standard supervised named entity or relation extraction system
+
+#### Evaluation
+
++ **keys**
+  + Correct answers, called <u>keys</u>, are produced manually for each extraction task (filled templates or SGML annotated texts)
++ **responses**
+  + Scoring of system results, called responses, against keys is done automatically.
++ **interannotator agreement**
+  + 
 
 
 
