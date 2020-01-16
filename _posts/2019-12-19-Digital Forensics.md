@@ -470,16 +470,28 @@ For the files in the system memory, we should use the command named `filescan` t
 
 ![05](/Pictures/Digital Forensics/Bad PDF/05.png)
 
-Next, we should check the `dumpfiles` to check the possibality of virus files. We can find the target file which is suspicious for the virus file should be a excutable programme named `sdra64.exe`
+From the previous steps, we can find the suspicious files named `sdra64.exe` which had been operated by the targeted application, Next we have to check the details of this file. The picture below shows that there are two files named `sdra64.exe`.
+
+![06](/Pictures/Digital Forensics/Bad PDF/06.png)
+
+Next, we should check the `dumpfiles` to check the possibality of virus files. The first 
 
 ```shell
-> python vol.py dumpfiles -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -Q 0x000000000230ff28 --dump-dir ./result
+>python vol.py dumpfiles -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -Q 0x000000000230ff28 --dump-dir ./result
 > cd result | strings file.None.0x82091008 > PDF.txt
 ```
 
 We can find this virus file which can steal the information from the host computer and can be embedd in the email, for more details, please click [here](https://www.file.net/process/sdra64.exe.html).
 
 **6.Are there any related registry entries associated with the payload?** 
+
+
+
+
+
+
+
+
 
 
 
