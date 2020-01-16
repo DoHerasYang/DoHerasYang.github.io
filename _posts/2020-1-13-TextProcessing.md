@@ -844,8 +844,6 @@ Common to just use the words, but pre-process them for generalisation.
 
 
 
-
-
 ---
 
 ### 4.Information Extraction(IE)
@@ -917,7 +915,7 @@ Common to just use the words, but pre-process them for generalisation.
   + Involve multiple role players
   + Are often expressed across multiple sentences
 
-#### Aproach
+#### Approach
 
 + Knowledge Engineering Approaches
 + Supervised Learning Approaches
@@ -979,7 +977,31 @@ Common to just use the words, but pre-process them for generalisation.
 
 
 
+#### Named Entity Recognition
 
++ Tasks
+  + for each textual mention of an entity of one of a fixed set of types identify its <u>extent</u> and its <u>type</u>.
++ Recap
+  + Types of entities which have been addressed by IE systems
+    + Named individuals 
+      + Organisations, persons, locations, books, films, ships, restaurants . . .
+    + Named Kinds
+      + Proteins, chemical compounds/drugs, diseases, aircraft components . . .
+    + Times
+      + temporal expressions – dates, times of day
+    + Measures
+      + temporal expressions – dates, times of day
+  + Multiple references to the same entity in a text are rarely made using the same string:
+    + Pronouns – They . . . he
+    + Names/defiinite descriptions  - Tony Blair . . . the Prime Minister
+    + Abbreviated forms - Theresa May ... May; United Nations ... UN
+    + Orthographic variants 
+  + Different textual expressions that refer to the same real world entity are said to <u>corefer</u>
+  + **Coreference Task**: link togther all textual references to the same real world entity, regardless of whether the surface form is a name or not
 
-
-
+> **Knowledge Engineering Approaches to NER**
+>
+> + Such systems typically use
+>   + named entity lexicons and
+>   + Manually authored pattern / action rules or regular expression
+> + 
