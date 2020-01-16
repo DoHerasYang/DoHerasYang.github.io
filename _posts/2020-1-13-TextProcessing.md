@@ -274,7 +274,7 @@ Common to just use the words, but pre-process them for generalisation.
 >           + 0, for orthogonal vectors, 
 >           + -1, for vectors pointing in opposite directions
 
->  Inverse document frequency( <u>**IDF**</u> )
+>  **Inverse document frequency**( <u>**IDF**</u> )
 >
 >  Term Weighting
 >
@@ -349,7 +349,7 @@ Common to just use the words, but pre-process them for generalisation.
 >     + probability that a random surfer will visit that page
 >   + its PageRank score: a measure of its authority
 
-#### Evalution:
+#### Summary:
 
 + Component / technique
 
@@ -428,6 +428,20 @@ Common to just use the words, but pre-process them for generalisation.
 
       ![19](/Pictures/Text Processing/19.png)
 
+#### Evaluation
+
++ Strengths
+  + Can search huge document collections very rapidly
+  + Insensitive to genere and domain of the texts
+  + Relatively straightforward to implement
+    + challenges scaling to huge, dynamic document collections
++ Weakness:
+  + Documents are returned not information/answers
+    + user must further read texts to extract information
+    + output is unstructured so limited possibilities for direct data mining/further processing
+
+ 
+
 ---
 
 ### 2. Sentiment Analysis
@@ -485,8 +499,6 @@ Common to just use the words, but pre-process them for generalisation.
   + small power consumption = positive
   + small screen = negative
 + Can store more fine-grained sentiment information in lexicon and add additional rules.
-
-
 
 #### Gradable 
 
@@ -702,11 +714,185 @@ Common to just use the words, but pre-process them for generalisation.
 
 ---
 
-### Natural Language Generation
+### 3.Natural Language Generation
 
 >Scanerio:
 >
 >![38](/Pictures/Text Processing/38.png)
 >
+>![39](/Pictures/Text Processing/39.png)
+
+>**Goals**:
 >
+>+ Decide on content: to determine what information to communicate
+>+ Decide on rhetorical structure: to determine how to structure the information to make a coherent text
+
+#### How to Choose Content
+
++ Theoretical approach: deep reasoning based on deep knowledge of user, task, context, etc
++ Pragmatic approach: write schemas which try to imitate human-written texts in a corpus
++ Statistical approach: use learning techniques to learn content rules from corpus
+
+#### Theoretical Approach
+
++ Deduce what the user needs to know, and communicate this
++ in-depth knowledge
+  + User(knowledge,task,etc)
+  + Context, domain,world
++ AI 
+  + applies logical rules to the knowledge base to deduce new information
++ Evaluation
+  + Lack knowledge about user
+  + Lack knowledge of context
+  + Hard to do in practice because we don't have good models of the effects of choices
+  + Very hard to maintain knowledge base
+    like new usersm new regulations, etc.
+
+#### Statistical Approach
+
++ Statistical/learning techniques (including deep learning)
+  + Parse corpus, align with source data, use machine learning algorithms to learn content selection rules/schemas/cases
++ Worth considering if large corpora available
+
+#### Pragmatic Approach: Schema
+
++ Analyse corpus texts (after aligning them to data), and manually infer content and structure rules.
++ Typically based on imitating patterns seen in human-written texts
+  + Revised based on user feedback
++ Specify structure as well as content
++ Evaluation:
+  + Sometimes corpus texts may not be very good from a microplanning perspective
+
+#### Text structure
+
++ Rhetorical Relations: describe how the parts of a text are linked to each other.
++ Example:
+  + ![40](/Pictures/Text Processing/40.png)
+  + ![41](/Pictures/Text Processing/41.png)
+  + ![42](/Pictures/Text Processing/42.png)
+
+#### Lexical Choice
+
++ the task of choosing the right words or lemmas to express the contents of the message
++ Issues:
+  + Frequency (affects readability) 
+  + Formality
+  + Focus, expextations
+  + Technical terms
+  + Convention
+
+
+
+#### Statistics-Based Lexical Choice for NLG from Quantitative Information
++ Goal 
+  + Systems need to “know” what expressions are most suitable for expressing a given piece of information.
+  + To develop a statistical algorithm for lexical choice for quantitative information, which can
+    + Detect the relationship between data dimensions (aka. attributes) and words
+    + Does not rely on hand-crafted rules;
+    + Predict both when and which words should be used
+    + One word can refer to multiple dimensions
++ ![43](/Pictures/Text Processing/43.png)
++ Methodology(Vector)
+  + We represent each attribute (e.g. wind speed) as a combination of some weighted <u>key-points</u>.
+    + Taking the min and max values of the attribute (from training data)
+    + Key-points are evenly spaced between the min and max values
+  + The number of the key-points for an attribute are fixed
+  + An example of deriving the key point weights for the attribute value ws=9 (i.e., wind speed dimension).
+    + ![44](//Pictures/Text Processing/44.png)
+  + Similarly, a data record (i.e., a set of attribute-value pairs) can be represented by multiple groups of key-points, e.g.:
+    + ws = 9 → [0.1, 0.9, 0, 0, 0]
+    + dir = 2 → [0.97, 0.03, 0, 0, 0]
+  + Thus, to represent a set of attribute-value pairs, we concatenate the individual weight vectors, e.g.:
+    + {ws = 9, dir = 2} → [0.1, 0.9, 0, 0, 0, 0.97, 0.03, 0, 0, 0]
+  + The entire data-text corpus can then be represented with a vector matrix (K), whose row corresponds to the weight vector of a data record.
+    + ![45](/Pictures/Text Processing/45.png)
+  + We use a column vector (namely ei)to represent the text of a datarecord Each element of $ei$
+    indicates whether a word appears in the data record, e.g.:
+    + ![46](/Pictures/Text Processing/46.png)
+  + We represent words in the corpus using the same weight vectors whose values are unknown.
+  + To estimate $vi$ for word $i$ given a data-to-text corpus as input
+  + $v_i$ and $v_d$ should be close to each other in the vector space if word $i$ appears in data record $d$
+    + ![47](/Pictures/Text Processing/47.png)
+    + appear $(i, d1) = 1$ if word $i$ appears in data record $d$ and $0$ otherwise.
+  + Our task is to find the weight vector vi for each word i, such that the similarity of $v_i$ and $v_d$ is close to appear $(i, d)$ as much as possible for each data record $(d)$.
+    + ![48](/Pictures/Text Processing/48.png)
+
+#### Microplanning
+
++ Decide how to best express a message in language
++ Imitating corpus works to some degree, but not perfectly
++ Key is better understanding of how linguistic choices affected readers
+  + Our SumTime weather-forecast generator microplans better than human forecasters
+
+#### Relisation 
+
++ Creating linear text from (typically) structured input; ensuring syntactic correctness
++ Take care of details of language
++ Problem
+  + There are lots of finicky details of language which most people developing NLG systems don’t want to worry about
+  + Solution:
+    + Automate this using a realiser
+
+#### Morphology
+
++ In linguistics, morphology is the study of words, how they are <u>formed</u>, and their <u>relationship</u> to other words in the same language.
++ Variations of a root form of a word
++ Inflectional morphology
++ Derivational morphology - change meaning
+
+
+
+
+
+---
+
+### 4.Information Extraction
+
+> **Definition**
+>
+> From each text in a set of unstructured natural language texts identify information about predefined classes of <u>entities, relationships or events</u> and record this information in a structured form by either:
+>
+> + Annotating the source text, e.g. using XML tags;
+> + Filling in a data structure separate from the text, e.g a template or database record or “stand-off annotation”
+> + The activity of populating a structured information repository (database) from an unstructured, or free text, information source
+> + The activity of creating a semantically annotated text collection (cf.“The Semantic Web”)
+>
+> **Purpose:**
+>
+> + searching or analysis using conventional database queries
+> + data-mining;
+> + generating a summary (perhaps in another language);
+>
+> **Task** 
+>
+> + Given: a document collection and a predefined set of entities, relations
+>   and/or events
+> + Return: a structured representation of all mentions of the specified entities, relations and/or events
+>
+> **Evaluation**:
+>
+> + Strengths
+>   + Extracts facts from texts, not just texts from text collections
+>   + Can feed other powerful applications( databases, semantic indexing engines, data mining tools)
+> + Weakness:
+>   + Systems tend to be genre/domain specific and porting to new genres and domains can be time-consuming/requires expertise
+>   + Limited accuracy
+>   + Computationally demanding, so performance issues on very large collections
+> + 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
