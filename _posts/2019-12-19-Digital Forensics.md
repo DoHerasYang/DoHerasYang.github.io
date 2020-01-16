@@ -545,10 +545,10 @@ The Trojan virus file named `sdra64.exe`, this is the backdoor programme which t
 > 	b. Find out more information about the malware from Virustotal.com
 > 2. Conduct Behavioural (host Only) malware analysis on the file brbbot.exe
 >       a. Using tools such as RegShot, ProcessMonitor and Processhacker, explain
->   the effect of the malware on the registry and processes
+>     the effect of the malware on the registry and processes
 > 3. Conduct Behavioural (Network) malware analysis on the file brbbot.exe
 >       a. Using tools such as Wireshark, ApateDNS, REMNux and Fakedns explain
->   the effect of malware on the network.
+>     the effect of malware on the network.
 
 > Your analysis should provide answers to the following questions
 > • What is the MD5 Hash value of the malware?
