@@ -617,7 +617,7 @@ From the `shorcuts` which record the network package which was sent from the tar
 
 As for the `whatsapp` which is regarded as the very safe chat application, it keeps the message in the local database in local instead of server. So the folder where the `whatsapp` store the messages is `/data/data/com.whatsapp/`.  You can find this file by searching the extension of the file from the `result`.
 
-![10](//Pictures/Digital Forensics/Mobile Forensics/10.png)
+![10](/Pictures/Digital Forensics/Mobile Forensics/10.png)
 
 **11.What are these messages, where are they storejd?**
 
@@ -625,11 +625,9 @@ As for the `whatsapp` which is regarded as the very safe chat application, it ke
 
 **12.How many people did the owner of the phone call?**
 
-You can check all the call history details from the `      data/com.android.providers.contacts/databases/contacts2.db`
+You can check all the call history details from the `data/com.android.providers.contacts/databases/contacts2.db`
 
 ![11](/Pictures/Digital Forensics/Mobile Forensics/11.png)
-
-
 
 
 
