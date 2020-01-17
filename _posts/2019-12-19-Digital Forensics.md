@@ -555,7 +555,7 @@ In the process of finding the phone number, I located the location of  database 
 
 Otherwise, the little tick I would like to supply is the folder which could contain the useful data for answering these questions is named `userdata`.
 
-![01](//Pictures/Digital Forensics/Mobile Forensics/01.png)
+![01](/Pictures/Digital Forensics/Mobile Forensics/01.png)
 
 **2.What is make of the phone?**
 
@@ -653,11 +653,11 @@ Also you can find the log information from here:
 
 **15.How many text messages were received?**
 
-
-
-
+Please refer to Q14.
 
 **16.What is the MSISDN of the owner of the phone?**
+
+
 
 **17.What time was the first message sent on WhatsApp?**
 
