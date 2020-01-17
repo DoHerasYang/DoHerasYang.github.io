@@ -472,14 +472,12 @@ For the files in the system memory, we should use the command named `filescan` t
 
 From the previous steps, we can find the suspicious files named `sdra64.exe` which had been operated by the targeted application, Next we have to check the details of this file. The picture below shows that there are two files named `sdra64.exe`.
 
-![06](/Pictures/Digital Forensics/Bad PDF/06.png)
-
 Next, we should check the `dumpfiles` to check the possibality of virus files. The first file's offset is `0x000000000230ff28`, and the second file's offset is `0x0000000002464028`, you can check the dump files which may contain the crucial information.
 
 ```shell
 >python vol.py dumpfiles -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -Q 0x000000000230ff28 --dump-dir ./result
 >python vol.py dumpfiles -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -Q 0x0000000002464028 --dump-dir ./result
-> cd result | strings file.None.0x82091008 > PDF_1.txt | strings file.None.0x82091008 > PDF_2.txt
+> cd result | strings file.None.0x82091008.dat > PDF_1.txt | strings file.None.0x8221fb08.dat > PDF_2.txt
 ```
 
 We can find this virus file which can steal the information from the host computer and can be embedd in the email, for more details, please click [here](https://www.file.net/process/sdra64.exe.html).
@@ -529,13 +527,125 @@ The Trojan virus file named `sdra64.exe`, this is the backdoor programme which t
 
 **Background**:
 
-> 
+> PGI Forensics is a data recovery and forensics company that offers data recovery, incident
+> response, and forensic services to various commercial institutions and Police forces in the
+> EMEA Region. One of their clients, KY Legal, has recently sent a mobile phone to PGI
+> Forensics, London office for examination in a case involving smuggling of animals from
+> Africa.
+> However, all the investigators in the London Office are busy with other cases and as a result,
+> a physical image of the phone has been acquired and this has been assigned to you in the
+> Sheffield Office.Specifically, the owner of the phone is suspected to be involved (possibly the
+> leader of a gang) in smuggling Rhinos from Kenya to the United States and Canada. This
+> case is one of several cases that the INTERPOL is investigating on Rhino Smuggling and
+> the suspects details has come up in at least three of the investigations.
+
+**Tool**:
+
+`Autospy` - Old friend good to see you again!
+
+**Analysis**:
+
+**1.What is Josh Hisory's Phone Number?**
+
+For the clue to find this information, we can try to search the SQLite3 database file named `/contacts/contact.db` where the contact information is stored in `Android` file system. 
+
+But in fact, the exact location of the contacts database might depend on the manufactures. While "plain Vanilla Android" has them in `/data/data/android.providers.contacts/databases`, the stock ROM on my *Motorola Milestone 2* e.g. uses `/data/data/com.motorola.blur.providers.contacts/databases/contacts2.db` instead.
+
+In the process of finding the phone number, I located the location of  database file, but I still can't extracte the information from it, I find a fix way which requires us to search the key words `Phone Number`, and the result indicates there is a file named `Contacts Artifact` which contains the exact information.
+
+Otherwise, the little tick I would like to supply is the folder which could contain the useful data for answering these questions is named `userdata`.
+
+![01](//Pictures/Digital Forensics/Mobile Forensics/01.png)
+
+**2.What is make of the phone?**
+
+The idea to solve this question is to find the `log file`s or `XML files` which may contain information about the device and operation system. You can try keyword `hardware` in search engine.
+
+`/img_blk0_mmcblk0.bin/vol_vol52/media/0/Android/data/com.enflick.android.TextNow/cache/log_logcat_com_enflick_android_TextNow_0.log` is the file contains all the system information which also includes `Phone Number` or other device activity records.
+
+![02](/Pictures/Digital Forensics/Mobile Forensics/02.png)
+
+`/img_blk0_mmcblk0.bin/vol_vol52/system/users/0/settings_secure.xml` which contain system and user activities about the sensitive data.
+
+![03](/Pictures/Digital Forensics/Mobile Forensics/03.png)
+
+**3.Identify how many third party apps have been installed on the phone?**
+
+System apps / pre-installed-bloatware-apps are stored in `/system/app` with privileged apps in `/system/priv-app` (which are mounted read-only to prevent any changes). You may also find system apps in `/custpack/app`'s subdirectories.
+
+ Normal apps (three party applications) in internal memory go to `/data/app` to check the details of the applications the user installed.
+
+![04](/Pictures/Digital Forensics/Mobile Forensics/04.png)
+
+**4.List the third Party apps installed.**
+
+Please refer to Q3
+
+**5.What is the name of the Mobile Network Provider?**
+
+The forensics can find the relevat information from the `Messages` which is under the folder named `result`.
+
+ I emphasize the location to store the messages which is `/vol_vol52/user_de/0/com.android.providers.telephony/databases/telephony.db`. 
+
+![05](/Pictures/Digital Forensics/Mobile Forensics/05.png)
+
+**6.What are the email address of the ownerof the phone?**
+
+You can find the relevant `log file` I mentioned before named `log_logcat_com_enflick_android_TextNow_0.log` to obtain the correct answer.
+
+![06](/Pictures/Digital Forensics/Mobile Forensics/06.png)
+
+Otherwise, you can check the database file named `accounts_de.db` to find the useful information. The location of this file is `/vol_vol52/system_de/0/accounts_de.db`.
+
+![07](/Pictures/Digital Forensics/Mobile Forensics/07.png)
+
+**7.How many messages were sent using Facebook and what were they?**
+
+**8.What is the name of the file that contains the text, "now you can edit and post photos, videos and GIFs ?**
+
+**9.How many images can you find that was sent with WhatsApp?**
+
+The system store the information about the revelent image files which had been sent  in `vol_vol52/system_ce/0/shortcut_service/bitmaps/com.whatsapp	`. We can find information from the under pictures:
+
+![08](/Pictures/Digital Forensics/Mobile Forensics/08.png)
+
+From the `shorcuts` which record the network package which was sent from the target 
+
+![09](/Pictures/Digital Forensics/Mobile Forensics/09.png)
+
+**10.How many messages were sent using WhatsApp?**
+
+As for the `whatsapp` which is regarded as the very safe chat application, it keeps the message in the local database in local instead of server. So the folder where the `whatsapp` store the messages is `/data/data/com.whatsapp/`.  You can find this file by searching the extension of the file from the `result`.
+
+![10](//Pictures/Digital Forensics/Mobile Forensics/10.png)
+
+**11.What are these messages, where are they storejd?**
+
+`          vol_vol52/data/com.whatsapp/databases/msgstore.db        `
+
+**12.How many people did the owner of the phone call?**
+
+You can check all the call history details from the `      data/com.android.providers.contacts/databases/contacts2.db`
+
+![11](/Pictures/Digital Forensics/Mobile Forensics/11.png)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 ---
 
-### 9. Icon Newwork
+### 9. Icon Network
 
 **Background**:
 
@@ -546,7 +656,7 @@ The Trojan virus file named `sdra64.exe`, this is the backdoor programme which t
 > computer network maintenance and IT management services as well.
 > Prism manufacturing, one of Icon networks* long standing customers has contacted your line
 > manager that two of their servers has been infected with malware. Your supervisor has
-> assigned this task to you.\
+> assigned this task to you.
 
 > Using your knowledge of malware analysis, you are expected to
 > 1. Conduct static malware analysis on the file brbbot.exe
@@ -574,4 +684,32 @@ The Trojan virus file named `sdra64.exe`, this is the backdoor programme which t
 **Analysis**:
 
 1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
