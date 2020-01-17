@@ -619,7 +619,7 @@ As for the `whatsapp` which is regarded as the very safe chat application, it ke
 
 ![10](/Pictures/Digital Forensics/Mobile Forensics/10.png)
 
-**11.What are these messages, where are they storejd?**
+**11.What are these messages, where are they stored?**
 
 `          vol_vol52/data/com.whatsapp/databases/msgstore.db        `
 
@@ -629,9 +629,50 @@ You can check all the call history details from the `data/com.android.providers.
 
 ![11](/Pictures/Digital Forensics/Mobile Forensics/11.png)
 
+**13.How many calls did the owner of the phone have on skype?**
+
+For the full log information, the forensics can access the folder which is `/data/data/com.skype.raider/files/ *user-name*/main.db`. The database named `main.db`contains all the history information.
+
+In practice, I didn't find a database file named `main.db` but we can find the relevant file which may contain history information and log. So I found a file named `offline-storage.data`.
+
+![12](/Pictures/Digital Forensics/Mobile Forensics/12.png)
+
+**14.How many text messages were sent from the phone?**
+
+Most forensic examiners know to look at the MMSSMS.db for SMS/MMS data on almost any device. Android devices typically store this data in the telephony folder here:
+
+`*data/data/com.android.providers.telephony/databases/mmssms.db`
+
+![13](/Pictures/Digital Forensics/Mobile Forensics/13.png)
+
+Also you can find the log information from here:
+
+`*/data/data/com.google.android.apps.messaging/databases/bugle_db*`
+
+![14](/Pictures/Digital Forensics/Mobile Forensics/14.png)
+
+**15.How many text messages were received?**
 
 
 
+
+
+**16.What is the MSISDN of the owner of the phone?**
+
+**17.What time was the first message sent on WhatsApp?**
+
+**18.List the evidence(s) that make you to believe that the suspect is involved in Rhino**
+**Smuggling.**
+
+**19.What locations do you think the suspect visited on the 30th November 2018?**
+
+**20.List the wireless networks, the device has been connected to ?**
+
+**21What evidence can you use to prove that the suspect visited Kenya?**
+
+
+
+**21What other countries apart from Kenya has the suspect visited?**
 
 
 
