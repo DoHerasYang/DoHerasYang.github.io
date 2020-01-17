@@ -15,6 +15,8 @@ tags: Lectures
 >
 > **@All the konowledge rights are reserved by the owner of this course's materials and Nesrine Kaaniche at the University of Sheffield.**
 
+> Really Appreciate my classmates 
+
 ### 1. Hacking Incident
 
 **Chain of custody**: in legal contexts, is the chronological documentation or paper trail that records the sequence of custody of physical or electronic evidence. It is very essential to maintain the chain of custody to preserve the interity of the evidence and prevent it from the contamination.
@@ -46,7 +48,11 @@ The physical and electronic evidence may include:
 
 **Tools**:
 
-`USB_Write_Blocker_All_Windows` is the software to prevent the writing the information to target portable device from the host machine. It's very easy to use, before you plug in the device, you should open this batch file and follow the instruction from the console. 
+`USB_Write_Blocker_All_Windows` is the software to prevent the writing the information to target portable device from the host machine. It's very easy to use, before you plug in the device.
+
++ You should open this batch file and follow the instruction from the console. 
++ Open registry editor and click run.
++ Connect the USB drive
 
 `MD5` is the hash function which is widely use to produce a 128-bit hash value to verify the integrity of file. In digital forensics, it's very essential to keep the integrity and creditability of evidence.
 
@@ -70,13 +76,15 @@ The physical and electronic evidence may include:
 
 ![04](/Pictures/Digital Forensics/FTK/04.png)
 
-5)Next, we will be asked to select the `Image Destination Folder`, and `Image Fragment size` allows us to split up the large file into different size data and sotre them on the other store media. If you want to encrypt the raw data, just tick `Use AD Encryption`. After we have decided the previous information, we can click the `Finish`.
+5)Next, we will be asked to select the `Image Destination Folder`, and `Image Fragment size` allows us to split up the large file into different size data and store them on the other store media. If you want to encrypt the raw data, just tick `Use AD Encryption`. After we have decided the previous information, we can click the `Finish`.
 
 ![05](/Pictures/Digital Forensics/FTK/05.png) 
 
-6) We just wait the software to creatw image, after that we will finish our task.
+6) We just wait the software to create image, after that we will finish our task.
 
 ![06](/Pictures/Digital Forensics/FTK/06.png)
+
+7)After the backup creation process it will show a window with Drive/Image Verify results note down the Hash values for SHA1 and MD5 in the preliminary examination report.
 
 ---
 
@@ -141,13 +149,15 @@ Then, we save the Hex value file as the `JPG` file.
 
 5.We have recognized that `50 4B` is the Hex value of `XLSX` or `ZIP`file. However the `XLSX`'s Hex value should be more specific which is `50 4B 03 04 14 00 06 00`. We can see the original Hex value is different from that. So we can make sure that We can easily extract the final file by imitating previous steps.<br>`0000D000` is the beginning Hex value of the `ZIP` file and also we can locate the end Hex value of file by considering the trailer bytes `50 4B` after which we have to count `17 characters` which here is at `0000D9FF`. We will obtain the encrypted `XLS` file. And the password we have known is `goodtimes`.
 
-![07](/Pictures/Digital Forensics/Drug Dealer Case/07.png)
+![07](/Pictures/Digital Forensics/Drug Dealer Case/07.png)\
 
-6.For Q4,we used passwords or encryption to mask them from others.
+Refer the following [link]( https://www.garykessler.net/library/file_sigs.html) to get the signatures for different file formats. 
 
-7.For Q5, we used hex editor and file signature table to successfully examine the contents of each file.
+6.**Q4**,he used passwords or encryption to mask them from others.
 
-8.For **Q6**, The `JPG` file just includes the values for color space, I don't know how to confirm the tools to generate it.
+7.**Q5**, we used hex editor and file signature table to successfully examine the contents of each file.
+
+8.**Q6**, The `JPG` file just includes the values for color space, I don't know how to confirm the tools to generate it.
 
 
 
@@ -201,6 +211,10 @@ The thoughts to solve this question is to discover the useful files which could 
 
 ![04](/Pictures/Digital Forensics/Credit Card Fraud/04.png)
 
+We may also check his emails which are sent from where we can get the position of Frank with the company name.
+
+The company logo is available in inbox emails which can be found under `vol2\Users\IEUser\AppData\Roaming\Thunderbird\Profiles\nujdgn3y.default\ImapMail\mail.boxipay.online`.
+
 **2.Where is the location and name of the file where Frank stores his password?**
 
 We just follow our normal mind, we may not sotre our password in plaintext, so we tend to find something which can hide the text information. The `media files`, such as `pictures`, `music` and  `vedios`, should come to our mind at first. Meanwhile, we can check whether there is any documents file which provide hint for the location of passwrod. After we checj all the document file, we tend to search the result folder which has collected all the media files. Unfortunately, It seems that Frank is clever than we think. 
@@ -227,11 +241,17 @@ After I find the name of the operating system value in registry, so try to searc
 
 If you have any information to search, you just need to input the information in `Keyword Search` in Autopsy. You will obtain the answer directly.
 
+Also, the folders with name audio, image, message in file types are very important. 
+
+For password messages we can check these folders. For this answer if we go to `vol2/File Types/By MIME Type/message/rfc822.` The text mail `mail-20181030` says everything.
+
 ![08](/Pictures/Digital Forensics/Credit Card Fraud/08.png)
 
 **5.Who are the top 3 customers Frank sold the most cards to in Decemeber 2017 and how many cards did he sell to them?**
 
 It is very easy to find the relevant files named `2017 December Sales.xls` by following the `Views` subbar and proceeding to the correlative file collection.
+
+As there should be some file to save these details so go to application and search for all file types on the V`iews/File Types/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`, you will get a excel file named 2017 December. Extract this file and sort the data in excel.
 
 ![09](/Pictures/Digital Forensics/Credit Card Fraud/09.png)
 
@@ -241,9 +261,11 @@ We have gained the clue for the `smokingGun.zip`'s password which is `MYFOOTBALL
 
 So we try to find one audio file which contains the password for `smokingGun.zip`.We can finally find that the target audio file named `creative.mp3` contains the password.
 
+Also, the folders with name audio, image, message in file types are very important. For password messages we can check these folders. For this answer if we go to `vol2/File Types/By MIME Type/audio/mpeg/creative.mp3`.
+
 **7.What websites has Frank Visited using the laptop?**
 
-You can easily find the website history and cookies from the `Results` subbar. And also use the `Timeline` to sort out all the web activity.
+You can easily find the website history and cookies from the `Results` subbar. And also use the `Timeline` to sort out all the web activity. Click on the web history and on the right side Save table as CSV. 
 
 ![11](/Pictures/Digital Forensics/Credit Card Fraud/11.png)
 
@@ -275,7 +297,27 @@ You can easily find the website history and cookies from the `Results` subbar. A
 
 Firstly, I think we should have some knowledge of Linux system logs and file structure which can help us better to search for useful information which we can base on to analyse what happened in target machine.    If your system or server has been suffered from the cyber attack, go check the system log and you will find some clues.
 
-The system log is managed by a service called `syslog`:<br>`/var/log/boot.log` : Records the events that occur during the boot process of the system, which is the information displayed during the POST process of the Linux system.<br>`/var/log/lastlog`  ：Record the time of the last successful user login, login IP and other information.<br>`/var/log/secure`    ：Linux system security log, recording user and workgroup deterioration, user login authentication.<br>`/var/log/btmp`        ：Record users, time and remote IP address of Linux login failure.<br>
+>  The system log is managed by a service called `syslog`:<br>`/var/log/boot.log` : Records the events that occur during the boot process of the system, which is the information displayed during the POST process of the Linux system.<br>`/var/log/lastlog`  ：Record the time of the last successful user login, login IP and other information.<br>`/var/log/secure`    ：Linux system security log, recording user and workgroup deterioration, user login authentication.<br>`/var/log/btmp`        ：Record users, time and remote IP address of Linux login failure.<br>
+
+> **/bin**- contains all the binaries for the OS
+> **/sbin**: System binaries
+> **/boot**: all the stuff needed for booting the system
+> **/cdrom**: for mounting CDs
+> **/dev**: All the mounted devices come under this like hard disk partitions which are called sda1,sda2 etc
+> **/etc**: It is a folder which contains all system-vide application files which are system specific not the user specific like apt.
+> **/lib/lib32/lib64**: are folders where libraries are saved for system required software.
+> **/media/mnt**: both are more or less same if you mount a device or connect a pen drive on a computer with linux OS the system automatically mounts the device in the media folder while if you manually mount a device it is done using mnt.
+> **/opt**: It is the folder which contains all optional files like optional applications or software which you want to use. Manually installed software by vendors reside here. Self written application resides here.
+> **/proc**: It contains all the processes running on the system. Pseudo files. Use process ID PID to check all the processes with this ID. All cpu info of CPU can be find out.
+> **/root**: User home folder but root permission is required.
+> **/run**: It contains all the processes running on RAM so as and when the system shuts down the data stored here goes which means this folder is empty when we turn ON the system.
+> **/sys**: system files, similar to run directory so on boot time nothing is stored there.
+> **/tmp**: temporary folder so if something crashes in between while running any application you can get the recent copy of your work here. Mostly empty when you reboot the system.
+> **/usr**: All the applications used by user will be installed here while bin folder contains all the application used by the system to do maintenance. Non essential applications are stored here. So the bin, sbin and lib inside the usr folder contain their essential files and libraries.
+> **/var**: it contains all the logs and crashes for system and many aplications. It is always expected to grow whenever you run the system.
+> **/home**: User specific information just like My Documents in windows.
+>
+> For more information, please click [here](https://doherasyang.github.io/2019/12/19/Digital-Forensics.html)https://www.youtube.com/watch?v=HbgzrKJvDRw 
 
 For some commericial operating system like `Debian` and `Ubuntu`, they use `/var/log/auth.log` to store the stores logs from the pluggable authentication module (PAM), including successful logins, failed login attempts, and authentication methods. 
 
@@ -283,7 +325,7 @@ For the details of system admin, the information is stored in `/etc/passwd` and 
 
 ![01](/Pictures/Digital Forensics/Linux Forensics/01.png)
 
-Next we go to check the system log file, we can see that the remote attacker wanted to create a new users in  attacked system via `ssh`. In addition, the port name `22` is reserved for the `ssh` service. That means the service named `ssh` trigerrd the alert for network administrators. Ant the account's name is `ttyl`.
+Next we go to check the system log file, we can see that the remote attacker wanted to create a new users in  attacked system via `ssh`. In addition, the port name `22` is reserved for the `ssh` service. On this protocol the `SSHD` service has been attacked by the attacker through which he is trying to login into the system. 
 
 ![02](/Pictures/Digital Forensics/Linux Forensics/02.png)
 
@@ -667,24 +709,24 @@ From the `canonical_address` you can see the each contact's `id` and you can com
 
 ![15](/Pictures/Digital Forensics/Mobile Forensics/15.png)
 
+Also you can check `message`
+
+![18](/Pictures/Digital Forensics/Mobile Forensics/18.png)
+
 **16.What is the MSISDN of the owner of the phone?**
 
 `MSISDN` is a number uniquely identifying a subscription in a Global System for Mobile communications or a Universal Mobile Telecommunications System mobile network.
 
 
 
-
-
 **17.What time was the first message sent on WhatsApp?**
 
+From the `vol_vol52/media/0/WhatsApp/Databases`, we can find there are so much encrypted message file, so the first time the suspect used `WhatsApp` is `2018-12-01`.
 
-
-
+![19](/Pictures/Digital Forensics/Mobile Forensics/19.png)
 
 **18.List the evidence(s) that make you to believe that the suspect is involved in Rhino**
 **Smuggling.**
-
-
 
 
 
@@ -711,8 +753,6 @@ In the directory `vol_vol52/misc/wifi` , the file including all the wireless inf
 **22.What other countries apart from Kenya has the suspect visited?**
 
 You can search the keywords like`Latitude` and `Longitude`, you will know the location the suspect visited by inputing the mentioned keywords.
-
-
 
 
 
