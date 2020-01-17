@@ -133,15 +133,21 @@ Then save the new create Hex file by `ctrl+S` and choose the file type as `doc`.
 
 ![05](/Pictures/Digital Forensics/Drug Dealer Case/05.png)
 
-4.For the **second question**, if we want to locate and recover the `JPG` file we should find the Hex signature of `JPG` file which is `FF D8`. We can locate the beginning of jpg file and also it is very easy to find the end of Hex value.<br>By finishing the searching for Hex signature, you can find the beginning location should be `00009200`.  By scrolling down the Hex file, we can find `pw = goodtimes` which is located at the line of `0000CF20`. Because `50 4B` is the Hex signature for `DOCX PPTX XLSX`, we can konw that `0000CFF0` is the end of `JPG` file. Then, we save the Hex value file as the `JPG` file.
+4.For the **second question**, if we want to locate and recover the `JPG` file we should find the Hex signature of `JPG` file which is `FF D8`. We can locate the beginning of jpg file and also it is very easy to find the end of Hex value.<br>By finishing the searching for Hex signature, you can find the beginning location should be `00009200`. The trailing signature of the .jpg file is `FF D9` which comes at `CE E0` so we will select the data till this address. By scrolling down the Hex file, we can find `pw = goodtimes` which is located at the line of `0000CF20`. 
+
+Then, we save the Hex value file as the `JPG` file.
 
 ![06](/Pictures/Digital Forensics/Drug Dealer Case/06.jpg)
 
-5.We have recognized that `50 4B` is the Hex value of `XLSX` or `ZIP`file. However the `XLSX`'s Hex value should be more specific which is `50 4B 03 04 14 00 06 00`. We can see the original Hex value is different from that. So we can make sure that We can easily extract the final file by imitating previous steps.<br>`0000D000` is the beginning Hex value of the `ZIP` file and also we can locate the end Hex value of file should be `0000D9FF`. We will obtain the encrypted `XLS` file. And the password we have known is `goodtimes`.
+5.We have recognized that `50 4B` is the Hex value of `XLSX` or `ZIP`file. However the `XLSX`'s Hex value should be more specific which is `50 4B 03 04 14 00 06 00`. We can see the original Hex value is different from that. So we can make sure that We can easily extract the final file by imitating previous steps.<br>`0000D000` is the beginning Hex value of the `ZIP` file and also we can locate the end Hex value of file by considering the trailer bytes `50 4B` after which we have to count `17 characters` which here is at `0000D9FF`. We will obtain the encrypted `XLS` file. And the password we have known is `goodtimes`.
 
 ![07](/Pictures/Digital Forensics/Drug Dealer Case/07.png)
 
-6.For **Q6**, The `JPG` file just includes the values for color space, I don't know how to confirm the tools to generate it.
+6.For Q4,we used passwords or encryption to mask them from others.
+
+7.For Q5, we used hex editor and file signature table to successfully examine the contents of each file.
+
+8.For **Q6**, The `JPG` file just includes the values for color space, I don't know how to confirm the tools to generate it.
 
 
 
@@ -603,6 +609,8 @@ Otherwise, you can check the database file named `accounts_de.db` to find the us
 
 **8.What is the name of the file that contains the text, "now you can edit and post photos, videos and GIFs ?**
 
+Extract the vedioes from the application. It's name is `e1f012cd75cd41398a300960c1a7f85a.mp4`.
+
 **9.How many images can you find that was sent with WhatsApp?**
 
 The system store the information about the revelent image files which had been sent  in `vol_vol52/system_ce/0/shortcut_service/bitmaps/com.whatsapp	`. We can find information from the under pictures:
@@ -655,28 +663,54 @@ Also you can find the log information from here:
 
 Please refer to Q14.
 
+From the `canonical_address` you can see the each contact's `id` and you can comapre `recipient_id` with the id from `canonical_address`.
+
+![15](/Pictures/Digital Forensics/Mobile Forensics/15.png)
+
 **16.What is the MSISDN of the owner of the phone?**
+
+`MSISDN` is a number uniquely identifying a subscription in a Global System for Mobile communications or a Universal Mobile Telecommunications System mobile network.
+
+
 
 
 
 **17.What time was the first message sent on WhatsApp?**
 
+
+
+
+
 **18.List the evidence(s) that make you to believe that the suspect is involved in Rhino**
 **Smuggling.**
 
+
+
+
+
 **19.What locations do you think the suspect visited on the 30th November 2018?**
+
+From the `log_logcat_com_enflick_android_TextNow_0.log	` we can find the useful information which indicate the date which is `2018-11-30`. And we will obtain the `Latitude` and `Longitude` information which confire the location is `North Carolina American`.
+
+![16](/Pictures/Digital Forensics/Mobile Forensics/16.png
 
 **20.List the wireless networks, the device has been connected to ?**
 
-**21What evidence can you use to prove that the suspect visited Kenya?**
+In the directory `vol_vol52/misc/wifi` , the file including all the wireless information named `wpa_supplicant.conf` can be found.
+
+![17](/Pictures/Digital Forensics/Mobile Forensics/17.png)
+
+**21.What evidence can you use to prove that the suspect visited Kenya?**
+
+`Textnow` is a application for people to send the message. And
 
 
 
-**21What other countries apart from Kenya has the suspect visited?**
 
 
+**22.What other countries apart from Kenya has the suspect visited?**
 
-
+You can search the keywords like`Latitude` and `Longitude`, you will know the location the suspect visited by inputing the mentioned keywords.
 
 
 
