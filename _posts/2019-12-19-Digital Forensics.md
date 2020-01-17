@@ -325,7 +325,13 @@ For the details of system admin, the information is stored in `/etc/passwd` and 
 
 ![01](/Pictures/Digital Forensics/Linux Forensics/01.png)
 
-Next we go to check the system log file, we can see that the remote attacker wanted to create a new users in  attacked system via `ssh`. In addition, the port name `22` is reserved for the `ssh` service. On this protocol the `SSHD` service has been attacked by the attacker through which he is trying to login into the system. 
+Next we go to check the system log file, we can see that the remote attacker wanted to create a new users in  attacked system via `ssh`. In addition, the port name `22` is reserved for the `ssh` service. On this protocol the `SSHD` service has been attacked by the attacker through which he is trying to login into the system.
+
+The account name is Victoria ./var/etc/hostname
+
+> **SSH:** This is the home page for the SSH (Secure Shell) protocol, software, and related information. SSH is a software package that enables secure system administration and file transfers over insecure networks. It is used in nearly every data center, in every larger enterprise. 
+>
+> **SSHD** is the [**OpenSSH**](https://www.ssh.com/ssh/openssh/) server process. It listens to incoming connections using the [**SSH protocol**](https://www.ssh.com/ssh/protocol) and acts as the server for the protocol. It handles user authentication, encryption, terminal connections, file transfers, and [**tunneling**](https://www.ssh.com/ssh/tunneling/).
 
 ![02](/Pictures/Digital Forensics/Linux Forensics/02.png)
 
@@ -333,13 +339,33 @@ Next we go to check the system log file, we can see that the remote attacker wan
 
 It is very easy to use the Unix commands to operate the Linux system as you want. 
 
-We can obtain the system information by checking this file `/etc/issue`. For the information about the CPU, you can access the `/proc/cpuinfo` to obtain it. Also, you can find them from the log file at `/var/log/install/hardware-summary`.
+We can obtain the system information by checking this file `/etc/issue`. For the information about the CPU, you can access the `/proc/cpuinfo` to obtain it. Also, you can find them from the log file at `/var/log/installer/hardware-summary`.
 
 ![03](/Pictures/Digital Forensics/Linux Forensics/03.png)
 
 **3.What processes were running on targeted server?**
 
 There is no log that logs the processes. The only way you would find is that perhaps there was something has written to the `syslog` . So the alternative way is to find the relevant log file which may have the crucial informartion about the process. We can try these log files `/var/logs/syslog` and ` /var/logs/messag`.
+
+Otherwise, the processes running on the system may be obtained from the `/var/run` crond.pid, sshd.pid, acpid.pid, dhcpclient.eth0.pid, rsyslogd.pid, postmap.pid, rpc.statd.pid, sm-notify.pid, SMTP.
+
+> The software utility **cron** is a time-based [job scheduler](https://en.wikipedia.org/wiki/Job_scheduler) in [Unix-like](https://en.wikipedia.org/wiki/Unix-like) computer [operating systems](https://en.wikipedia.org/wiki/Operating_system). Users that set up and maintain software environments use cron to schedule jobs (commands or [shell scripts](https://en.wikipedia.org/wiki/Shell_script)) to run periodically at fixed times, dates, or intervals. It typically automates system maintenance or administration—though its general-purpose nature makes it useful for things like downloading files from the [Internet](https://en.wikipedia.org/wiki/Internet) and downloading [email](https://en.wikipedia.org/wiki/Email) at regular intervals.
+>
+> The acpid service supports the Advanced Configuration and Power Interface (ACPI) to allow intelligent power management on your system and to query battery and configuration status. It listens on a file (**/proc/acpi/event**) and when an event occurs, executes programs to handle the event. Rules are defined by simple configuration files. acpid will look in a configuration directory (**/etc/acpi/events** by default), and parse all files that do not begin with a period (‘.’). Each file must define two things: an event and also a corresponding action.
+>
+> **Rsyslogd** is a system utility providing support for message logging.
+>
+> The **postmap** command creates or queries one or more Postfix lookup tables, or updates an existing one.
+>
+> `rpc.statd` implements the NSM (Network Status Monitor) RPC protocol, As per the name NSM, it doesn’t actually provide active monitoring but implements a reboot notification service. It is used by rpc.lockd for lock recovery if NFS Server or Client Crashes.
+>
+> **NFS** must be able to detect if any lock state is lost coz of system reboot. NFS Server must release all file locks used by any application on client which got rebooted, Similarly a client must remind the server of file locks held by applications running on it.
+>
+> **NSM** is used to notify NFS peers of reboots and for this it requires 2 components.
+>
+> **rpc.statd** which listens & sends reboot notifications
+>
+> **sm-notify** A helper program that notifies NFS peers after the local system reboots.
 
 **4.What are attackers IP and target IP addresses?**
 
@@ -351,7 +377,7 @@ For the target IP address, You can find this crucial information from `/etc/var/
 
 **5.What service was attacked?**
 
-We can see that before the attacker stealed the files from the server, the system tried to establish the `SMTP` service. `SMTP` is a set of rules that allow data to be sent from one email server to another and allows the exchange of online messages. For the more details about the `SMTP` services, please click [here](https://whatis.techtarget.com/definition/SMTP-Simple-Mail-Transfer-Protocol).
+We can see that before the attacker tried to download the files to host machine, the system tried to establish the `SMTP` service. `SMTP` is a set of rules that allow data to be sent from one email server to another and allows the exchange of online messages. For the more details about the `SMTP` services, please click [here](https://whatis.techtarget.com/definition/SMTP-Simple-Mail-Transfer-Protocol).
 
 ![05](/Pictures/Digital Forensics/Linux Forensics/05.png)
 
@@ -369,11 +395,17 @@ A remotely exploitable vulnerability has been discovered in Sendmail. The vulner
 
 The overflow condition occurs when Sendmail processes incoming e-mail messages containing malformed address parameters in a field such as "From:" or "CC:". One of the checks to ensure that the addresses are valid is flawed, resulting in a buffer overflow condition. Successful attackers may exploit this vulnerability to gain root privileges on affected servers remotely.
 
+By exploiting the above vulnerability in SMTP user is trying to launch buffer overflow attack and he wants to create a new user in the server.(/var/log/rejectlog create user passwd and wget commands)
+
 **8.Did the attacker download files? Which ones? Give an analysis of those files.**
 
-We can analyse the `/etc/log/mainlog` to find the message about the files which were stealed by remote attacker. `wget` is one of the Linux commands which can allow the other to download files from the Internet or remote server. It can support  HTTP, HTTPS and FTP protocols, and can use HTTP proxy. For more details, please click [here](https://shapeshed.com/unix-wget/).
+We can analyse the `/etc/log/mainlog` to find the message about the files which were downloaded by remote attacker. `wget` is one of the Linux commands which can allow the other to download files from the Internet or remote server. It can support  HTTP, HTTPS and FTP protocols, and can use HTTP proxy. For more details, please click [here](https://shapeshed.com/unix-wget/).
 
-After you extract the `mainlog` from the `Autopsy`, you can open it by `Notepad` and analyse it. You can find the `wget` command , target file names and target storing location.
+After you extract the `mainlog/rejectlog` from the `Autopsy`, you can open it by `Notepad` and analyse it. You can find the `wget` command , target file names and target storing location.
+
+`/tmp/c.pl` and `/tmp/rk.tar`. 
+
+Initially he is downloading the files but in the end para he is using rm command to remove the rk.tar file.
 
 ![05](/Pictures/Digital Forensics/Linux Forensics/07.png)
 
@@ -385,7 +417,7 @@ No, the attacker manullly steal the files via the SMTP server. We can see the ti
 
 **10.What could have prevented the attacks?**
 
-The system admin should update the `SMTP` and its components into the latest version. Also for the internal network or secret network, the internal network should be directly disconnected from the external network or a firewall should be set up between the local network and the external network. 
+The system admin should update the `SMTP` and its components into the latest version(EXIM 4.0 version has this vulnerability so updating it could have prevent the attack). Also for the internal network or secret network, the internal network should be directly disconnected from the external network or a firewall should be set up between the local network and the external network. 
 
 The firewall can prevent most of cyber attack.
 
@@ -721,9 +753,11 @@ Also you can check `message`
 
 **17.What time was the first message sent on WhatsApp?**
 
-From the `vol_vol52/media/0/WhatsApp/Databases`, we can find there are so much encrypted message file, so the first time the suspect used `WhatsApp` is `2018-12-01`.
+From the `vol_vol52/media/0/WhatsApp/Databases`, we can find there are so much encrypted message file, so the first time the suspect used `WhatsApp` is `2018-12-01`. 
 
 ![19](/Pictures/Digital Forensics/Mobile Forensics/19.png)
+
+Also, we find 
 
 **18.List the evidence(s) that make you to believe that the suspect is involved in Rhino**
 **Smuggling.**
@@ -743,12 +777,6 @@ In the directory `vol_vol52/misc/wifi` , the file including all the wireless inf
 ![17](/Pictures/Digital Forensics/Mobile Forensics/17.png)
 
 **21.What evidence can you use to prove that the suspect visited Kenya?**
-
-`Textnow` is a application for people to send the message. And
-
-
-
-
 
 **22.What other countries apart from Kenya has the suspect visited?**
 
