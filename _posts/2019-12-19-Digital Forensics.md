@@ -17,7 +17,7 @@ tags: Lectures
 
 > **Acknowledges Specially**:
 >
-> ​	I really appreciate my graduate classmates <u>Tanushree</u> and <u>Simon</u> for their careful and patient help to complete this seemingly impossible task. Without their help and advice I would not be able to complete such a huge and large task alone.
+> ​	I really appreciate my graduate classmates <u>Tanushree</u> and <u>Simon</u> for their careful and patient help to complete this seemingly impossible task. Without their help and advice I would not be able to complete such a large and complex task alone.
 >
 > ​	In the course of writing this blog, I wanted to quit many times because of the difficulty of digital forensic analysis. Thanks to <u>Neil</u> for encouraging me and accomplishing me.
 
@@ -512,11 +512,19 @@ Use the command `sockscan` for checking the information about the processes whic
 
 **3.List any suspicious URLs that may be in the suspected process’s memory.**
 
-We can check the clipboard information by command `clipboard`, we can find the history Data `search-network-plus.com/...ternet%20Explorer%206.0`. Next, we will check the dump files.
+To check the suspicious URLs, you should use the `image-loc` command to generate the web history from the memory files. From the above URLs it can be seen that the third one which is related to the `process ID 1756` is the most suspected one.
+
+```shell
+> python vol.py -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" image-loc iehistory
+```
 
 ![03](/Pictures/Digital Forensics/Bad PDF/03.png)
 
 **4.Are there any processes that contain URLs that may point to banking troubles? If so, what are these processes and what are the URLs?**
+
+Use command `strings “C:\Users\Forensics User\Desktop\Forensics 2019\Tasks\8-Bad PDF\BF.vmem” > “C:\Users\Forensics User\Desktop\Forensics 2019\Tasks\8-Bad PDF\results.txt”`
+
+Search for the string `bank` in the text file. As it is related to the `firefox` so the process ID will be same as the ID of firefox i.e. `888`.
 
 We have locked the target is the web application whose name is `firefox` and also the service named `AcroRd32.exe` which is supported by the Adobe. Let's go check the `dumpfiles` and `memdump`. You should download the `Strings` command line from [here](https://docs.microsoft.com/en-us/sysinternals/downloads/strings). And copy all the files into the repostity named `result`.
 
@@ -543,6 +551,16 @@ From the generated file named `888.txt` and `1752.txt` , we can find the URL lik
 
 **5.List suspicious files that were loaded by any processes on the victim’s machine. From this information, what was a possible payload of the initial exploit be that would be affecting the victim’s bank account?**
 
+Use the command for memory dump
+
+```shell
+> Python vol.py –f “C:\Users\Forensics User\Desktop\Forensics 2019\Tasks\8-Bad PDF\BF.vmem” memdump –p 1752 –dump-dir ./result
+```
+
+Seach for `.exe` files
+
+Sspicious file `srda64.exe` because this file has been downloaded with the adobe patch which is not there in the authenticated update patch. 
+
 For the files in the system memory, we should use the command named `filescan` to find the FILE_OBJECT handles. We should compare the content betwenn the `file.txt` and `888.txt` to find which files were loaded by the process. We can try to find the virus file which can steal the confidential information.
 
 ```shell
@@ -554,25 +572,28 @@ For the files in the system memory, we should use the command named `filescan` t
 
 ![05](/Pictures/Digital Forensics/Bad PDF/05.png)
 
-From the previous steps, we can find the suspicious files named `sdra64.exe` which had been operated by the targeted application, Next we have to check the details of this file. The picture below shows that there are two files named `sdra64.exe`.
+From the previous steps, we can find the suspicious files named `sdra64.exe` which had been operated by the targeted application, Next we have to check the details of this file. The picture below shows that there are two files named `sdra64.exe`. 
 
 Next, we should check the `dumpfiles` to check the possibality of virus files. The first file's offset is `0x000000000230ff28`, and the second file's offset is `0x0000000002464028`, you can check the dump files which may contain the crucial information.
+
+By running the following command we will get the malware in the dump file but possibly it will not open because of virus protection in our PCs. This is the initial exploit or possible payload.
 
 ```shell
 >python vol.py dumpfiles -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -Q 0x000000000230ff28 --dump-dir ./result
 >python vol.py dumpfiles -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -Q 0x0000000002464028 --dump-dir ./result
 > cd result | strings file.None.0x82091008.dat > PDF_1.txt | strings file.None.0x8221fb08.dat > PDF_2.txt
+# for PDF.php
+> python vol.py dumpfiles -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" -Q 0x0000000001ffadf0 --dump-dir ./result
 ```
 
 We can find this virus file which can steal the information from the host computer and can be embedd in the email, for more details, please click [here](https://www.file.net/process/sdra64.exe.html).
 
 **6.Are there any related registry entries associated with the payload?** 
 
-First, we should print all the registry key to display all the registry key, subways, abd values from the registry hives.
+We can use the command `printkey` to generate all the registry information.
 
 ```shell
-> python vol.py -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" printkey --profile = WinXPSP2x86 > ./result/rekey.txt
-> python vol.py -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" hivedump --profile = WinXPSP2x86 > ./result/revalue.txt
+> python vol.py -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" printkey -K "“ Microsoft\Windows\CurrentVersion\Run" --profile = WinXPSP2x86 > ./result/rekey.txt
 ```
 
 With the professor's help, we should check the logging information which located. at `Microsoft\WindowsNT\Currentversion\Winlogon` . And the vaule should be the current value of the virus file.
@@ -597,13 +618,71 @@ The Trojan virus file named `sdra64.exe`, this is the backdoor programme which t
 
 **1.List the protocols found in the capture. What protocol do you think the attack(s) is/are based on?**
 
+Go to `Statistics -> Protocol Hierachy`
 
+From the `Protocol hierachy` it can be seen that the `HTTP` takes most of the percent bytes `78.8%` out of which a big text packet `Line Based Text Data` is taking `64.1%` of total consumption which is doubtful so we can check it in the `pcap.log`
 
+![01](/Pictures/Digital Forensics/Network/01.png)
 
+Next, we input the `HTTP` into the filter to check all the `HTTP` packets. As we can see that Line Based Text data is taking maximum payload so we will search for this in all `html` pages. In info look for all packets which have `text/html`.
 
+Start with the first packet, Go to middle window in which the Response in frame XX is written. So go with this flow and check for something unusual. From here, we come to know that the local machine was trying to connect to `192.1689.56.50`.
 
+Also from the first packet we can observe that the local host (`10.0.2.15`) is trying to connect to (192.168.56.50) (see upper window `packet 25`) the URL of which is http://rapidshare.com.eyu32.ru/login.php (This info is available in the middle window HTTP). The response is in `packet 28` where the user is asked to enter the log information which can be viewed in the middle window `Line Based Text data`. So the user enters this the response is in frame 32 where he rquests the http://rapidshare.com.eyu32.ru/images/ssltyles.css in frame 34 he gets the response and next he requests http://rapidshare.com.eyu32.ru/images/images/dot.jpg
 
+![02](/Pictures/Digital Forensics/Network/02.png)
 
+![03](/Pictures/Digital Forensics/Network/03.png)
+
+The response comes in frame 37 as the 404 not found but he has been redirected to http://sploitme.com in `packet 41` which has IP address `192.168.56.52`. Similarly he clicks on some other images like `packet 42` on http://rapidshare.com but every time he gets 404 not found but a redirection to http://sploitme.com. 
+
+![04](/Pictures/Digital Forensics/Network/04.png)
+
+In `packet 57` he clicked on http://sploitme.com.cn/fg/show.php?s=3feb5a6b2f and in reponse to this he gets a text message in `packet 63`. If we look for the Line Based text data we can see the javascript file. By closely looking we can see that it has eval() function which contains a very big string. 
+
+`Eval()` is a vulnerability in http which should not be there. For more details see below.
+
+![05](/Pictures/Digital Forensics/Network/05.png)
+
+![06](/Pictures/Digital Forensics/Network/06.png)
+
+So attack is based on http protocol. (The other method is goto Analyze-> Follow-> HTTP stream)
+
+**2.List IPs and hosts names /domain names. What can you tell about it?**
+
+For host:  Go to `Statistics -> Resolved Address`
+
+For other IPs: Go to `Statistics -> IPv4 Statistics -> Source and Destination Addresses`
+
+![07](/Pictures/Digital Forensics/Network/07.png)
+
+We can tell that the IP address of local machine is `10.0.2.15` and the attacker IP is `192.168.56.52`.
+
+**3.List all the web pages. List those visited containing suspect and possibly malicious Java script and who’c connecting to it.**
+
+Already answered in the solution of Question 1.
+
+**4.Sketch the overview of general actions performed by attacker.**
+
+Already answered in the solution of Question 1.
+
+**5.What actions are performed to slow the analysis down? Provide java script of these actions?**
+
+Paste the line of code containing that eval(CRYPT.obfuscate()) full code. Packet 63
+
+**6.Which OS was targeted by the attacks? Which software? And which vulnerabilities? Could the attack be prevented?**
+
+From `packet 57` lower window it can be seen that the local machine has `Windows NT 5.1` which indicates `Window XP`. Any program that hosts the `WebBrowser ActiveX control` or used the` IE HTML `rendering engine (MSHTML) may be affected by this vulnerability. Mozilla with Active X for Windows XP.
+
+![08](/Pictures/Digital Forensics/Network/08.png)
+
+For more information, please click [here](https://www.kb.cert.org/vuls/id/713878/).
+
+![10](/Pictures/Digital Forensics/Network/10.png)
+
+The below pictures indicates the `Marking name` and corresponding `System version`.
+
+![09](/Pictures/Digital Forensics/Network/09.png)
 
 ---
 
