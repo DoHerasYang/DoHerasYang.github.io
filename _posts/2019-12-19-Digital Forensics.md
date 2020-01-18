@@ -11,7 +11,7 @@ tags: Lectures
 
 # Digital Forensics - Lecture
 
-> The content of this blog is based on the course CM6016 (Cyber Threat Hunting and Digital Forensics (AUTUMN 2019~20)) at the University of Sheffield.
+> The content of this blog is based on the course CM6016 (Cyber Threat Hunting and Digital Forensics (AUTUMN 2019~2020) at the University of Sheffield.
 >
 > **@All the konowledge rights are reserved by the owner of this course's materials and Nesrine Kaaniche at the University of Sheffield.**
 
