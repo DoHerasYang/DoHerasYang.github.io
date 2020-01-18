@@ -15,7 +15,11 @@ tags: Lectures
 >
 > **@All the konowledge rights are reserved by the owner of this course's materials and Nesrine Kaaniche at the University of Sheffield.**
 
-> Really Appreciate my classmates 
+> **Acknowledges Specially**:
+>
+> ​	I really appreciate my graduate classmates <u>Tanushree</u> and <u>Simon</u> for their careful and patient help to complete this seemingly impossible task. Without their help and advice I would not be able to complete such a huge and large task alone.
+>
+> ​	In the course of writing this blog, I wanted to quit many times because of the difficulty of digital forensic analysis. Thanks to <u>Neil</u> for encouraging me and accomplish me.
 
 ### 1. Hacking Incident
 
