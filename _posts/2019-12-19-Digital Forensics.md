@@ -749,15 +749,11 @@ Also you can check `message`
 
 `MSISDN` is a number uniquely identifying a subscription in a Global System for Mobile communications or a Universal Mobile Telecommunications System mobile network.
 
-
-
 **17.What time was the first message sent on WhatsApp?**
 
-From the `vol_vol52/media/0/WhatsApp/Databases`, we can find there are so much encrypted message file, so the first time the suspect used `WhatsApp` is `2018-12-01`. 
+From the `vol_vol52/system_ce/0/recent_images/153_task_thumbnail.png   `, we can decuce the time the suspects used the `WhatsApp`.
 
 ![19](/Pictures/Digital Forensics/Mobile Forensics/19.png)
-
-Also, we find 
 
 **18.List the evidence(s) that make you to believe that the suspect is involved in Rhino**
 **Smuggling.**
