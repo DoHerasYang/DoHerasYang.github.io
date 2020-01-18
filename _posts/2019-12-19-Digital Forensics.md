@@ -727,7 +727,7 @@ In practice, I didn't find a database file named `main.db` but we can find the r
 
 Most forensic examiners know to look at the MMSSMS.db for SMS/MMS data on almost any device. Android devices typically store this data in the telephony folder here:
 
-`*data/data/com.android.providers.telephony/databases/mmssms.db`
+` vol_vol52/user_de/0/com.android.providers.telephony/databases/mmssms.db `
 
 ![13](/Pictures/Digital Forensics/Mobile Forensics/13.png)
 
