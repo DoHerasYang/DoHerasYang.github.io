@@ -453,7 +453,7 @@ In this section, we use the  well-known open source  forensics framework `volati
 
 Open the `Command Prompt` as the administraor, and proceed to the installation folder `C:\volatility-2.6\volatility-master`.
 
-```powershell
+```shell
 > cd C:\volatility-2.6\volatility-master
 > chdir 
 C:\volatility-2.6\volatility-master
