@@ -221,9 +221,9 @@ The company logo is available in inbox emails which can be found under `vol2\Use
 
 **2.Where is the location and name of the file where Frank stores his password?**
 
-We just follow our normal mind, we may not sotre our password in plaintext, so we tend to find something which can hide the text information. The `media files`, such as `pictures`, `music` and  `vedios`, should come to our mind at first. Meanwhile, we can check whether there is any documents file which provide hint for the location of passwrod. After we checj all the document file, we tend to search the result folder which has collected all the media files. Unfortunately, It seems that Frank is clever than we think. 
+We just follow our normal mind, we may not sotre our password in plaintext, so we tend to find something which can hide the text information. The `media files`, such as `pictures`, `music` and  `vedios`, should come to our mind at first. Meanwhile, we can check whether there is any documents file which provide hint for the location of passwrod. After we check all the document file, we tend to search the result folder which has collected all the media files. Unfortunately, It seems that Frank is clever than we think. 
 
-The file structure in Windows has one prominent features that each users has their unique forlder in `C:\users`. For the image of Windos system, it keeps this feature and the path should be `vol2\users`. We head down to this repositority and check all the folders such as `Document` and `Music`.  After the carefully searching, we can find our answer is under the directory named `Personal Biz`.
+The file structure in Windows has one prominent features that each users has their unique forlder in `C:\users`. For the image of Windows system, it keeps this feature and the path should be `vol2\users`. We head down to this repositority and check all the folders such as `Document` and `Music`.  After the carefully searching, we can find our answer is under the directory named `Personal Biz`.
 
 ![05](/Pictures/Digital Forensics/Credit Card Fraud/05.png)
 
