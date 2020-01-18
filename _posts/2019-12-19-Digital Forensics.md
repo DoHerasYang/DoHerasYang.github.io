@@ -768,7 +768,7 @@ From the `vol_vol52/system_ce/0/recent_images/153_task_thumbnail.png   `, we can
 
 From the `log_logcat_com_enflick_android_TextNow_0.log	` we can find the useful information which indicate the date which is `2018-11-30`. And we will obtain the `Latitude` and `Longitude` information which confire the location is `North Carolina American`.
 
-![16](/Pictures/Digital Forensics/Mobile Forensics/16.png
+![16](/Pictures/Digital Forensics/Mobile Forensics/16.png)
 
 **20.List the wireless networks, the device has been connected to ?**
 
