@@ -19,7 +19,7 @@ tags: Lectures
 >
 > ​	I really appreciate my graduate classmates <u>Tanushree</u> and <u>Simon</u> for their careful and patient help to complete this seemingly impossible task. Without their help and advice I would not be able to complete such a huge and large task alone.
 >
-> ​	In the course of writing this blog, I wanted to quit many times because of the difficulty of digital forensic analysis. Thanks to <u>Neil</u> for encouraging me and accomplish me.
+> ​	In the course of writing this blog, I wanted to quit many times because of the difficulty of digital forensic analysis. Thanks to <u>Neil</u> for encouraging me and accomplishing me.
 
 ### 1. Hacking Incident
 
