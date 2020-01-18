@@ -303,23 +303,23 @@ Firstly, I think we should have some knowledge of Linux system logs and file str
 
 >  The system log is managed by a service called `syslog`:<br>`/var/log/boot.log` : Records the events that occur during the boot process of the system, which is the information displayed during the POST process of the Linux system.<br>`/var/log/lastlog`  ：Record the time of the last successful user login, login IP and other information.<br>`/var/log/secure`    ：Linux system security log, recording user and workgroup deterioration, user login authentication.<br>`/var/log/btmp`        ：Record users, time and remote IP address of Linux login failure.<br>
 
-> **/bin**- contains all the binaries for the OS
-> **/sbin**: System binaries
-> **/boot**: all the stuff needed for booting the system
-> **/cdrom**: for mounting CDs
-> **/dev**: All the mounted devices come under this like hard disk partitions which are called sda1,sda2 etc
-> **/etc**: It is a folder which contains all system-vide application files which are system specific not the user specific like apt.
-> **/lib/lib32/lib64**: are folders where libraries are saved for system required software.
-> **/media/mnt**: both are more or less same if you mount a device or connect a pen drive on a computer with linux OS the system automatically mounts the device in the media folder while if you manually mount a device it is done using mnt.
-> **/opt**: It is the folder which contains all optional files like optional applications or software which you want to use. Manually installed software by vendors reside here. Self written application resides here.
-> **/proc**: It contains all the processes running on the system. Pseudo files. Use process ID PID to check all the processes with this ID. All cpu info of CPU can be find out.
-> **/root**: User home folder but root permission is required.
-> **/run**: It contains all the processes running on RAM so as and when the system shuts down the data stored here goes which means this folder is empty when we turn ON the system.
-> **/sys**: system files, similar to run directory so on boot time nothing is stored there.
-> **/tmp**: temporary folder so if something crashes in between while running any application you can get the recent copy of your work here. Mostly empty when you reboot the system.
-> **/usr**: All the applications used by user will be installed here while bin folder contains all the application used by the system to do maintenance. Non essential applications are stored here. So the bin, sbin and lib inside the usr folder contain their essential files and libraries.
-> **/var**: it contains all the logs and crashes for system and many aplications. It is always expected to grow whenever you run the system.
-> **/home**: User specific information just like My Documents in windows.
+> **/bin**: contains all the binaries for the OS<br>
+> **/sbin**: System binaries<br>
+> **/boot**: all the stuff needed for booting the system<br>
+> **/cdrom**: for mounting CDs<br>
+> **/dev**: All the mounted devices come under this like hard disk partitions which are called sda1,sda2 etc<br>
+> **/etc**: It is a folder which contains all system-vide application files which are system specific not the user specific like apt.<br>
+> **/lib/lib32/lib64**: are folders where libraries are saved for system required software.<br>
+> **/media/mnt**: both are more or less same if you mount a device or connect a pen drive on a computer with linux OS the system automatically mounts the device in the media folder while if you manually mount a device it is done using mnt.<br>
+> **/opt**: It is the folder which contains all optional files like optional applications or software which you want to use. Manually installed software by vendors reside here. Self written application resides here.<br>
+> **/proc**: It contains all the processes running on the system. Pseudo files. Use process ID PID to check all the processes with this ID. All cpu info of CPU can be find out.<br>
+> **/root**: User home folder but root permission is required.<br>
+> **/run**: It contains all the processes running on RAM so as and when the system shuts down the data stored here goes which means this folder is empty when we turn ON the system.<br>
+> **/sys**: system files, similar to run directory so on boot time nothing is stored there.<br>
+> **/tmp**: temporary folder so if something crashes in between while running any application you can get the recent copy of your work here. Mostly empty when you reboot the system.<br>
+> **/usr**: All the applications used by user will be installed here while bin folder contains all the application used by the system to do maintenance. Non essential applications are stored here. So the bin, sbin and lib inside the usr folder contain their essential files and libraries.<br>
+> **/var**: it contains all the logs and crashes for system and many aplications. It is always expected to grow whenever you run the system.<br>
+> **/home**: User specific information just like My Documents in windows.<br>
 >
 > For more information, please click [here](https://doherasyang.github.io/2019/12/19/Digital-Forensics.html)https://www.youtube.com/watch?v=HbgzrKJvDRw 
 
@@ -331,7 +331,7 @@ For the details of system admin, the information is stored in `/etc/passwd` and 
 
 Next we go to check the system log file, we can see that the remote attacker wanted to create a new users in  attacked system via `ssh`. In addition, the port name `22` is reserved for the `ssh` service. On this protocol the `SSHD` service has been attacked by the attacker through which he is trying to login into the system.
 
-The account name is Victoria ./var/etc/hostname
+The account name is Victoria `./var/etc/hostname`
 
 > **SSH:** This is the home page for the SSH (Secure Shell) protocol, software, and related information. SSH is a software package that enables secure system administration and file transfers over insecure networks. It is used in nearly every data center, in every larger enterprise. 
 >
@@ -349,7 +349,7 @@ We can obtain the system information by checking this file `/etc/issue`. For the
 
 **3.What processes were running on targeted server?**
 
-There is no log that logs the processes. The only way you would find is that perhaps there was something has written to the `syslog` . So the alternative way is to find the relevant log file which may have the crucial informartion about the process. We can try these log files `/var/logs/syslog` and ` /var/logs/messag`.
+There is no log that logs the processes. The only way you would find is that perhaps there was something has written to the `syslog` . So the alternative way is to find the relevant log file which may have the crucial informartion about the process. We can try these log files `/var/logs/syslog` and  `/var/logs/messag`.
 
 Otherwise, the processes running on the system may be obtained from the `/var/run` crond.pid, sshd.pid, acpid.pid, dhcpclient.eth0.pid, rsyslogd.pid, postmap.pid, rpc.statd.pid, sm-notify.pid, SMTP.
 
@@ -373,7 +373,7 @@ Otherwise, the processes running on the system may be obtained from the `/var/ru
 
 **4.What are attackers IP and target IP addresses?**
 
-For the attacker IP address, we can deduce it from the `/etc/auth.log`, and should be `192.168.56.101`.
+For the attacker IP address, we can deduce it from the `/var/log /auth.log`, and should be `192.168.56.101`.
 
 For the target IP address, You can find this crucial information from `/etc/var/log/exim4/rejectlog` where the host IP should be `192.168.56.1`.
 
@@ -393,7 +393,7 @@ From the `mainlog` and `rejectlog` , we can see that there are plenty of rejecti
 
 **7.What flaws or vulnerabilities did the attacker exploit?**
 
-The attacker exploited the vulnerabilities in `Sendmail` which is widely used  `Mail Transfer Agent (MTA) `for Unix and Microsoft Windows systtem.
+The attacker exploited the vulnerabilities in `Sendmail` which is widely used  `Mail Transfer Agent (MTA) `for `Unix` and `Microsoft Windows system`.
 
 A remotely exploitable vulnerability has been discovered in Sendmail. The vulnerability is due to a buffer overflow condition in the SMTP header parsing component. Remote attackers may exploit this vulnerability by connecting to target SMTP servers and transmitting to them malformed SMTP data.
 
