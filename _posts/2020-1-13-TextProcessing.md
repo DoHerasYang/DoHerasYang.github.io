@@ -1010,10 +1010,10 @@ Common to just use the words, but pre-process them for generalisation.
 >   + Discourse interpretation
 > + Lexical processing
 >   + Many rule-based NER systems made extensive use of specialised lexicons of proper names, such as <u>gazetteers</u> – lists of place names
->   + Why not use even larger gazetteers?
+>   + **Why not use even larger gazetteers?**
 >     + Many NEs occur in multiple categories - the larger the lexicons the greater ambiguity
 >     + the listing of names is never complete, so need some mechanism to type unseen NEs in any case
->   + Principles
+>   + **Principles**
 >     + Tokenisation, sentence splitting, morphological analysis
 >     + Part-of-speech tagging 
 >       + tags known proper name words andunknown uppercase-initial words as proper names (NNP, NNPS)  NNP = Proper nouns
@@ -1021,13 +1021,13 @@ Common to just use the words, but pre-process them for generalisation.
 >     + Trigger Word Tagging
 >       + certain words in multi-word names function as trigger words, permitting classification of the name
 >       + system has trigger words for various orgs,gov't institutions,locations
-> + NE Parsing
+> + **NE Parsing**
 >   + Using the presetrules to identify the unclassified proper name 
 >   + ![50](/Pictures/Text Processing/50.png)
 > + Discourcse Interpretation - Coreference Resolution
 >   + When the name class of an antecedent (anaphor) is known thenestablishing coreference allows the name class of the anaphor (antecedent) to be established.
 >   + An unclassified PN may be co-referential with a variant form of a classified PN. (PN = Pronoun)
->     +  Ford – Ford Motor Co.
+>     + **** Ford – Ford Motor Co.
 >   + An unclassified PN may be co-referential with a definite NP which permits the PN’s class to be inferred
 >     + E.g. Kellogg ... the breakfast cereal manufacturer
 >   + Semantic type information
@@ -1059,4 +1059,4 @@ Common to just use the words, but pre-process them for generalisation.
 >   + In sequence labelling for NER, each token is given one of three label
 >     types:
 >     + ![51](//Pictures/Text Processing/51.png)
->   + 
+>     + 
