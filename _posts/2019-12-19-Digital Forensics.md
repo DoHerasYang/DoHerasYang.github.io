@@ -171,7 +171,7 @@ Then save the new create Hex file by `ctrl+S` and choose the file type as `doc`.
 
 ![05](/Pictures/Digital Forensics/Drug Dealer Case/05.png)
 
-4.For the **second question**, if we want to locate and recover the `JPG` file we should find the Hex signature of `JPG` file which is `FF D8`. We can locate the beginning of jpg file and also it is very easy to find the end of Hex value.<br>By finishing the searching for Hex signature, you can find the beginning location should be `00009200`. The trailing signature of the .jpg file is `FF D9` which comes at `CE E0` so we will select the data till this address. By scrolling down the Hex file, we can find `pw = goodtimes` which is located at the line of `0000CF20`. 
+4.For the **second question**, if we want to locate and recover the `JPG` file we should find the Hex signature of `JPG` file which is `FF D8` which at `000092000`. We can locate the beginning of jpg file and also it is very easy to find the end of Hex value.<br>By finishing the searching for Hex signature, you can find the beginning location should be `00009200`. The trailing signature of the .jpg file is `FF D9` which comes at `0000B430` so we will select the data till this address. By scrolling down the Hex file, we can find `pw = goodtimes` which is located at the line of `0000CF20`. 
 
 Then, we save the Hex value file as the `JPG` file.
 
