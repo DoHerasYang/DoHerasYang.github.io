@@ -730,19 +730,21 @@ The below pictures indicates the `Marking name` and corresponding `System versio
 
 **Tool**:
 
-`Autospy` - Old friend good to see you again!
+`Autopsy` - Old friend good to see you again!
 
 **Analysis**:
 
-**1.What is Josh Hisory's Phone Number?**
+**1.What is Josh Hickman's Phone Number?**
 
 For the clue to find this information, we can try to search the SQLite3 database file named `/contacts/contact.db` where the contact information is stored in `Android` file system. 
 
 But in fact, the exact location of the contacts database might depend on the manufactures. While "plain Vanilla Android" has them in `/data/data/android.providers.contacts/databases`, the stock ROM on my *Motorola Milestone 2* e.g. uses `/data/data/com.motorola.blur.providers.contacts/databases/contacts2.db` instead.
 
-In the process of finding the phone number, I located the location of  database file, but I still can't extracte the information from it, I find a fix way which requires us to search the key words `Phone Number`, and the result indicates there is a file named `Contacts Artifact` which contains the exact information.
+In the process of finding the phone number, I located the location of  database file, but I still can't extract the information from it, I find a fix way which requires us to search the key words `Phone Number`, and the result indicates there is a file named `Contacts Artifact` which contains the exact information.
 
 Otherwise, the little tick I would like to supply is the folder which could contain the useful data for answering these questions is named `userdata`.
+
+Another approach is to go to Results->Contacts-> contacts2.db where the Name and phone number is written in the table tab.
 
 ![01](/Pictures/Digital Forensics/Mobile Forensics/01.png)
 
@@ -751,6 +753,8 @@ Otherwise, the little tick I would like to supply is the folder which could cont
 The idea to solve this question is to find the `log file`s or `XML files` which may contain information about the device and operation system. You can try keyword `hardware` in search engine.
 
 `/img_blk0_mmcblk0.bin/vol_vol52/media/0/Android/data/com.enflick.android.TextNow/cache/log_logcat_com_enflick_android_TextNow_0.log` is the file contains all the system information which also includes `Phone Number` or other device activity records.
+
+Another approach is goto `EXIF Metadata` in results click on it in the Table tab you will get device model and manufacturer information.
 
 ![02](/Pictures/Digital Forensics/Mobile Forensics/02.png)
 
@@ -772,6 +776,8 @@ Please refer to Q3
 
 **5.What is the name of the Mobile Network Provider?**
 
+Go to `Results-> Messages->` There is a service message from Tracfone which is incoming.
+
 The forensics can find the relevat information from the `Messages` which is under the folder named `result`.
 
  I emphasize the location to store the messages which is `/vol_vol52/user_de/0/com.android.providers.telephony/databases/telephony.db`. 
@@ -786,15 +792,21 @@ You can find the relevant `log file` I mentioned before named `log_logcat_com_en
 
 Otherwise, you can check the database file named `accounts_de.db` to find the useful information. The location of this file is `/vol_vol52/system_de/0/accounts_de.db`.
 
+Alternate way is to Extract `contacts2.db` and open it in SQLite where accounts->browse data you will get all user accounts he has two email addresses.
+
 ![07](/Pictures/Digital Forensics/Mobile Forensics/07.png)
 
 **7.How many messages were sent using Facebook and what were they?**
+
+`Thread2_db` We think.
 
 **8.What is the name of the file that contains the text, "now you can edit and post photos, videos and GIFs ?**
 
 Extract the vedioes from the application. It's name is `e1f012cd75cd41398a300960c1a7f85a.mp4`.
 
 **9.How many images can you find that was sent with WhatsApp?**
+
+Click on Results-> Messages-> Save as CSV file-> Apply Filter in CSV file for Whatsapp and only one file is sent from whatsapp.
 
 The system store the information about the revelent image files which had been sent  in `vol_vol52/system_ce/0/shortcut_service/bitmaps/com.whatsapp	`. We can find information from the under pictures:
 
@@ -806,6 +818,8 @@ From the `shorcuts` which record the network package which was sent from the tar
 
 **10.How many messages were sent using WhatsApp?**
 
+From the databases save `msgstore.db` Then in SQLite open this database, right click on Messages and browse table All messages are visible.
+
 As for the `whatsapp` which is regarded as the very safe chat application, it keeps the message in the local database in local instead of server. So the folder where the `whatsapp` store the messages is `/data/data/com.whatsapp/`.  You can find this file by searching the extension of the file from the `result`.
 
 ![10](/Pictures/Digital Forensics/Mobile Forensics/10.png)
@@ -815,6 +829,8 @@ As for the `whatsapp` which is regarded as the very safe chat application, it ke
 `          vol_vol52/data/com.whatsapp/databases/msgstore.db        `
 
 **12.How many people did the owner of the phone call?**
+
+`Calllog.db` to check all call logs.
 
 You can check all the call history details from the `data/com.android.providers.contacts/databases/contacts2.db`
 
@@ -858,6 +874,8 @@ Also you can check `message`
 
 `MSISDN` is a number uniquely identifying a subscription in a Global System for Mobile communications or a Universal Mobile Telecommunications System mobile network.
 
+Goto messages first message from Tracfone has MSISDN number 9197580276.
+
 **17.What time was the first message sent on WhatsApp?**
 
 From the `vol_vol52/system_ce/0/recent_images/153_task_thumbnail.png   `, we can decuce the time the suspects used the `WhatsApp`.
@@ -867,9 +885,11 @@ From the `vol_vol52/system_ce/0/recent_images/153_task_thumbnail.png   `, we can
 **18.List the evidence(s) that make you to believe that the suspect is involved in Rhino**
 **Smuggling.**
 
-
+No evidence
 
 **19.What locations do you think the suspect visited on the 30th November 2018?**
+
+Go to `EXIF Metadat`a it contains the lat long info for each date.
 
 From the `log_logcat_com_enflick_android_TextNow_0.log	` we can find the useful information which indicate the date which is `2018-11-30`. And we will obtain the `Latitude` and `Longitude` information which confire the location is `North Carolina American`.
 
@@ -883,7 +903,11 @@ In the directory `vol_vol52/misc/wifi` , the file including all the wireless inf
 
 **21.What evidence can you use to prove that the suspect visited Kenya?**
 
+No Evidence.
+
 **22.What other countries apart from Kenya has the suspect visited?**
+
+Only `North Carolina`.
 
 You can search the keywords like`Latitude` and `Longitude`, you will know the location the suspect visited by inputing the mentioned keywords.
 
@@ -926,10 +950,6 @@ You can search the keywords like`Latitude` and `Longitude`, you will know the lo
 > • What files are created?
 > • What is the ,php file that malware is looking for on the server?
 > • What would have happened if the malware found the .php file on the server?
-
-**Analysis**:
-
-1.
 
 
 
