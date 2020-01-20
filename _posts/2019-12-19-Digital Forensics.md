@@ -21,6 +21,12 @@ tags: Lectures
 >
 > ​	In the course of writing this blog, I wanted to quit many times because of the difficulty of digital forensic analysis. Thanks to <u>Neil</u> for encouraging me and accomplishing me.
 
+---
+
+[TOC]
+
+---
+
 ### 1. Hacking Incident
 
 **Chain of custody**: in legal contexts, is the chronological documentation or paper trail that records the sequence of custody of physical or electronic evidence. It is very essential to maintain the chain of custody to preserve the interity of the evidence and prevent it from the contamination.

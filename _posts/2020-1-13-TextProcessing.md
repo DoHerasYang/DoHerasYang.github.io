@@ -1052,11 +1052,18 @@ Common to just use the words, but pre-process them for generalisation.
 >   + Supervised learning approaches aim to address the portability problems inherent in knowledge engineering NER
 >     + Instead of manually authoring rules, systems learn from annotated examples
 >     + Moving to new domain requires only annotated data in the domain – can be supplied by domain expert without need for expert computational linguist
-> + Sequence Labelling
+> + **Sequence Labelling**
 >   + Systems may learn
 >     + <u>patterns</u> that match extraction targets
 >     + <u>classifiers</u> that label tokens as beginning/inside/outside a tage type
 >   + In sequence labelling for NER, each token is given one of three label
 >     types:
 >     + ![51](//Pictures/Text Processing/51.png)
->     + 
+>     + Scheme is called `BIO` or sometimes `IOB`
+>   + Each training instance(token) is typically represented as a set of **features**
+>   + **Features** can be not only the characteristics of the token itxself but of neighbouring tokens as well
+>     + the classifier extracts features from
+>       + input string
+>       + left predictions
+> + **Carreras et al.(2003)**
+>   + 
