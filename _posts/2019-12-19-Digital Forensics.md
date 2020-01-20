@@ -536,6 +536,13 @@ Use the command `sockscan` for checking the information about the processes whic
 
 ![02](/Pictures/Digital Forensics/Bad PDF/02.png)
 
+```shell
+# For all TCP
+> python vol.py connections -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem"
+# For All Open sockets
+> python vol.py sockets -f "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem"
+```
+
 **3.List any suspicious URLs that may be in the suspected process’s memory.**
 
 To check the suspicious URLs, you should use the `image-loc` command to generate the web history from the memory files. From the above URLs it can be seen that the third one which is related to the `process ID 1756` is the most suspected one.
@@ -545,6 +552,10 @@ To check the suspicious URLs, you should use the `image-loc` command to generate
 ```
 
 ![03](/Pictures/Digital Forensics/Bad PDF/03.png)
+
+```shell
+> strings "C:\Users\ForensicsUser\Desktop\Forensics 2019\Tasks\8 - Bad PDF\BF.vmem" | findstr "http://" > "./result/urlresult.txt" | findstr "https://" > "./result/urlresult.txt"
+```
 
 **4.Are there any processes that contain URLs that may point to banking troubles? If so, what are these processes and what are the URLs?**
 
