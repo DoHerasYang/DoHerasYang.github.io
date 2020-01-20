@@ -23,7 +23,27 @@ tags: Lectures
 
 ---
 
-[TOC]
+Table of Contents
+
+  \* [Digital Forensics - Lecture](#digital-forensics---lecture)
+
+​     \* [1. Hacking Incident](#1-hacking-incident)
+
+​     \* [2. FTK Imager](#2-ftk-imager)
+
+​     \* [3. Drug Dealer Case](#3-drug-dealer-case)
+
+​     \* [4. Credit Card Fraud](#4-credit-card-fraud)
+
+​     \* [5.Linux Forensics](#5linux-forensics)
+
+​     \* [6.Bad PDF](#6bad-pdf)
+
+​     \* [7.Network Forensics](#7network-forensics)
+
+​     \* [8. Mobile Forensics](#8-mobile-forensics)
+
+​     \* [9. Icon Network](#9-icon-network)
 
 ---
 
