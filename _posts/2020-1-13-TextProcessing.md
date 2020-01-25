@@ -1066,4 +1066,57 @@ Common to just use the words, but pre-process them for generalisation.
 >       + input string
 >       + left predictions
 > + **Carreras et al.(2003)**
->   + 
+>   + NE detection: in a first pass over the text BIO tags are assigned without regard to type.
+>   + NE classification: in a second pass the NE’s detected in the first pass are assigned a class (organisation, person, location, etc.)
+>   + **Adaboost classifier**
+>   + Type pattern of consecutive words in context 
+>     + functional (f)
+>     + capitalized (C)
+>     + lowercased (l)
+>     + punctuation mark (.)
+>     + quote ()
+>     + other(x)
+> + **Entity Linking**
+>   + KBP: Knowlege base population
+>     + Facts are gathered from open access web sources and used to build a
+>       structuted information repository.
+>   + Entity Linking Task: Given a text with a recognised NE mention in that text and a knowledge base (KB), such as Wikipedia, link the NEs to the matching entry in the KB if there is one, else create an entry.
+>     + Very Difficult Task
+>   + Approach:
+>     + Given a text T containing an NE mention m and using Wikipedia as a KB
+>       + index all pages in the KB using an information retrieval system
+>       + Build a query from T (e.g. use the sentence/paragraph/whole text) containing m and search the KB
+>       + From the ranked list of KB pages returned by step 2 pick the high ranked page whose name matches m and return it
+>     + Doesn’t work very well
+
++ Conclusion:
+  + Named Entity Recognition (NER) is a core IE technology that is now relatively mature and at “usable” performance levels.
+  + NER aims to detect and classify all mentions of named entities of a given set of entity types within a given text.
+  + Techniques used have included:
+    + Knowledge engineering approaches
+    + Supervised Learning Approach
+  + Challenge:
+    + Reducing the amount of training data needed via, e.g. bootstrapping techniques.
+    + Exploiting existing structured data sources to generate “weakly labelled” training data (aka distant supervision)
+    + Expanding the classes of entities addressed
+    + Developing NERs for languages other than English.
+
+#### Relation Extraction
+
++ Task:
+  + given a text T and a set of relations R, identify all assertions of relations from R in T, holding between entities identified in entity extraction.
++ Relations in R are usually binary
++ Reations in are assumed to be a subset of those identifed in the entity extraction process
+
+
+
+
+
+
+
+
+
+
+
+
+
