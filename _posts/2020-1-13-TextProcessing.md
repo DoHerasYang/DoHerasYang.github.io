@@ -1132,18 +1132,138 @@ Common to just use the words, but pre-process them for generalisation.
 > + The writing of rules has no end
 > + New rules needed for every new domain( pattern action rules for shallow approaches; transduction rules for deep approaches)
 
-> Suppervised Learning Approaches
+> ##### Suppervised Learning Approaches
 >
 > What to be learned?
 >
 > + **Rules** that
 >   +  Match to all and only relation bearing sentences
 >   + Capture sunstrings within the matched text that correspond to relation arguments
-> + 
+> + **Binary classifier** 
+>   + containing instances of the entity types between which the relation holds
+>   + As with NER can be divided into detection and classification stages:
+>
+> Process:
+>
+> + Assume entities to be related already tagged
+> + Use any algorithm for learning binary classifiers to learn to distinguishinstances (typically sentences) where
+>   + entities co-occur and relation holds (positive instances)
+>   + entities cooccur anreation os (positive instances)
+> + Features used fall into 3 broad classes:
+>   + Features of the named entities
+>   + Features from the words in the text, usually words from 3 locations
+>   + Features about the entity pair within the sentence
+>
+> Strengths:
+>
+> + No need to write extensive/complex rule sets for each domain
+> + Same system straightforwardly adapts to any new domain, provided training data is supplied.
+>
+> Weakness:
+>
+> + Quality of relation extraction dependent on quality and quantity of training data, which can be difficult and time consuming to generate
+> + Developing feature extractors can be difficult and they may be noisy (e.g. parsers) reducing overall performance
+
+> ##### Bootstrapping Approaches
+>
+> Motivation:
+>
+> + reduce number of manually labelled examples needed to build a system
+>
+> Key Idea:
+>
+> + set of trusted tuples T (e.g. pairs of entities known to stand in the relation of interest)
+>
+> + set of trusted patterns P (i.e. patterns known to extract pairs of entities in the given relation with high accuracy)
+>
+>   The if 
+>
+>   + then find tuples from T in sentences S in D, extract patterns from context of sentences in S, add patterns to P and then use P to find new tuples in D and add to T; repeat until convergence.
+>   + then match patterns from P in sentences S in D, extract tuples from pattern matches in sentences in S, add tuples to T and then use tuples in T to find new patterns in D and add to P; repeat until convergence.
+>
+> **DIPRE(Dual Iterative Pattern Relation Expansion)**
+>
+> + Aim
+>   + to extract useful relational tuples from the Web, of the form
+> + Method
+>   + Exploit “duality of patterns and relations”
+>     + Good tuples help find good patterns
+>     + Good patterns help find good tuples
+>   + Starting with user-supplied tuples, iteratively
+>     + Use these tuples to find patterns
+>     + Use the patterns to find more tuples
+> + Patterns are defined as 5-tuples:
+>   (order, urlprefix, prefix, middle,suffix)
+> + Occurrences are defined as 7-tuples:
+>   (author,title, order, url, prefix, middle,suffix)
+> + An algorithm for generating a pattern given a set of occurrences is described
+>   + Algorithm inisists order and middle of all occurrences is the same – they form part of the generated pattern
+>   + Additionally pattern contains
+>     + longest matching prefix of the url of all the occurrences
+>     + longest matching suffix of the prefix of all the occurrences
+>     + longest matching prefix of the suffix of all the occurrences
+>     + See Brin (1999) for details
+> + Patterns are assessed for specificity and rejected if their specificity is too low, i.e. if they are too general.
+> + Conclusion
+>   + Strengths:
+>     + Need for manually labelled training data is eliminated
+>   + Weaknesses:
+>     + Can suffer from <u>semantic drift</u> – when an erroneous pattern introduces erroneous tuples, which in turn lead to erroneous patterns
+>     + Works well when significant redudancy in assertion of specific tuples an in use of specific patterns to express a relation
+>     + Issues when multiple relations hold between the same pair of entities
+
+> ##### Distant Supervision Approaches
+>
+> Aim:
+>
+> + reduce/eliminate the need for manually labelled training data
+>
+> Key Idea:
+>
+> + Suppose we have a large document collection D plus a structured data source (e.g. a database) R that contains
+>   + many instances of a relation of interest in, e.g., a relational table
+>   + optionally, for each relation instance a link to a document in D providing evidence for the relation
+>
+> Method:
+>
+> + search for sentences in D containing the entity pairs that occur in relation instances (tuples) in R
+> + label these sentences as positive occurrences of the relation instance
+> + use the labelled sentences as training data to train a standard supervised relation extractor
+>
+> **Freebase** - a free on-line database of structured semantic data
+>
+> **Distant Supervision Assumption**
+>
+> if two entities participate in a relation, any sentence that contains those two entities might express
+> that relation.
+>
+> + combine features from multiple mentions to get a richer feature vector
+> + use multiclass logistic regression as a learning framework
+> + At test time features are combined from all occurrences of a given entity pair in the test data and the most likely relation is assigned
+>
+> **Negative instances**
+>
+> + to get these, randomly select entity pairs that do not appear in any Freebase relation and extract features for them
+> + Freease reation anextract eatures or tem these rare occurrences should be low
+>
+> Conclusion:
+>
+> + Strengths:
+>   + Need for manually labelled training data is eliminated
+>   + Can very rapidly get extractors for a wide range of relations
+> + Weakness:
+>   + Precision still lags behind best knowledge-engineered/directly supervised learning approaches
+>   + Only works if a good supply of structured data is available for the relation(s) of interest
+
+---
+
+## Past Paper
 
 
 
 
+
+ 
 
 
 
