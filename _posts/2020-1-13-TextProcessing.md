@@ -1107,6 +1107,39 @@ Common to just use the words, but pre-process them for generalisation.
   + given a text T and a set of relations R, identify all assertions of relations from R in T, holding between entities identified in entity extraction.
 + Relations in R are usually binary
 + Reations in are assumed to be a subset of those identifed in the entity extraction process
++ Challenge:
+  + The same relation may be expressed in many different ways:
+  + The information required may be spread across multiple sentences and discovering relations may depend upon following coreference links.
+  + The information to be extracted may be implied by the text, rather than explicitly asserted, and extracting it may require inference
+
+> ##### Knowledge Rngineering Approach
+>
+> Use the authored rules and can be divided into
+>
+> + Shallow: using the pattern-action rules
+> + Deep: linguinstically inspired "language understanding" systems
+>   + typically parse input using broad coverage NL parser to identify key grammatical relations, like subject and object
+>   + use transduction rules to extract relations of interest from parser output
+>   + Extraction rules over parser output allow a wider set of expressions to be captured than with regex's over words and NE tags alone
+>
+> Strengths:
+>
+> + high precision
+> + System behaviour is human-comprehensible
+>
+> Weakness:
+>
+> + The writing of rules has no end
+> + New rules needed for every new domain( pattern action rules for shallow approaches; transduction rules for deep approaches)
+
+> Suppervised Learning Approaches
+>
+> What to be learned?
+>
+> + **Rules** that
+>   +  Match to all and only relation bearing sentences
+>   + Capture sunstrings within the matched text that correspond to relation arguments
+> + 
 
 
 
