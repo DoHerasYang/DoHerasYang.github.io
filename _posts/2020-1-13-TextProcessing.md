@@ -1261,6 +1261,11 @@ Common to just use the words, but pre-process them for generalisation.
 
 
 
+### 2013-2014
+
+a) In the context of Information Retrieval, explain the difference between algorithms that perform boolean search and algorithms that perform a ranked search. What type of algorithm would be better for a regular user (such as an undergraduate student in the Humanities area) who is using a search query with multiple terms, which he/she expects to appear in many documents? Explain the reasons behind your choice of
+algorithm type.
+
 
 
  
