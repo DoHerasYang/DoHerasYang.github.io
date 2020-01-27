@@ -1445,31 +1445,89 @@ Answer:
 
 ​	Precision and Recall address the relation between the retrieved and relevant sets of documents.
 
-​	**F-measure**: combines precision and recall into a single figure,gives equal weight to both. It is the F is a harmonic mean which penalises low performance in one value more than arithmethic mean.
+​	**F-measure**: combines precision and recall into a <u>single figure</u>,gives equal weight to both. It is the F is a harmonic mean which penalises low performance in one value more than arithmethic mean.
 
-​	Because the there are tremendous web pages which is included in the Internet, but the mount of the retrieved pages is pretty small because of the assumption and limitation of algorithms.
+​	Because the there are tremendous web pages which is included in the Internet, the mount of the retrieved pages is pretty small because of the assumption and limitation of algorithms.
 
 
 
 4.
 
-a) Differentiate subjectivity from sentiment. How are the tasks of Subjectivity Classification and Sentiment Analysis related?
+**a) Differentiate subjectivity from sentiment. How are the tasks of Subjectivity Classification and Sentiment Analysis related?**
+
+Answer:
+
+​	As for the rule-based subjectivity classifier, the task is to search for the emotion words lexicon and determine the sentence/document is objective or subjective.
+
+​	As for the rule-based sentiment classifier, the task is to determine the document/sentence shows the positive sentiment or negative sentiment by counting the value of lexicons and build the judgement model.
+
+**b)Explain the steps involved in the lexicon-based approach to Sentiment Analysis of features in a sentence (e.g. features of a product, such as the battery of a mobile phone). Discuss the limitations of this approach.**
+
+Answer:
+
+​	As for the binary approach, the input is the sentences s and product features f, the output is the attitude of this feature is positive,negative or netural.
+
+​	Step1: the model should pick up all the sentences which contains the fratures and lexicons about the attitude.
+​	Step2: the model should select all the emotion words in sentence
+​	Step3: assign the values of emotion words, 1=positive, 0=netural, -1=negative
+​	Step4: sum up the orientation and assign the orientation to (f,s)
+
+​	As for the shortcoming for intensifiers, the gradable approach assign the different levels to the emotional content. The process is similar to the binary approach, the final decision is based on the all emotion words.
+
+​	The disadvantage is requiring a lexicon of emotion words which should be fairly comprehensive,covering new words.abbreviations,misspelled words.
+
+**c)Given the following sentences and opinion lexicon (adjectives only), apply the weighted lexical-based approach to classify EACH sentence as positive, negative or objective. Show the final emotion score for each sentence. In addition to use of the lexicon, make sure you consider any general rules that have an impact in the final decision. Explain these rules when they are applied.**
+
+**Lexicon:**
+		**boring  -3**
+		**brilliant  2**
+		**good 3**
+		**horrible -5**
+		**happy  5**
+
+**(S1)He is brilliant but boring.**
+
+<u>Diminisher rule</u>:  the weight should be substracted from the positive terms.
+
+emotion(brilliant) = 2  emotion(boring) = -3 , so the decision value is 2-3 = -1
+
+**(S2) I am not good today.**	
+
+<u>Negation rule</u>: when the neighbourhood area occurs the negation words, the value should be decreased by 1 and inverted. 
+
+emotion(good) = 3,  the decision value is -(3-1) = -2
+
+**(S3) I am feeling HORRIBLE today, despite being happy with my achievement.**
+
+<u>Capitalization rule</u> : the value of emtions words should be increased by 1 for positive words,-1 for negative words. Diminisher rule:  the weight should be substracted from the positive terms.
+
+emotion(horrible) = -5, capitalization rules -> emotion(horrible) = -6 emotion(happy) = 5
+
+Decision value = -1
+
+**(S4) He is extremely brilliant but boring, boring.**
+
+<u>Intensifier rule</u>: the weight of extremely is 2, so the emotion(brilliant) = 4, emotion(boring) =  -3, so the decision value is -2.
+
+**d)Specify the five elements of Bing Liu’s model for Sentiment Analysis, and exemplify them with respect to the following text. Identify the features present in the text, and for each indicate its sentiment value as either positive or negative. Discuss two language processing challenges in automating the identification of such elements.**		
+
+> “I am in love with my new Toshiba Portege z830-11j. With its i7 core processors,
+> it is extremely fast. It is the lightest laptop I have ever had, weighting only 1 Kg.
+> The SSD disk makes reading/writing operations very efficient. It is also very silent,
+> the fan is hardly ever used. The only downside is the price: it is more expensive
+> than any Mac. Lucia Specia, 10/04/2012.”
+
+**e) Differentiate direct from comparative Sentiment Analysis. What are the elements necessary in comparative models of Sentiment Analysis?**
 
 
 
-​	
+---
 
-​	
+### 2016-2017
 
-​	
+**Section A**
 
-​		
-
-​	
-
-
-
-
+**a)Explain briefly the intuition behind the PageRank algorithm. Discuss how it can documents that are ranked equally “relevant” according to the similarity score given by the vector space model.**
 
 
 
