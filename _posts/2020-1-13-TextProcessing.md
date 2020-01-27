@@ -1263,14 +1263,209 @@ Common to just use the words, but pre-process them for generalisation.
 
 ### 2013-2014
 
-a) In the context of Information Retrieval, explain the difference between algorithms that perform boolean search and algorithms that perform a ranked search. What type of algorithm would be better for a regular user (such as an undergraduate student in the Humanities area) who is using a search query with multiple terms, which he/she expects to appear in many documents? Explain the reasons behind your choice of
-algorithm type.
+**Section A**
+
+**a) In the context of Information Retrieval, explain the <u>difference between algorithms that perform boolean search and algorithms that perform a ranked search</u>. <u>What type of algorithm would be better for a regular user (such as an undergraduate student in the Humanities area) who is using a search query with multiple terms, which he/she expects to appear in many documents?</u> Explain the reasons behind your choice of algorithm type.**
+
+Answer: 
+
+​	For the boolean search model, the model just needs to decide the whether the document is relevant or not.  And the presence of the terms is very essential and suffient for the search. For the operator, the boolean search model exploits the boolean operators like AND and OR. The boolean query provides the logical result for deciding whether the document should be returned. 
+
+​	For the ranked search method like the vector space model, it relys on the frequency of terms and maybe some weight of terms could affect the result of the search. The documents are point in high-dimension vector space and its value is the frequency of the terms. Also, the query should be represented as the vectors. This method record the vectors for each documents and queries, finally calculate the similarity metrics which can be interpreted as the normalised correlation coefficient.
+
+​	For the choice of the searching algorithm, the ranked algorithm should be chosen.  Because the boolean algorithm is difficult and unnatural for the newbies. And the users don't want the plenty of ranked results list. For the ranked algorithm, it's very easy to generate the result lists and pick up the relevant documents.
+
+**b) Compression techniques are important due to the growth in volume of the data that must be stored and transmitted.**
+
+​	**(i) Explain the difference between lossy and lossless forms of compression. Discuss the suitability of these alternative forms of compression for different media types (e.g. for text vs. image data).**
+
+Answer:
+
+​	Data Compression is a technique in which the size of data is reduced without loss of information. **Lossy compression** and **Lossless compression** are the categories of data compression method.
+
+​	The main difference between the two compression techniques (lossy compression and Lossless compression) is that, The <u>lossy compression technique</u> does not restored the data in its original form, after decompression on the other hand l<u>ossless compression</u> restores and rebuilt the data in its original form, after decompression.
+
+​	![01](/Pictures/Text Processing Exam/01.png)
+
+​	(**ii)Explain the difference between <u>static, semi-static and adaptive techniques</u> for text compression, noting their key advantages and disadvantages.**
+
+Answer:
+
+​	A static model is a fixed model that is known by both the encoder and thedecoder and does not depend on the specific data that is beingcompressed.
+
+​	A semiadaptive or semistatic model is a fixed model that is constructed from the data to be compressed. 
+
+​	An adaptive model changes during the compression.  At a given point incompression, the model is a function of the previously compressed part ofthe data.  Since that part of the data is available to the decoder at thecorresponding point in decompression, there is no need to store the model.
+
+**c)The two main model components in Statistical Machine Translation are the Translation Model and the Language Model. Explain the role of each of these components.Describe the type of data that is necessary to build each of them. Mention one way in which these components can be combined to build a translation system.**
+
+**d)Assume we have a small set of seed words with positive and negative opinions, e.g.: positive = {good, fast, cheap} and negative = {slow, boring, fragile}. Explain the two most common (semi-)automated approaches to <u>expand these sets</u> with more opinion words or phrases to create lexica for Sentiment Analysis, providing examples whenever possible. Give one advantage and one disadvantage of each approach. **
+
+Answer:
+
+​	 This model is created from the seed words which comes from the supervised seed positive and negative words. It can be divided into two parts ways, <u>Dictionary-based and Corpus-based approach</u>. For the Dictionary-based, the users should find the synonyms/antonyms of seed emotion words in dictionaries like WordNet. Otherwise, users can build the patterns from the seed words/phrases to search on large corpora. For the <u>Corpus-based approach</u>, the examples are annotated with sentiment are used withe machine learning algorithms to learn a classifier for each sentence and document. The users can rely on the manully way (gold-standards) and crow-annotated resources like Amazon Product Resource. This approach can be divided into the two steps: <u>subjectivity classifier</u> : first run binary classifier to identify and then eliminate objective segments.  <u>Subjectivity Classifier with remaining segments</u>: learn how to combine and weight different attributes to make predictions.
+
+​	For the advantages for the <u>Dictionary-based</u> approach, it doesn't need the labelled data and the  procedure of learning is not required. For disadvantages, it requires powerful linguistic resources which is not always available, so users cannot guarantee the efficiency of this approach.
+
+​	For the advantages for the <u>Corpus-based approach</u>, it really easy to implement anf usually works well. As for the disvantage, the assumption of this approach is hard to estimate.
+
+**Section B**
+
+2.In the context of Information Retrieval, given the following documents:
+
+Document 1: Sea shell, buy my sea shell!
+Document 2: You may buy lovely SEA SHELL at the sea produce market.
+Document 3: Product marketing in the Shelly sea is an expensive market.
+and the query:
+Query 1: sea shell produce market
+
+**a)Apply the following term manipulations on document terms: stoplist removal, capitalisation and stemming, showing the transformed documents. Explain each of these manipulations. Provide the stoplist used, making sure it includes punctuation, but no content words.**
+
+Answer:
+
+​	For the stop removal list, it should exclude the "non-content" words, so the stop list should be "my, may ,at, you ,the, in, is, an, , , ! , .".
+
+​	For the capitalisation, turn all the words to lower case.
+
+​	For the stemming, turn the `marketing` to `market`. `product` to `produce`
+
+​	So the transformed document should be:
+
+Document 1: sea shell  buy sea shell
+
+Document 2: buy lovely sea shell sea produce market
+
+Document 3: produce market shelly sea expensive market
+
+**b)Show how Document 1, Document 2 and Document 3 would be represented using an inverted index which includes term frequency information.**
+
+Answer:
+
+​	sea: (1,1) (1,4) (2,3) (2,5) (3,4)
+
+​	shell: (1,2) (1,5) (2,4) 
+
+​	buy: (1,3) (2,1) 
+
+​	lovely:(2,2) 
+
+​	produce: (2,6) (3,1)
+
+​	market: (2,7) (3,2) (3,6)
+
+​	shelly:(3,3)
+
+​	expensive: (3,5)
+
+**c)Using term frequency (TF) to weight terms, represent the documents and query as vectors. Produce rankings of Document 1, Document 2 and Document 3 according to their relevance to Query 1 using two metrics: <u>Cosine Similarity</u> and <u>Euclidean Distance</u>. Show which document is ranked first according to each of these metrics.**
+
+Answer:
+
+​	**TF:** 
+
+​	Query: sea(1) shell(1) produce(1) market(1)
+
+​	Document1: sea(2) shell(2) produce(0) market(0) buy(1)
+
+​	Document2: sea(2) shell(1) produce(1) market(1) buy(1) lovely(1)
+
+​	Document3: sea(1) shell(0) produce(1) market(2) expensive(1)
+
+​	**Evaluation:**
+
+​	<u>Similarity cosine</u>:
+
+​	Document1: (2×1+2×1+0×1+0×1+0×1) / (2× √(4+4+0+0+1)) = 4/6
+
+​	Document2: (2×1+1×1+1×1+1×1+0×1+0×1) / (2×√(4+1+1+1+1+1)) = 5/6
+
+​	Document3: (1×1+0×1+1×1+2×1+0×1) / (2×√(1+0+1+4+1) = 4/5.29
+
+​	<u>Euclidean Distance</u>：
+
+​	Document1: √(1+1+1+1+1) = √5
+
+​	Document2: √(1+0 +0 + 0 + 1 + 1) = √3
+
+​	Document3: √(0+1+0+1+1) = √3
+
+​	For the best similarity, we should choose the lowest value document.
+
+**d)Explain the intuition behind using TF.IDF (term frequency inverse document frequency) to weight terms in documents. Include the formula (or formulae) for computing TF.IDF values as part of your answer. For the ranking in the previous question using cosine similarity, discuss whether and how using TF.IDF to weight terms instead of TF only would change the results.**
+
+Answer:
+
+​	For using the Terms frequency, the result of the model may be affected by the freqency of the terms in documents, so we should consider the less common terms could be more useful to find the relevant documents, so we use the inverse document frequency to avoid this situation happening.
+
+​	we need the document frequency (df) which include the key terms from the query.
+
+​	sea : idf:0 log1 = 0
+
+​	shell: idf: log(3/2)=0.17609125905
+
+​	buy: idf: log(3/2)=0.17609125905
+
+​	lovely: idf: log(3/1)=0.477
+
+​	produce: idf: log(3/2)=0.17609125905
+
+​	market: idf: log(3/2)=0.17609125905
+
+​	shelly: idf: log(3/1) = 0.477
+
+​	expensive: idf: log(3/1)=0.477
+
+​	**Evaluation**:
+
+|   Terms   |   Query   | Document1 | Document2 | Document3 |
+| :-------: | :-------: | :-------: | :-------: | :-------: |
+|    Sea    |   0×1/4   |   0×2/5   |   0×2/6   |   0×1/5   |
+|   Shell   | 0.18×1/4  | 0.18×2/5  | 0.18×1/6  |  0.18×0   |
+|    Buy    |     0     | 0.18×1/5  | 0.18×1/6  |  0.18×0   |
+|  Lovely   |     0     |  0.477×0  | 0.477×1/6 |  0.477×0  |
+|  Produce  | 0.176×1/4 |  0.176×0  | 0.176×1/6 | 0.176×1/5 |
+|  Market   | 0.176×1/4 |     0     | 0.176×1/6 | 0.176×1/5 |
+|  Shelly   |     0     |     0     |     0     | 0.477×1/5 |
+| Expensive |     0     |     0     |     0     | 0.477×1/5 |
+|           |  0.20925  |   0.108   |  0.1975   |  0.0892   |
+
+​	Document1: (0+(0.045×0.072)) / 0.20925×0.108
+
+​	Document2: (0+(0.03×0.045)+(0.044×0.0293)×2) / 0.20925×0.1975
+
+​	Document3: (0+(0.044×0.0352)) / 0.20925×0.0892
+
+**e)Explain the metrics Precision, Recall and F-measure in the context of evaluation in Information Retrieval against a gold-standard set, assuming a boolean retrieval model. Discuss why it is not feasible to compute recall in the context of searches performed on very large collections of documents, such as the Web.**
+
+Answer:
+
+​	**Recall**： the proportion of the relevant documents 
+
+​	**Precision**: the proportion of retrieved documents that are relevant
+
+​	Precision and Recall address the relation between the retrieved and relevant sets of documents.
+
+​	**F-measure**: combines precision and recall into a single figure,gives equal weight to both. It is the F is a harmonic mean which penalises low performance in one value more than arithmethic mean.
+
+​	Because the there are tremendous web pages which is included in the Internet, but the mount of the retrieved pages is pretty small because of the assumption and limitation of algorithms.
 
 
 
- 
+4.
+
+a) Differentiate subjectivity from sentiment. How are the tasks of Subjectivity Classification and Sentiment Analysis related?
 
 
+
+​	
+
+​	
+
+​	
+
+​		
+
+​	
 
 
 
