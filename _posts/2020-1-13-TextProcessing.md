@@ -1476,7 +1476,7 @@ Answer:
 
 ​	The disadvantage is requiring a lexicon of emotion words which should be fairly comprehensive,covering new words.abbreviations,misspelled words.
 
-**c)Given the following sentences and opinion lexicon (adjectives only), apply the weighted lexical-based approach to classify EACH sentence as positive, negative or objective. Show the final emotion score for each sentence. In addition to use of the lexicon, make sure you consider any general rules that have an impact in the final decision. Explain these rules when they are applied.**
+**c)Explain the graded lexicon-based approach for Sentiment Analysis.Given the following sentences and opinion lexicon (adjectives only), apply the weighted lexical-based approach to classify EACH sentence as positive, negative or objective. Show the final emotion score for each sentence. In addition to use of the lexicon, make sure you consider any general rules that have an impact in the final decision. Explain these rules when they are applied.**
 
 **Lexicon:**
 		**boring  -3**
@@ -1485,7 +1485,11 @@ Answer:
 		**horrible -5**
 		**happy  5**
 
-**(S1)He is brilliant but boring.**
+Graded lexicon-based Approach:
+
+​	
+
+(S1)He is brilliant but boring.**
 
 <u>Diminisher rule</u>:  the weight should be substracted from the positive terms.
 
@@ -1517,9 +1521,29 @@ Decision value = -1
 > the fan is hardly ever used. The only downside is the price: it is more expensive
 > than any Mac. Lucia Specia, 10/04/2012.”
 
+Answer:
+
+​	As for the five elements, they should be:
+
+>  `e_i` : the name of the entity
+>
+> `a_ij`: an aspect of the `e_i`
+>
+> `oo_ijkl`: the orientation of the opinion about the aspecrt `a_ij` of the entity.
+>
+> `h_k`: the opinion holder
+>
+> `t_l`: the time when opinion is expressedx by `h_k`
+
+​	The name of the entity is `Toshiba Portege z830-11j`. For the many aspects, they should be `i7 core processors`,`SSD disk`,`weighting`,`fan`,`price`.The orientation of each opinion about the aspect, for the general idea about this product, the holders said `love`, it's the positive. For the aspect `i7 core processors`, the holder said `fast`, it is positive. For the `weight`, the holder said it's`the lightest`, the orientation is positive. As for the `SSD disk`, the holder said `efficient and silent`, so the positive.  For the `fan`, it said `hardly ever used`, it's netural. The aspect `privr`, the `more expensive`, so it's negative.	Aslo, you can generate the quintuple to show the result, like below:
+
+​	(`Toshiba Portege z830-11j`, i7 core processors, positive,Lucia Specia,10/04/2012)
+
+​	Challenge: 1) Maybe it's very difficult to comfirm the entity name because of variations and abbreviation. 2) It's very difficult to distinguish the subjective and objective sentences because of the language.
+
 **e) Differentiate direct from comparative Sentiment Analysis. What are the elements necessary in comparative models of Sentiment Analysis?**
 
-
+The comparative SA can contrast direct opinion verusu more comparativve opinions such as direct sentiment expressions on target objects and comparisons expressing similarities or differences.
 
 ---
 
@@ -1529,5 +1553,14 @@ Decision value = -1
 
 **a)Explain briefly the intuition behind the PageRank algorithm. Discuss how it can documents that are ranked equally “relevant” according to the similarity score given by the vector space model.**
 
+PageRank is designed to use the structure of a graph to quantify the importance of each node in that graph. Accordingly, every usage of PageRank outside of a web context must maintain some notion of importance, even if the interpretation of the importance of a node varies from application to application.
 
+PageRank can be thought of as a fluid that circulates throughout a network, passing from node to node across edges, and pooling at the nodes that are the most important
 
+Intuition: PageRank works by counting the number and quality of links to a page to determine a rough estimate of how important the website is. The underlying assumption is that more important websites are likely to receive more links from other websites.
+
+**Section B**
+
+**d) A second approach to Sentiment Analysis is the corpus-based supervised learning approach.**
+
+**(i) Explain the corpus-based supervised learning approach to Sentiment Analysis in general terms, i.e. in terms of inputs, outputs and processes involved.**
