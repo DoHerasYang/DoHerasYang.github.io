@@ -1559,8 +1559,5 @@ PageRank can be thought of as a fluid that circulates throughout a network, pass
 
 Intuition: PageRank works by counting the number and quality of links to a page to determine a rough estimate of how important the website is. The underlying assumption is that more important websites are likely to receive more links from other websites.
 
-**Section B**
 
-**d) A second approach to Sentiment Analysis is the corpus-based supervised learning approach.**
 
-**(i) Explain the corpus-based supervised learning approach to Sentiment Analysis in general terms, i.e. in terms of inputs, outputs and processes involved.**
