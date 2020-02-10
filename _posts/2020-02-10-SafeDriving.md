@@ -4,7 +4,7 @@ title: 'Safe Driving'
 date: 2020-02-10
 author: DoHerasYang
 color: rgb(255,102,32)
-cover: '/Pictures/CoverPage/textimg.jpeg'
+cover: ''
 tags: Notes
 
 ---
