@@ -43,8 +43,6 @@ Table of Contents
 
 ​     \* [8. Mobile Forensics](#8-mobile-forensics)
 
-​     \* [9. Icon Network](#9-icon-network)
-
 ---
 
 ### 1. Hacking Incident
@@ -926,67 +924,4 @@ You can search the keywords like`Latitude` and `Longitude`, you will know the lo
 
 ---
 
-### 9. Icon Network
-
-**Background**:
-
-> Icon networks is a network consulting and security company based in Bristol. The
-> organisation provides network installation and security consulting services to businesses
-> based in South West England and Wales. 90% of their customers are small businesses who
-> often do not have an in house IT team and as such Icon offers IT support, Incident response,
-> computer network maintenance and IT management services as well.
-> Prism manufacturing, one of Icon networks* long standing customers has contacted your line
-> manager that two of their servers has been infected with malware. Your supervisor has
-> assigned this task to you.
-
-> Using your knowledge of malware analysis, you are expected to
-> 1. Conduct static malware analysis on the file brbbot.exe
-> 	a. Provide more information about the static properties of malware such as an
-> MD5 hash, file size, file type, targeted operating system.
-> 	b. Find out more information about the malware from Virustotal.com
-> 2. Conduct Behavioural (host Only) malware analysis on the file brbbot.exe
->       a. Using tools such as RegShot, ProcessMonitor and Processhacker, explain
->     the effect of the malware on the registry and processes
-> 3. Conduct Behavioural (Network) malware analysis on the file brbbot.exe
->       a. Using tools such as Wireshark, ApateDNS, REMNux and Fakedns explain
->     the effect of malware on the network.
-
-> Your analysis should provide answers to the following questions
-> • What is the MD5 Hash value of the malware?
-> • What IP addresses and TCP ports it is trying to connect to?
-> • What changes are made to the Registry?
-> • What changes are made to the file system?
-> • What domain(s) this malware is trying to connect to?
-> • What dll files are loaded and run by malware?
-> • What files are created?
-> • What is the ,php file that malware is looking for on the server?
-> • What would have happened if the malware found the .php file on the server?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+**That is the END of this article**
