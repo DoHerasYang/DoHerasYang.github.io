@@ -4,7 +4,7 @@ title: 'Machine Learning'
 date: 2019-12-11
 author: DoHerasYang
 color: rgb(255,210,32)
-cover: '/Pictures/machineimage.jpg'
+cover: '/Pictures/CoverPage/machineimage.jpg'
 tags: python pytorch
 
 ---

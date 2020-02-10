@@ -4,10 +4,8 @@ title: 'Text Processing'
 date: 2020-01-13
 author: DoHerasYang
 color: rgb(255,222,32)
-cover: ''
+cover: '/Pictures/CoverPage/textimg.jpeg'
 tags: Lecture-Course
-
-
 
 ---
 

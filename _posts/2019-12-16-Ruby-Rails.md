@@ -4,7 +4,7 @@ title: 'Ruby Rails - First Exploration'
 date: 2019-12-16
 author: DoHerasYang
 color: rgb(255,210,32)
-cover: '/Pictures/rails.jpeg'
+cover: '/Pictures/CoverPage/rails.jpeg'
 tags: Ruby-Rails
 
 ---

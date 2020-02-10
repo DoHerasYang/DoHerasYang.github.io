@@ -4,7 +4,7 @@ title: 'Digital Forensics'
 date: 2019-12-19
 author: DoHerasYang
 color: rgb(255,210,32)
-cover: '/Pictures/forensics.jpg'
+cover: '/Pictures/CoverPage/forensics.jpg'
 tags: Lectures
 
 ---
