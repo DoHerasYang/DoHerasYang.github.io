@@ -38,9 +38,5 @@ Middleware between the mobile application and the database, it can be used for a
 
 
 
-
-
-
-
 #### 1.1 Exceed the Allowed Speed
 
