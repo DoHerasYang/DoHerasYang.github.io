@@ -28,7 +28,7 @@ tags: Notes
 >     1.8.0_241, x86_64:	"Java SE 8"	/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home
 > ```
 >
-> 2.Next, visit the orcle website to install the JDK software NOT JRE in your mac, the default installation position is `/Library/JAVA/JavaVirtualMachines`, you could obtain all the effective JDK components from there.
+> 2.Next, visit the orcle website to install the JDK software NOT JRE in your mac, the default installation position is `/Library/JAVA/JavaVirtualMachines`, you could obtain all the effective JDK components from [there](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html).
 >
 > 3.Next, we should update the `~/.bash_profile` to add the command into the default environment.
 >
@@ -107,7 +107,7 @@ tags: Notes
 > #cstest: CiCS testing only
 > 				-pe openmp 4
 > #The numebr of cores
-> #The amount of cores should below the 4
+> #The amount of cores should be below the 4
 > 				-l rmem=16G
 > #obtain the real memory
 > 				-M {Your email address}
