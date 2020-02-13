@@ -17,7 +17,7 @@ tags: Notes
 
 #### 1.1 The Configuratiion problems and Fixes
 
-> **Mac - Switch the Different JAVA version in the Mac** 
+> **Mac - Switch the Different JAVA version on Mac** 
 >
 > 1.Firstly, you should specify your JAVA installed version in your mac, you could input this command into your computer.
 >
@@ -60,7 +60,7 @@ tags: Notes
 
 
 
-> **Install the `Spark(2.3.2)` and Configure the Jupyter Notebook**
+> **Install the `Spark(2.3.2)` and Configure the Jupyter Notebook on local Machine**
 >
 > 1.Go to this [Link](https://archive.apache.org/dist/spark/) to download all the history Apache Spark software. Select one specific version you want.
 >
@@ -91,13 +91,33 @@ tags: Notes
 >
 > 5.Enjoy your `Pyspark`!
 
+
+
 > **Disscussion on the Command `qrshx` on the HPC**
 >
 > 1.The details of the `qrshx`:
 >
 > ```shell
-> $ qrshx -P rse \ #
+> $ qrshx -P {Parameters} 
+> #gpu: GPU-equipped nodes (public)
+> #rse: Research Software Engineering group's CPU-only nodes (restricted access)
+> #rse-training: For training courses run by the Research Software Engineering group (restricted access)
+> #insigneo-imsb: Insigneo Integrative Musculo-Skeletal Biomechanics (IMSB) subgroup's nodes (restricted access)
+> #security: Computer Science Security project (restricted access)
+> #cstest: CiCS testing only
+> 				-pe openmp 4
+> #The numebr of cores
+> #The amount of cores should below the 4
+> 				-l rmem=16G
+> #obtain the real memory
+> 				-M {Your email address}
+> 				-j y
+> #allow you to disconnect the HPC
+> 				-gpu=1
+> #the GPU numbers you want to use
+> #https://docs.hpc.shef.ac.uk/en/latest/sharc/GPUComputingShARC.html#gpucomputing-sharc
+> $./{my_programe} --num-cores=2
 > ```
 >
-> 
+> 2.The command should accod with the [JupyterHub Server](https://jupyter-sharc.shef.ac.uk/) interface information. If not, you will not be allowed to distribute the resource.
 
