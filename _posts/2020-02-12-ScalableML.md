@@ -60,7 +60,7 @@ tags: Notes
 
 
 
-> **Install the `Spark(2.3.2)` and Configure the Jupyter Notebook on local Machine**
+> **Install the `Spark(2.3.2)` and Configure the Jupyter Notebook on local Machine(MAC)**
 >
 > 1.Go to this [Link](https://archive.apache.org/dist/spark/) to download all the history Apache Spark software. Select one specific version you want.
 >
@@ -121,3 +121,8 @@ tags: Notes
 >
 > 2.The command should accod with the [JupyterHub Server](https://jupyter-sharc.shef.ac.uk/) interface information. If not, you will not be allowed to distribute the resource.
 
+
+
+> **The Command `spark-submit`**
+>
+> 
