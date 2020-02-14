@@ -1,3 +1,4 @@
+// This JavaScript is to adapt to different phone versions and Web Browsers
 (function() {
   var MutationObserver, Util, WeakMap, getComputedStyle, getComputedStyleRX,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
