@@ -5,9 +5,11 @@
   <!-- 引入head标签 -->
   {% include head.html %}
   {% include androidColor.html %}
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
 <body>
-
 <!-- 顶部锚点 -->
 <a id="htmlup" name="htmlup"></a>
 <!-- 引入博文顶部选项 -->
@@ -32,11 +34,7 @@
 
   <!-- 文章内容 -->
   <!-- 插入JavaScript 模块用以支持-->>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async
-          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-  <p>{{ page.content }}</p>
+  {{ page.content }}
 
   <!-- 引入share模块 -->
   {% include share.html %}
