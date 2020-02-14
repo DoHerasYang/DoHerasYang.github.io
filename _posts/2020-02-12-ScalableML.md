@@ -206,7 +206,7 @@ spark = SparkSession \
   		.appName("Demo RDD Example") \
     	.config("spark.some.config.option","some-value") \
       .master("local") \
-      .getorCreate()
+      .getOrCreate()
       
 df = spark.sparkContext.parallelize([(1,2,3,'a b c')]).toDF(['col1','col2','col3','col4'])
 
