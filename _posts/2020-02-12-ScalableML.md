@@ -11,8 +11,6 @@ tags: Notes
 
 # ScalableML
 
-
-
 ### 1. Lab1 and Background Notes
 
 #### 1.1 The Configuratiion problems and Fixes
@@ -302,7 +300,7 @@ list(iterable) -> new list initialized from iterable's items
 `pyspark.sql.DataFrame.groupBy `
 
 + This function can <u>delete the repeated variables</u> in each row, so sometimes it can be treated as another way to reduce the complexity of the DataFrame.
-+ The returned varianle's type is `pyspark.sql.group.GroupedData`. If you want to show the details of this data structure, you should convert this to DataFrame like `count / avg / agg etc functions`.
++ The returned variable's type is `pyspark.sql.group.GroupedData`. If you want to show the details of this data structure, you should convert this to DataFrame like `count / avg / agg etc functions`.
 
 
 
