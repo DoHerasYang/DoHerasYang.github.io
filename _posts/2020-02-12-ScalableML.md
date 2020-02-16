@@ -13,10 +13,6 @@ tags: Notes
 
 
 
-
-
-
-
 ### 1. Lab1 and Background Notes
 
 #### 1.1 The Configuratiion problems and Fixes
@@ -116,7 +112,7 @@ tags: Notes
 > #obtain the real memory
 > 				-M {Your email address}
 > 				-j y
-> #allow you to disconnect the HPC
+> #normal and error outputs into a single file (the file above)
 > 				-gpu=1
 > #the GPU numbers you want to use
 > #https://docs.hpc.shef.ac.uk/en/latest/sharc/GPUComputingShARC.html#gpucomputing-sharc
@@ -233,6 +229,80 @@ spark = SparkSession.builder.config(new_instance)
 
 The `.master` sets the Spark master URL to connect to, such as “local” to run locally, “local[4]” to run locally with 4 cores, or `'spark://master:7077'` to run on a Spark standalone cluster.
 
+For more details, you can click [here](https://www.javatpoint.com/pyspark-rdd) to learn more actions and transformations about the RDD.
+
+
+
+#### 1.3 Some Actions and Transformations in PySpark
+
+`pyspark.sql.functions.split`(*str*, *pattern*)  [[source]](https://spark.apache.org/docs/latest/api/python/_modules/pyspark/sql/functions.html#split)
+
++ This function's object is the `DataFrame[value: string`, and this function requires a returned variable instead of changing the original DataFrame.
++ The returned variable' type is `pyspark.sql.column.Column`, we can't use the normal pyspark function like `collect() / show()` to handle with this type's variable.
+
+```python
+split_logFile = split(new_object['value'], '- -')
+```
+
+`pyspark.sql.DataFrame.select()`
+
++ Projects a set of expressions and returns a new `DataFrame`, and the the parameters: **cols** – list of column names (string) or expressions (Column). If one of the column names is ‘*’, that column is expanded to include all columns in the current DataFrame.
++ The returned variable is the **`pyspark.sql.dataframe.DataFrame`**.
+
+`pyspark.sql.DataFrame.withColumn(colName,col)`
+
++ Returns a new **DataFrame** by adding a column or replacing the existing column that has the same name.
++ The column expression must be an expression over this **DataFrame**; attempting to add a column from some other [`DataFrame`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=read text#pyspark.sql.DataFrame) will raise an error.
++ Parameters:
+  - **colName** – string, name of the new column.
+  - **col** – a [`Column`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=read text#pyspark.sql.Column) expression for the new column.
+
+```python
+new_logFile = new_object.withColumn('URL', split_logFile.getItem(0))
+```
+
+`pyspark.sql.DataFrame.dropDuplicates`
+
++ Return a new **DataFrame** with duplicate rows removed, optionally only considering certain columns. If you want to select the specifical row or columns to handle, you should use the `select` function.
+
+```python
+new_logFile.select('URL').dropDuplicates().count()
+```
+
+`pyspark.sql.DataFrame.orderBy`
+
++ There are various ways to use this fuction, the directly way is to just import this function.
++ Returns a new `DataFrame` sorted by the specified column(s).
++ The Parameters:
+  + **cols** – list of [`Column`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=orderby#pyspark.sql.Column) or column names to sort by.
+  + Ascending:  both the boolean and list. Boolean parameters are used for ONE row, the list can be used to process the multiply rows.
+
+```python
+result = new_logFile.orderBy("count",ascending = False).take(1)
+# the type of result is Row
+result[0][0]
+```
+
+ `pyspark.sql.Row`
+
++ A row in [`DataFrame`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=read text#pyspark.sql.DataFrame). The fields in it can be accessed:  `row.key` and `row['key']`.
++ The Row object in pyspark's type is the `list`, so if you want to assess the content of `Row` object, you could follow the rules of python `List`.
++ From the `DataFrame`, you can use `take()` function to generate `Row` variable.
+
+```python
+$ result? 
+Type:        list
+String form: [Row(URL='edams.ksc.nasa.gov ', count=6530)]
+Length:      1
+Docstring:  
+list() -> new empty list
+list(iterable) -> new list initialized from iterable's items
+```
+
+`pyspark.sql.DataFrame.groupBy `
+
++ This function can <u>delete the repeated variables</u> in each row, so sometimes it can be treated as another way to reduce the complexity of the DataFrame.
++ The returned varianle's type is `pyspark.sql.group.GroupedData`. If you want to show the details of this data structure, you should convert this to DataFrame like `count / avg / agg etc functions`.
 
 
 
@@ -241,3 +311,5 @@ The `.master` sets the Spark master URL to connect to, such as “local” to ru
 
 
 
+
+  
