@@ -288,7 +288,7 @@ result[0][0]
 + From the `DataFrame`, you can use `take()` function to generate `Row` variable.
 
 ```python
-$ result? 
+>>>>result? 
 Type:        list
 String form: [Row(URL='edams.ksc.nasa.gov ', count=6530)]
 Length:      1
@@ -302,13 +302,43 @@ list(iterable) -> new list initialized from iterable's items
 + This function can <u>delete the repeated variables</u> in each row, so sometimes it can be treated as another way to reduce the complexity of the DataFrame.
 + The returned variable's type is `pyspark.sql.group.GroupedData`. If you want to show the details of this data structure, you should convert this to DataFrame like `count / avg / agg etc functions`.
 
+`pyspark.SparkContext.parallelize`
+
++ The second parameter is the `numSlices` which indicates the number of slice in `DataFrame`.
+
+`pyspark.sql.DataFrmae.filter`
+
++ Parameters:
+
+  **condition** – a [`Column`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=filter#pyspark.sql.Column) of [`types.BooleanType`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=filter#pyspark.sql.types.BooleanType) or a string of SQL expression.
+
+`pyspark.RDD.map`
+
++ Return a new RDD by applying a function to each element of this RDD.
+
+```python
+>>>>demo = spark.sparkContext.parallelize([1,2,3,4,5,6])
+>>>>demo.map(lambda x: x+1).collect()
+[2, 3, 4, 5, 6, 7]
+```
 
 
 
+#### 1.4 [MLlib](https://spark.apache.org/docs/2.3.2/ml-guide.html) - Spark’s machine learning (ML) library.
+
+`MLlib` allows easy combination of numerous algorithms into a single pipeline using standardized APIs for machine learning algorithms. The key concepts are:
+
+- **Dataframe**. Dataframes can hold a variety of data types.
+- **Transformer**. Transforms one dataframe into another.
+- **Estimator**. Algorithm which can be fit on a DataFrame to produce a Transformer.
+- **Pipeline**. A Pipeline chains multiple Transformers and Estimators together to specify an ML workflow.
+- **Parameter**. Transformers and Estimators share a common API for specifying parameters.
+
+A list of some of the available ML features is available [here](http://spark.apache.org/docs/2.3.2/ml-features.html).
+
+**Clarification on whether Estimator is a transformer**. See [Estimators](https://spark.apache.org/docs/2.3.2/ml-pipeline.html#estimators)
+
+In this part, I want to analyse the function and datastructure I met about the *MLlib*.
 
 
-
-
-
-  
 
