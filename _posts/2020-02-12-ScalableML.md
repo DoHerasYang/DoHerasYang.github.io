@@ -5,11 +5,11 @@ date: 2020-02-10
 author: DoHerasYang
 color: rgb(255,102,32)
 cover: ''
-tags: Notes
+tags: Pyspark
 
 ---
 
-# ScalableML
+# ScalableML - Pyspark
 
 ### 1. Lab1 and Background Notes
 
@@ -56,7 +56,7 @@ tags: Notes
 > Java HotSpot(TM) 64-Bit Server VM (build 13+33, mixed mode, sharing)
 > ```
 
-
+---
 
 > **Install the `Spark(2.3.2)` and Configure the Jupyter Notebook on local Machine(MAC)**
 >
@@ -89,7 +89,7 @@ tags: Notes
 >
 > 5.Enjoy your `Pyspark`!
 
-
+---
 
 > **Disscussion on the Command `qrshx` on the HPC**
 >
@@ -119,7 +119,7 @@ tags: Notes
 >
 > 2.The command should accod with the [JupyterHub Server](https://jupyter-sharc.shef.ac.uk/) interface information. If not, you will not be allowed to distribute the resource.
 
-
+---
 
 > **The Command `spark-submit`**
 >
@@ -147,7 +147,7 @@ tags: Notes
 
 
 
-> 
+
 
 #### 1.2 Background Information
 
@@ -228,6 +228,8 @@ spark = SparkSession.builder.config(new_instance)
 The `.master` sets the Spark master URL to connect to, such as “local” to run locally, “local[4]” to run locally with 4 cores, or `'spark://master:7077'` to run on a Spark standalone cluster.
 
 For more details, you can click [here](https://www.javatpoint.com/pyspark-rdd) to learn more actions and transformations about the RDD.
+
+
 
 
 
@@ -324,6 +326,8 @@ list(iterable) -> new list initialized from iterable's items
 
 
 
+
+
 #### 1.4 [MLlib](https://spark.apache.org/docs/2.3.2/ml-guide.html) - Spark’s machine learning (ML) library.
 
 `MLlib` allows easy combination of numerous algorithms into a single pipeline using standardized APIs for machine learning algorithms. The key concepts are:
@@ -339,6 +343,47 @@ A list of some of the available ML features is available [here](http://spark.apa
 **Clarification on whether Estimator is a transformer**. See [Estimators](https://spark.apache.org/docs/2.3.2/ml-pipeline.html#estimators)
 
 In this part, I want to analyse the function and datastructure I met about the *MLlib*.
+
+
+
+---
+
+`pyspark.ml.linalg.Vector.dense`
+
++ Create a dense vector of 64-bit floats from a Python list or numbers. 
++ You can use the lists or `pyspark.sql.DataFrame`.
+
+
+
+`pyspark.RDD.randomSplit`
+
++ Parameters
+  - **weights** – list of doubles as weights with which to split the [`DataFrame`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=randomsplit#pyspark.sql.DataFrame). Weights will be normalized if they don’t sum up to 1.0.
+  - **seed** – The seed for sampling.
++ The returned varibale type is `DataFrame`.
+
+
+
+`pyspark.ml.regression import LinearRegression`
+
+```
+>>>>df = spark.createDataFrame([
+    (1.0, 2.0, Vectors.dense(1.0)),
+    (0.0, 2.0, Vectors.sparse(1, [], []))], ["label", "weight", "features"])
+>>>>lr = LinearRegression(maxIter=5, regParam=0.0, solver="normal", weightCol="weight")
+>>>>model = lr.fit(df)
+>>>>model.transorm(test_set)
+```
+
+
+
+`pyspark.ml.evaluation.RegressionEvaluator`
+
++ Parameters:
+  + *predictionCol='prediction'* -- The output of training model.
+  + **labelCol='label'* -- The label of test dataset, the type is string and should be indicated the name of column.
+  + **metricName='rmse'* -- The name of Metric used for Java.
++ The returned value's type is `RegressionEvaluator`.
 
 
 
