@@ -244,10 +244,14 @@ For more details, you can click [here](https://www.javatpoint.com/pyspark-rdd) t
 split_logFile = split(new_object['value'], '- -')
 ```
 
+
+
 `pyspark.sql.DataFrame.select()`
 
 + Projects a set of expressions and returns a new `DataFrame`, and the the parameters: **cols** – list of column names (string) or expressions (Column). If one of the column names is ‘*’, that column is expanded to include all columns in the current DataFrame.
 + The returned variable is the **`pyspark.sql.dataframe.DataFrame`**.
+
+
 
 `pyspark.sql.DataFrame.withColumn(colName,col)`
 
@@ -261,6 +265,8 @@ split_logFile = split(new_object['value'], '- -')
 new_logFile = new_object.withColumn('URL', split_logFile.getItem(0))
 ```
 
+
+
 `pyspark.sql.DataFrame.dropDuplicates()`
 
 + Return a new **DataFrame** with duplicate rows removed, optionally only considering certain columns. If you want to select the specifical row or columns to handle, you should use the `select` function.
@@ -268,6 +274,8 @@ new_logFile = new_object.withColumn('URL', split_logFile.getItem(0))
 ```python
 new_logFile.select('URL').dropDuplicates().count()
 ```
+
+
 
 `pyspark.sql.DataFrame.orderBy()`
 
@@ -278,10 +286,25 @@ new_logFile.select('URL').dropDuplicates().count()
   + Ascending:  both the boolean and list. Boolean parameters are used for ONE row, the list can be used to process the multiply rows.
 
 ```python
-result = new_logFile.orderBy("count",ascending = False).take(1)
+result = new_logFile.orderBy("count", ascending = False).take(1)
 # the type of result is Row
 result[0][0]
 ```
+
+
+
+`pyspark.sql.DataFrame.limit(num)`
+
++ Limits the result count to the number specified. The returned variable's type is `DataFrame`
+
+
+
+`pyspark.sql.DataFrame.collect()`
+
++ Returns all the records as a list of [`Row`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=collect#pyspark.sql.Row).
++ If you want to access the value in the list, you can access by `{list_name[0]}`
+
+
 
  `pyspark.sql.Row`
 
@@ -299,20 +322,28 @@ list() -> new empty list
 list(iterable) -> new list initialized from iterable's items
 ```
 
+
+
 `pyspark.sql.DataFrame.groupBy `
 
 + This function can <u>delete the repeated variables</u> in each row, so sometimes it can be treated as another way to reduce the complexity of the DataFrame.
 + The returned variable's type is `pyspark.sql.group.GroupedData`. If you want to show the details of this data structure, you should convert this to DataFrame like `count / avg / agg etc functions`.
 
+
+
 `pyspark.SparkContext.parallelize`
 
 + The second parameter is the `numSlices` which indicates the number of slice in `DataFrame`.
+
+
 
 `pyspark.sql.DataFrmae.filter`
 
 + Parameters:
 
   **condition** – a [`Column`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=filter#pyspark.sql.Column) of [`types.BooleanType`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=filter#pyspark.sql.types.BooleanType) or a string of SQL expression.
+
+
 
 `pyspark.RDD.map`
 
@@ -377,13 +408,32 @@ In this part, I want to analyse the function and datastructure I met about the *
 
 
 
-`pyspark.ml.evaluation.RegressionEvaluator`
+`pyspark.ml.evaluation.RegressionEvaluator()`
 
 + Parameters:
   + *predictionCol='prediction'* -- The output of training model.
   + **labelCol='label'* -- The label of test dataset, the type is string and should be indicated the name of column.
   + **metricName='rmse'* -- The name of Metric used for Java.
 + The returned value's type is `RegressionEvaluator`.
+
+
+
+`pyspark.ml.feature.Tokenizer (*inputCol=None*, *outputCol=None*)`
+
++ A tokenizer that converts the input string to lowercase and then splits it by white spaces.
+
+```python
+>>>>df = spark.createDataFrame([("a b c",)], ["text"])
+>>>>tokenizer = Tokenizer(inputCol="text", outputCol="words")
+>>>>tokenizer.transform(df).head()
+Row(text='a b c', words=['a', 'b', 'c'])
+```
+
+
+
+`pyspark.ml.feature.HashingTF(numFeatures=262144, binary=False, inputCol=None*, outputCol=None)`
+
++ Maps a sequence of terms to their term frequencies using the hashing trick. Currently we use Austin Appleby’s MurmurHash 3 algorithm (MurmurHash3_x86_32) to calculate the hash code value for the term object. 
 
 
 
