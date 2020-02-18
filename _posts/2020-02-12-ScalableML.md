@@ -131,9 +131,9 @@ tags: Pyspark
 >
 > Essential Parameters:
 >
-> +  **--master MASTER_URL**: The [master URL](https://spark.apache.org/docs/latest/submitting-applications.html#master-urls) for the cluster.
+> + **--master MASTER_URL**: The [master URL](https://spark.apache.org/docs/latest/submitting-applications.html#master-urls) for the cluster.<br>
 >
->   There are two different modes
+>   There are two different modes:<br>
 >
 >   + Spark On Mesos : mesos://host:port
 >   + Spark On YARN: yarn://host:port
@@ -153,13 +153,13 @@ tags: Pyspark
 
 ##### **Recap**:
 
-![Spark-Overview](../Pictures/Spark/Spark-Overview.png)
+![Spark-Overview](/Pictures/Spark/Spark-Overview.png)
 
 The Spark application can be interpretered into two parts: Driver Program and Application Master with the high level consisting of the **SparkContext** , Creating the RDDS and Performing the remain processes to achieve the final result.These transformations of RDDs are then translated into DAG and submitted to Scheduler to be executed on set of worker nodes.
 
 The Spark application can handle with the user program request and separate process to excute user application, it can also creates SparkContext to control the cluster manager and schedule job execution.
 
-![Spark-Core](../Pictures/Spark/Spark-Core.png)
+![Spark-Core](/Pictures/Spark/Spark-Core.png)
 
 
 
@@ -261,7 +261,7 @@ split_logFile = split(new_object['value'], '- -')
 new_logFile = new_object.withColumn('URL', split_logFile.getItem(0))
 ```
 
-`pyspark.sql.DataFrame.dropDuplicates`
+`pyspark.sql.DataFrame.dropDuplicates()`
 
 + Return a new **DataFrame** with duplicate rows removed, optionally only considering certain columns. If you want to select the specifical row or columns to handle, you should use the `select` function.
 
@@ -269,7 +269,7 @@ new_logFile = new_object.withColumn('URL', split_logFile.getItem(0))
 new_logFile.select('URL').dropDuplicates().count()
 ```
 
-`pyspark.sql.DataFrame.orderBy`
+`pyspark.sql.DataFrame.orderBy()`
 
 + There are various ways to use this fuction, the directly way is to just import this function.
 + Returns a new `DataFrame` sorted by the specified column(s).
