@@ -238,20 +238,20 @@ For more details, you can click [here](https://www.javatpoint.com/pyspark-rdd) t
 `pyspark.sql.functions.split`(*str*, *pattern*)  [[source]](https://spark.apache.org/docs/latest/api/python/_modules/pyspark/sql/functions.html#split)
 
 + This function's object is the `DataFrame[value: string`, and this function requires a returned variable instead of changing the original DataFrame.
-+ The returned variable' type is `pyspark.sql.column.Column`, we can't use the normal pyspark function like `collect() / show()` to handle with this type's variable.
++ The returned variable' type is `pyspark.sql.column.Column`, we can't use the normal pyspark function like `collect() / show()` to handle with this type's variable. But we can use the `pyspark.sql.Column.getItem(num)`
 
 ```python
 split_logFile = split(new_object['value'], '- -')
 ```
 
-
+<br>
 
 `pyspark.sql.DataFrame.select()`
 
 + Projects a set of expressions and returns a new `DataFrame`, and the the parameters: **cols** – list of column names (string) or expressions (Column). If one of the column names is ‘*’, that column is expanded to include all columns in the current DataFrame.
 + The returned variable is the **`pyspark.sql.dataframe.DataFrame`**.
 
-
+<br>
 
 `pyspark.sql.DataFrame.withColumn(colName,col)`
 
@@ -265,7 +265,7 @@ split_logFile = split(new_object['value'], '- -')
 new_logFile = new_object.withColumn('URL', split_logFile.getItem(0))
 ```
 
-
+<br>
 
 `pyspark.sql.DataFrame.dropDuplicates()`
 
@@ -275,7 +275,7 @@ new_logFile = new_object.withColumn('URL', split_logFile.getItem(0))
 new_logFile.select('URL').dropDuplicates().count()
 ```
 
-
+<br>
 
 `pyspark.sql.DataFrame.orderBy()`
 
@@ -291,20 +291,20 @@ result = new_logFile.orderBy("count", ascending = False).take(1)
 result[0][0]
 ```
 
-
+<br>
 
 `pyspark.sql.DataFrame.limit(num)`
 
 + Limits the result count to the number specified. The returned variable's type is `DataFrame`
 
-
+<br>
 
 `pyspark.sql.DataFrame.collect()`
 
 + Returns all the records as a list of [`Row`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=collect#pyspark.sql.Row).
 + If you want to access the value in the list, you can access by `{list_name[0]}`
 
-
+<br>
 
  `pyspark.sql.Row`
 
@@ -322,20 +322,20 @@ list() -> new empty list
 list(iterable) -> new list initialized from iterable's items
 ```
 
-
+<br>
 
 `pyspark.sql.DataFrame.groupBy `
 
 + This function can <u>delete the repeated variables</u> in each row, so sometimes it can be treated as another way to reduce the complexity of the DataFrame.
 + The returned variable's type is `pyspark.sql.group.GroupedData`. If you want to show the details of this data structure, you should convert this to DataFrame like `count / avg / agg etc functions`.
 
-
+<br>
 
 `pyspark.SparkContext.parallelize`
 
 + The second parameter is the `numSlices` which indicates the number of slice in `DataFrame`.
 
-
+<br>
 
 `pyspark.sql.DataFrmae.filter`
 
@@ -343,7 +343,7 @@ list(iterable) -> new list initialized from iterable's items
 
   **condition** – a [`Column`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=filter#pyspark.sql.Column) of [`types.BooleanType`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=filter#pyspark.sql.types.BooleanType) or a string of SQL expression.
 
-
+<br>
 
 `pyspark.RDD.map`
 
@@ -353,6 +353,35 @@ list(iterable) -> new list initialized from iterable's items
 >>>>demo = spark.sparkContext.parallelize([1,2,3,4,5,6])
 >>>>demo.map(lambda x: x+1).collect()
 [2, 3, 4, 5, 6, 7]
+```
+
+<br>
+
+`pyspark.sql.DatFrame.regexp_extract(str,pattern,idx)`
+
++ returned type is `pyspark.sql.column.Column` which can be used as the parameters of function `select`.
+
++ Parameters:<br>
+
+  + `str`: the name of the `DataFrame`'s Column and Object of  Column
+
+  + `pattern`: the regular expression in Java. usually starts with `r'{_regx_}'`
+
+  + `index`: the index of the string from the regx. 
+
+    For example, we use `r'(\d+)(\c)(\d+)'` to illustrate the meaning of this parameters.
+
+    In regx, the bracket `()` is used to match the pattern and obtain the results which follow this regulation.
+
+    The `index of 0` the function will return all the corresponding mathes, in the example string which is `(200 9202)`. Attention: the string includes the character space.
+
+    The `index of 1` the function will return the first match pattern's result which is `(200)`. That indicates that the index should follow the sequence of the regx pattern.
+
+```python
+>>>>df = spark.createDataFrame([('slppp6.intermind.net - - [01/Aug/1995:00:00:11 -0400] "GET /history/skylab/skylab-small.gif HTTP/1.0" 200 9202',)],['value'])
+>>>>df.select(regexp_extract('value',r'(\d+)(\c)(\d+|-)',1)).collect()
+# You can change this line with below line
+# df.select(regexp_extract(df['value'],r'(\d+)\c(\d+|-)',1)).collect()
 ```
 
 
@@ -397,7 +426,7 @@ In this part, I want to analyse the function and datastructure I met about the *
 
 `pyspark.ml.regression import LinearRegression`
 
-```
+```python
 >>>>df = spark.createDataFrame([
     (1.0, 2.0, Vectors.dense(1.0)),
     (0.0, 2.0, Vectors.sparse(1, [], []))], ["label", "weight", "features"])
