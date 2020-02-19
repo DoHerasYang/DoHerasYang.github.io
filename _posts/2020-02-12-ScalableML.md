@@ -147,8 +147,6 @@ tags: Pyspark
 
 
 
-
-
 #### 1.2 Background Information
 
 ##### **Recap**:
@@ -386,9 +384,9 @@ list(iterable) -> new list initialized from iterable's items
 
 
 
+### 2. Lab2 and Background Informatiom
 
-
-#### 1.4 [MLlib](https://spark.apache.org/docs/2.3.2/ml-guide.html) - Spark’s machine learning (ML) library.
+#### 2.1 [MLlib](https://spark.apache.org/docs/2.3.2/ml-guide.html) - Spark’s machine learning (ML) library.
 
 `MLlib` allows easy combination of numerous algorithms into a single pipeline using standardized APIs for machine learning algorithms. The key concepts are:
 
@@ -466,3 +464,4 @@ Row(text='a b c', words=['a', 'b', 'c'])
 
 
 
+#### 2.2 
