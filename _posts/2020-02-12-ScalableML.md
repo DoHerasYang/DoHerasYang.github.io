@@ -166,19 +166,36 @@ The Spark application can handle with the user program request and separate proc
 <u>RDD</u> could be regarded as the immutable parallel data structure with failure recovery possibilities. The Spark provides the APIs for materializations of data as well as for control over caching and partitioning of elements to optimize data placement. RDD stores information about its parents to optimize execution (via pipelining of operations) and recompute partition in case of failure. Each RDD is split into multiple partitions (similar pattern with smaller sets).
 which may be computed on different nodes of the cluster.
 
+- Resilient
+
+Fault-tolerant, is able to recomputer missing or damaged partitions due to node failures.
+
++ Distributed
+
+Data residing on multiple nodes in a cluster.
+
++ Dataset
+
+A collection of partitioned elements, e.g. tuples or other objects(that represent records of the data you work with)
+
+
+
 RDD has five main properties in Pyspark:
 
 ```python
-//a list of partitions (e.g. splits in Hadoop)
+#a list of partitions (e.g. splits in Hadoop)
+#i.e. the data inside a RDD is partitioned (split into Partitions) and then distributed across nodes in a cluster(one partition per JVM that may not correspnd to a single node)
 def getPartitions: Array[Partition]
 
-//a list of dependencies on other RDDs
+#a list of dependencies on other RDDs 
+# Immutaable or Read-only
+# - it does bot change once created and can be transformed using transformations to Rew RDD
 def getDependencies: Seq[Dependency[_]]
 
-//a function for computing each split
+#a function for computing each split
 def compute(split: Partition, context: TaskContext): Iterator[T]
 
-//(optional) a list of preferred locations to compute each split on
+#(optional) a list of preferred locations to compute each split on
 def getPreferredLocations(split: Partition): Seq[String] = Nil
 
 //(optional) a partitioner for key-value RDDs
@@ -200,6 +217,8 @@ spark = SparkSession \
       .master("local") \
       .getOrCreate()
       
+
+sc = spark.sparkContext      
 df = spark.sparkContext.parallelize([(1,2,3,'a b c')]).toDF(['col1','col2','col3','col4'])
 
 # output
@@ -329,8 +348,9 @@ list(iterable) -> new list initialized from iterable's items
 
 <br>
 
-`pyspark.SparkContext.parallelize`
+`pyspark.SparkContext.parallelize(c, numSlices=None)`
 
++ The first parameters can be assigned as `list/array` type.
 + The second parameter is the `numSlices` which indicates the number of slice in `DataFrame`.
 
 <br>
@@ -371,7 +391,7 @@ list(iterable) -> new list initialized from iterable's items
 
     In regx, the bracket `()` is used to match the pattern and obtain the results which follow this regulation.
 
-    The `index of 0` the function will return all the corresponding mathes, in the example string which is `(200 9202)`. Attention: the string includes the character space.
+    The `index of 0` the function will return all the corresponding mathes strings, in the example string which is `(200 9202)`. Attention: the string includes the character space.
 
     The `index of 1` the function will return the first match pattern's result which is `(200)`. That indicates that the index should follow the sequence of the regx pattern.
 
@@ -381,6 +401,30 @@ list(iterable) -> new list initialized from iterable's items
 # You can change this line with below line
 # df.select(regexp_extract(df['value'],r'(\d+)\c(\d+|-)',1)).collect()
 ```
+
+<br>
+
+`pyspark.RDD.reduceByKey(func, numPartitions=None, partitionFunc=<function portable_hash>) `
+
++ Parameters:<br>
+  + `fun`: mapping function which indicates the operation of the RDD datastracture. It will generate hash-partitioned output with existing partitioner.
+  + `numPartitions`: Output will be partitioned with `numPartitions` partitions, or the default parallelism level if `numPartitions` is not specified. Default partitioner is hash-partition. Default value is `HashPartitioner`
+  + `partitioner`: the partition function.
+
+```python
+# The Example about the partition
+list_v = [("a",1),("b",1),("a",1)]
+rdd = sc.parallelize(list_v)
+rdd.reduceByKey(_ + _).collect()
+# output
+# [('a',2)('b',1)]
+```
+
+<br>
+
+
+
+
 
 
 
@@ -402,8 +446,6 @@ A list of some of the available ML features is available [here](http://spark.apa
 
 In this part, I want to analyse the function and datastructure I met about the *MLlib*.
 
-
-
 ---
 
 `pyspark.ml.linalg.Vector.dense`
@@ -411,7 +453,7 @@ In this part, I want to analyse the function and datastructure I met about the *
 + Create a dense vector of 64-bit floats from a Python list or numbers. 
 + You can use the lists or `pyspark.sql.DataFrame`.
 
-
+<br>
 
 `pyspark.RDD.randomSplit`
 
@@ -420,7 +462,7 @@ In this part, I want to analyse the function and datastructure I met about the *
   - **seed** – The seed for sampling.
 + The returned varibale type is `DataFrame`.
 
-
+<br>
 
 `pyspark.ml.regression import LinearRegression`
 
@@ -433,7 +475,7 @@ In this part, I want to analyse the function and datastructure I met about the *
 >>>>model.transorm(test_set)
 ```
 
-
+<br>
 
 `pyspark.ml.evaluation.RegressionEvaluator()`
 
@@ -443,7 +485,7 @@ In this part, I want to analyse the function and datastructure I met about the *
   + **metricName='rmse'* -- The name of Metric used for Java.
 + The returned value's type is `RegressionEvaluator`.
 
-
+<br>
 
 `pyspark.ml.feature.Tokenizer (*inputCol=None*, *outputCol=None*)`
 
@@ -456,12 +498,25 @@ In this part, I want to analyse the function and datastructure I met about the *
 Row(text='a b c', words=['a', 'b', 'c'])
 ```
 
-
+<br>
 
 `pyspark.ml.feature.HashingTF(numFeatures=262144, binary=False, inputCol=None*, outputCol=None)`
 
-+ Maps a sequence of terms to their term frequencies using the hashing trick. Currently we use Austin Appleby’s MurmurHash 3 algorithm (MurmurHash3_x86_32) to calculate the hash code value for the term object. 
++ Maps a sequence of terms to their term frequencies using the hashing trick. Currently we use Austin Appleby’s MurmurHash 3 algorithm (`MurmurHash3_x86_32`) to calculate the hash code value for the term object. 
+
+<br>
+
+#### 2.2 HDFS
+
+`HDFS` is a distributed file system designed to store large files spread across multiple physical machines and hard drives. Spark is a tool for running distributed computations over large datasets. Spark is a successor to the popular `Hadoop MapReduce computation framework`. Together, Spark and HDFS offer powerful capabilites for writing simple code that can quickly compute over large amounts of data in parallel.
 
 
 
-#### 2.2 
+
+
+
+
+
+
+
+
