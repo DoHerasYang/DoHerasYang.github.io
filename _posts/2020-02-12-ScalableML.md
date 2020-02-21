@@ -297,7 +297,7 @@ new_logFile.select('URL').dropDuplicates().count()
 
 <br>
 
-`pyspark.sql.DataFrame.orderBy()`
+`pyspark.sql.DataFrame.orderBy(*cols, **kwargs)`
 
 + There are various ways to use this fuction, the directly way is to just import this function.
 + Returns a new `DataFrame` sorted by the specified column(s).
