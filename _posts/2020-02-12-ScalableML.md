@@ -563,7 +563,9 @@ Row(text='a b c', words=['a', 'b', 'c'])
 
 <br>
 
-#### 2.2 HDFS
+
+
+#### 2.2 HDFS(Hadoop Distributed File System)
 
 `HDFS` is a distributed file system designed to store large files spread across multiple physical machines and hard drives. Spark is a tool for running distributed computations over large datasets. Spark is a successor to the popular `Hadoop MapReduce computation framework`. Together, Spark and HDFS offer powerful capabilites for writing simple code that can quickly compute over large amounts of data in parallel.
 
@@ -571,7 +573,27 @@ Row(text='a b c', words=['a', 'b', 'c'])
 
 Within HDFS, a given name node manages file system namespace operations like opening, closing, and renaming files and directories. A name node also maps data blocks to data nodes, which handle read and write requests from HDFS clients. Data nodes also create, delete, and replicate data blocks according to instructions from the governing name node.
 
+![HDFS](/Pictures/Spark/HDFS.gif)
 
+
+
+#### 2.3 [Pipelines](https://blog.insightdatascience.com/spark-pipelines-elegant-yet-powerful-7be93afcdd42)
+
+ML Pipelines: high-level APIs to create and tune machine learning pipelines.
+
+![ml-PipelineModel](/Pictures/Spark/ml-PipelineModel.png)
+
+![pipeline_model](/Pictures/Spark/pipeline_model.png)
+
+<br>
+
+
+
+#### 2.4 Word Count in Spark
+
+![word_count](/Pictures/Spark/word_count.png)
+
+<br>
 
 
 
