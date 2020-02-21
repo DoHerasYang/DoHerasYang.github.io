@@ -434,7 +434,8 @@ v.groupby('rule').count().collect()
 # The Example about the partition
 list_v = [("a",1),("b",1),("a",1)]
 rdd = sc.parallelize(list_v)
-rdd.reduceByKey(_ + _).collect()
+#All the pair RDD operations take an optional second parameter for number of tasks
+rdd.reduceByKey(_ + _, 5).collect()
 # output
 # [('a',2)('b',1)]
 ```
@@ -480,6 +481,29 @@ errors.count()
 
 <br>
 
+`pyspark.RDD.foreach(func) `
+
++ Applies a function to traverse all elements of this RDD.
+
+<br>
+
+`pyspark.Accumalator(aid,value,accm_para)`
+
++ Parameters:
+  + `aid`:  the Identifier(ID) of this function, you can treat this like the unique index of this function.
+  + `value`: the initial value of this function.
+  + `accm_para`: the string to indicate the Accumalator.
+
+```python
+accum = sc.accumulator(0, "Example Accumulator")
+sc.parallelize(range(0,10)).foreach(lambda x: accum.add(x))
+accum.value
+# output 
+55
+```
+
+
+
 
 
 
@@ -504,10 +528,14 @@ In this part, I want to analyse the function and datastructure I met about the *
 
 ---
 
-`pyspark.ml.linalg.Vector.dense`
+`pyspark.ml.linalg.Vector.dense(*elements)`
 
 + Create a dense vector of 64-bit floats from a Python list or numbers. 
-+ You can use the lists or `pyspark.sql.DataFrame`.
++ `elements` type can be indicated as `python.lists` or `pyspark.sql.DataFrame` 
+
+```
+rdd = sc
+```
 
 <br>
 
