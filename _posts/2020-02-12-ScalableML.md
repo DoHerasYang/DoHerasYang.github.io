@@ -533,8 +533,11 @@ In this part, I want to analyse the function and datastructure I met about the *
 + Create a dense vector of 64-bit floats from a Python list or numbers. 
 + `elements` type can be indicated as `python.lists` or `pyspark.sql.DataFrame` 
 
-```
-rdd = sc
+```python
+rdd = sc.parallelize([1,2])
+Vector.dense(rdd)
+# output
+[1.0,2.0]
 ```
 
 <br>
