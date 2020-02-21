@@ -341,10 +341,26 @@ list(iterable) -> new list initialized from iterable's items
 
 <br>
 
-`pyspark.sql.DataFrame.groupBy `
+`pyspark.sql.DataFrame.groupBy() `
 
 + This function can <u>delete the repeated variables</u> in each row, so sometimes it can be treated as another way to reduce the complexity of the DataFrame.
 + The returned variable's type is `pyspark.sql.group.GroupedData`. If you want to show the details of this data structure, you should convert this to DataFrame like `count / avg / agg etc functions`.
++ [pyspark.sql.GroupedData.agg](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=group#pyspark.sql.GroupedData.agg) (Python method, in pyspark.sql module)
++ [pyspark.sql.GroupedData.apply](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=group#pyspark.sql.GroupedData.apply) (Python method, in pyspark.sql module)
++ [pyspark.sql.GroupedData.avg](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=group#pyspark.sql.GroupedData.avg) (Python method, in pyspark.sql module)
++ [pyspark.sql.GroupedData.count](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=group#pyspark.sql.GroupedData.count) (Python method, in pyspark.sql module)
++ [pyspark.sql.GroupedData.max](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=group#pyspark.sql.GroupedData.max) (Python method, in pyspark.sql module)
++ [pyspark.sql.GroupedData.mean](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=group#pyspark.sql.GroupedData.mean) (Python method, in pyspark.sql module)
++ [pyspark.sql.GroupedData.min](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=group#pyspark.sql.GroupedData.min) (Python method, in pyspark.sql module)
++ [pyspark.sql.GroupedData.pivot](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=group#pyspark.sql.GroupedData.pivot) (Python method, in pyspark.sql module)
++ [pyspark.sql.GroupedData.sum](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=group#pyspark.sql.GroupedData.sum) (Python method, in pyspark.sql module)
+
+```python
+v = sc.parallelize([(1,'a','bn'),(2,'b','mn'),(2,'a','nm')]).toDF(['num','rule','str'])
+v.groupby('rule').count().collect()
+# output
+[Row(rule='b', count=1), Row(rule='a', count=2)]
+```
 
 <br>
 
@@ -355,7 +371,7 @@ list(iterable) -> new list initialized from iterable's items
 
 <br>
 
-`pyspark.sql.DataFrmae.filter`
+`pyspark.sql.DataFrmae.filter()`
 
 + Parameters:
 
@@ -363,7 +379,7 @@ list(iterable) -> new list initialized from iterable's items
 
 <br>
 
-`pyspark.RDD.map`
+`pyspark.RDD.map()`
 
 + Return a new RDD by applying a function to each element of this RDD.
 
@@ -421,6 +437,47 @@ rdd.reduceByKey(_ + _).collect()
 ```
 
 <br>
+
+`pyspark.RDD.distinct() `
+
++ The type of object in this function is `RDD`, also you can use the `DataFrame` in one correct way.
+
+```python
+df = spark.sparkContext.parallelize([1,2,1])
+df.distinct().collect()
+# output
+[1,2]
+```
+
+<br>
+
+`pyspark.RDD.persist()`
+
++ This function can be assigned to set a new storage level if the RDD does not have a storage level set yet.
+
++ What's the difference between the `persist()` and `cache()`?
+
+  + `cache()` has only one default cache level, `MEMORY_ONLY`, and persist can set other cache levels according to the situation.
+
+  + Fore more details, you can check the source of spark.
+
+  + `def cache(): this.type = persist()`
+
+    `def persist(): this.type = persist(StorageLevel.MEMORY_ONLY)`
+
+```scala
+val lines = sc.textFile("hdfs://…")
+val errors = lines.filter(_.startsWith(“Error”))
+errors.persist()
+errors.count()
+//If you do errors.count() again, the file will be loaded again and computed again
+//Persist will tell Spark to cache the data in memory, to reduce the data loading cost of further actions on the same data
+//erros.persist() will do nothing. It is a lazy operation. But now the RDD says "read this file and then cache the contents" The action will trigger compution and data caching.                      
+```
+
+<br>
+
+``
 
 
 
@@ -509,6 +566,12 @@ Row(text='a b c', words=['a', 'b', 'c'])
 #### 2.2 HDFS
 
 `HDFS` is a distributed file system designed to store large files spread across multiple physical machines and hard drives. Spark is a tool for running distributed computations over large datasets. Spark is a successor to the popular `Hadoop MapReduce computation framework`. Together, Spark and HDFS offer powerful capabilites for writing simple code that can quickly compute over large amounts of data in parallel.
+
+`HDFS` is comprised of interconnected clusters of nodes where files and directories reside. An HDFS cluster consists of a single node, known as a `NameNode`, that manages the file system namespace and regulates client access to files. In addition, data nodes (`DataNodes`) store data as blocks within files.
+
+Within HDFS, a given name node manages file system namespace operations like opening, closing, and renaming files and directories. A name node also maps data blocks to data nodes, which handle read and write requests from HDFS clients. Data nodes also create, delete, and replicate data blocks according to instructions from the governing name node.
+
+
 
 
 
