@@ -211,9 +211,9 @@ Next, we will talk about the details and demenstration of functions in initialin
 
 from pyspark.sql import SparkSession
 spark = SparkSession \
-			.builder \
-  		.appName("Demo RDD Example") \
-    	.config("spark.some.config.option","some-value") \
+      .builder \
+      .appName("Demo RDD Example") \
+      .config("spark.some.config.option","some-value") \
       .master("local") \
       .getOrCreate()
       
