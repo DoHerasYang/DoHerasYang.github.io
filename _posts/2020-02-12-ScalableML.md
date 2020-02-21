@@ -258,6 +258,7 @@ For more details, you can click [here](https://www.javatpoint.com/pyspark-rdd) t
 + The returned variable' type is `pyspark.sql.column.Column`, we can't use the normal pyspark function like `collect() / show()` to handle with this type's variable. But we can use the `pyspark.sql.Column.getItem(num)`
 
 ```python
+df = spark.createDataFrame([('slppp6.intermind.net - - [01/Aug/1995:00:00:11 -0400] "GET /history/skylab/skylab-small.gif HTTP/1.0" 200 9202',)],['value'])
 split_logFile = split(new_object['value'], '- -')
 ```
 
@@ -279,6 +280,8 @@ split_logFile = split(new_object['value'], '- -')
   - **col** – a [`Column`](https://spark.apache.org/docs/latest/api/python/pyspark.sql.html?highlight=read text#pyspark.sql.Column) expression for the new column.
 
 ```python
+df = spark.createDataFrame([('slppp6.intermind.net - - [01/Aug/1995:00:00:11 -0400] "GET /history/skylab/skylab-small.gif HTTP/1.0" 200 9202',)],['value'])
+split_logFile = df.split(df.value,r'- -')
 new_logFile = new_object.withColumn('URL', split_logFile.getItem(0))
 ```
 
