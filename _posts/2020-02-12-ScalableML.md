@@ -254,12 +254,12 @@ For more details, you can click [here](https://www.javatpoint.com/pyspark-rdd) t
 
 `pyspark.sql.functions.split`(*str*, *pattern*)  [[source]](https://spark.apache.org/docs/latest/api/python/_modules/pyspark/sql/functions.html#split)
 
-+ This function's object is the `DataFrame[value: string`, and this function requires a returned variable instead of changing the original DataFrame.
-+ The returned variable' type is `pyspark.sql.column.Column`, we can't use the normal pyspark function like `collect() / show()` to handle with this type's variable. But we can use the `pyspark.sql.Column.getItem(num)`
++ This function's object is the `DataFrame`, and this function requires a returned variable instead of changing the original DataFrame.
++ The **returned variable's type** is `pyspark.sql.column.Column`, we can't use the normal pyspark function like `collect() / show()` to handle with this type's variable. But we can use the `pyspark.sql.Column.getItem(num)`
 
 ```python
 df = spark.createDataFrame([('slppp6.intermind.net - - [01/Aug/1995:00:00:11 -0400] "GET /history/skylab/skylab-small.gif HTTP/1.0" 200 9202',)],['value'])
-split_logFile = split(new_object['value'], '- -')
+split_logFile = split(df['value'], '- -')
 ```
 
 <br>
