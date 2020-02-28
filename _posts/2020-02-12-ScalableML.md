@@ -502,9 +502,7 @@ accum.value
 55
 ```
 
-
-
-
+<br>
 
 
 
@@ -624,6 +622,48 @@ ML Pipelines: high-level APIs to create and tune machine learning pipelines.
 ![word_count](/Pictures/Spark/word_count.png)
 
 <br>
+
+
+
+### 3. Collaborative filtering in Machine Learning Usage
+
+#### 3.1 Description
+
+**General Description**:
+
+If you want to design a intelligent  recommanded system to analyse the user's behaviour, you can reply on [this technology](https://en.wikipedia.org/wiki/Collaborative_filtering). This system can learn from the collected data and give better recommendations.
+
+These techniques aim to fill in the missing entries of a user-item association matrix primarily based on the matrix *itself*. 
+
+<br>
+
+**Collaborative filtering in `Pyspark`**
+
+`spark.ml` currently supports **model-based** collaborative filtering, in which users and products are described by a small set of latent factors that can be used to predict missing entries, using the **alternating least squares (ALS)** algorithm.
+
+
+
+#### 3.2 Principle
+
+##### 3.2.1 Singular value decomposition(SVD)
+
+Eigenvalues and eigenvectors:
+
+
+
+
+
+
+
+
+
+
+
+
+
+`ALS`: `pyspark.ml.recommendation.ALS`
+
+
 
 
 
