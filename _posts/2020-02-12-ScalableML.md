@@ -649,12 +649,10 @@ These techniques aim to fill in the missing entries of a user-item association m
 
 ##### 3.2.1 Singular value decomposition(SVD)
 
-**Eigenvalues and Eigenvectors:**<br>
-$$
-\begin{equation}
-\mathbf{Ax = \lambda xx}
-\end{equation}
-$$
+**Eigenvalues and Eigenvectors:**
+
+$$\begin{equation} \mathbf{Ax = \lambda x} \end{equation}$$
+
 <br>The A is the $n×n$ real symmetric matrix, $x$ is the $n$ dimension vector, we would define that the value $\lambda$ is the eigenvalues of the matrix $A$, and $x$ is the corresponding eigenvectors.
 
 **WHAT IS THE BENEFITS of Eigenvalues and Eigenvectors?**
