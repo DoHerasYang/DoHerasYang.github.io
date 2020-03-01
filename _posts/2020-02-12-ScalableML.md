@@ -653,19 +653,19 @@ These techniques aim to fill in the missing entries of a user-item association m
 
 $$\begin{equation} \mathbf{Ax = \lambda x} \end{equation}$$
 
-<br>The A is the $n×n$ real symmetric matrix, $x$ is the $n$ dimension vector, we would define that the value $\lambda$ is the eigenvalues of the matrix $A$, and $x$ is the corresponding eigenvectors.
+The A is the $n×n$ real symmetric matrix, $x$ is the $n$ dimension vector, we would define that the value $\lambda$ is the eigenvalues of the matrix $A$, and $x$ is the corresponding eigenvectors.
 
 **WHAT IS THE BENEFITS of Eigenvalues and Eigenvectors?**
 
 If we decompose the features of matrix $A$, we will onbtain the $n$ number of eigenvalues ${\lambda_1 \leq \lambda_2 \leq \lambda_3 \leq \dots \leq \lambda_n}$  and its eigenvalues are ${w_1,w_2,\dots,w_n}$. If these eigenvectors are irrelevant, the matrix $A$ can be represented by this feature decomposition：<br>
-$$
-A = W\sum{W^{-1}}
-$$
+
+$$A = W\sum{W^{-1}}$$
+
 The $W$ is the $n×n$ matrix composed by eigenvectors, and the result of $\sum{W^{-1}}$ is $n×n$ main diagonal matrix composed by the $N$ eigenvalues.
 
 **Eigenvector normalization**
 
-Normalization of the $n$ eigenvector can make tbe $W$'s eigenvecots as the orthonormal basis. And It will satisfy $||w_i||_2 = 1 \quad w_i^Tw_i=1$.
+Normalization of the $n$ eigenvector can make tbe $W$'s eigenvecots as the orthonormal basis. And It will satisfy $\left|\left|w_i\right|\right|_2 = 1 \quad w_i^Tw_i=1$.
 
 In this case, to perform feature decomposition, the matrix $A$ must be the a square matrix. If $A$ is not a square matrix, that means what if the rows and columns are not the same, can we still decompose the matrix?
 
@@ -676,24 +676,24 @@ Now here comes our SVD.
 **SVD**:
 
 Assume there is one matrix which is $m×n$ size, the SVD of the matrix can be represented by:<br>
-$$
-A = U\sum{V^T}
-$$
+
+$$A = U\sum{V^T}$$
+
 The $U$ is the $m×m$ matrix, and $\sum{}$ is the $m×n$ matrix which only have main diagonal's values. The every element on the main diagonal is called a <u>singular value</u>. V is the $n×n$ matrix. U and V are unitary matrices.
 
 **Solve the SVD**:
 
 We use the multiplication of transpose of $A$ and matrix $A$ , and we will obtain a new $n×$n matrix $A^TA$. If the $A^TA$ is the square matrix, we will continue to do the eigenvalue decomposation. And the result of the eigenvalues and eigenvectors can satisfy this equation:<br>
-$$
-(A^TA)v_i = \lambda_iv_i
-$$
+
+$$(A^TA)v_i = \lambda_iv_i$$
+
 Now we can obtain the $n$ eigenvalues and $n$ eigenvectors of the matrix $A^TA$. We can use these eigenvectors to compose a $n×n$ matrix $V$. In general, we define the feature vectors of matrix $V$ as the right singular vectors.
 
 Next, we rely on very distinct way to generate another square matrix, which is $m×m $  $AA^T$. We do the eigenvalues decomposation to obtain the another sets of the eigenvalues and eigenvectors. The eigenvectors can compose a $m×m$ matrix $U$, we can these eigenvectors as the left singular vectors.<br>
-$$
-(AA^T)u_i = \lambda_i
-$$
-We need to 
+
+$$(AA^T)u_i = \lambda_i$$
+
+
 
 
 
