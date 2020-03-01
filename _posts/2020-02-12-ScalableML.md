@@ -623,8 +623,6 @@ ML Pipelines: high-level APIs to create and tune machine learning pipelines.
 
 <br>
 
-
-
 ### 3. Collaborative filtering in Machine Learning Usage
 
 #### 3.1 Description
@@ -637,13 +635,21 @@ These techniques aim to fill in the missing entries of a user-item association m
 
 <br>
 
-**Collaborative filtering in `Pyspark`**
+**Collaborative filtering in `Pyspark - ALS`**
 
-`spark.ml` currently supports **model-based** collaborative filtering, in which users and products are described by a small set of latent factors that can be used to predict missing entries, using the **alternating least squares (ALS)** algorithm.
-
-
+`spark.ml` currently supports **model-based** collaborative filtering, in which users and products are described by a small set of latent factors that can be used to predict missing entries, using the **alternating least squares (ALS)** function.
 
 
+
+
+
+
+
+
+
+
+
+<br>
 
 #### 3.2 Principle
 
@@ -662,6 +668,8 @@ If we decompose the features of matrix $A$, we will onbtain the $n$ number of ei
 $$A = W\sum{W^{-1}}$$
 
 The $W$ is the $n×n$ matrix composed by eigenvectors, and the result of $\sum{W^{-1}}$ is $n×n$ main diagonal matrix composed by the $N$ eigenvalues.
+
+<br>
 
 **Eigenvector normalization**
 
@@ -689,9 +697,27 @@ $$(A^TA)v_i = \lambda_iv_i$$
 
 Now we can obtain the $n$ eigenvalues and $n$ eigenvectors of the matrix $A^TA$. We can use these eigenvectors to compose a $n×n$ matrix $V$. In general, we define the feature vectors of matrix $V$ as the right singular vectors.
 
-Next, we rely on very distinct way to generate another square matrix, which is $m×m $  $AA^T$. We do the eigenvalues decomposation to obtain the another sets of the eigenvalues and eigenvectors. The eigenvectors can compose a $m×m$ matrix $U$, we can these eigenvectors as the left singular vectors.<br>
+Next, we rely on another distinct way to generate another square matrix, which is $m×m $  $AA^T$. We do the eigenvalues decomposation to obtain the another sets of the eigenvalues and eigenvectors. The eigenvectors can compose a $m×m$ matrix $U$, we can these eigenvectors as the left singular vectors.<br>
 
-$$(AA^T)u_i = \lambda_i$$
+$$(AA^T)u_i = \lambda_iu_i$$
+
+$$ \sum{u_i} = U $$
+
+The only matrix we havn't obtained is the $\sum$, and the diagonal values on the matrix are all singular values, so we just calculate the every singular values.
+
+$$ A = U\sum{V^T} ⇒ AV = U\sum{V^T}V ⇒ AV=U\sum ⇒ Au_i = \sigma_iv_i ⇒ \sigma_i=Au_i/v_i$$
+
+From the previous steps, we can conclude that 
+
+$$\sigma_i = \sqrt{\lambda_i} ⇒ \sigma_i = \sqrt{A^TA}$$
+
+
+
+##### 3.2.2 K-Folds Vaildation
+
+
+
+
 
 
 
