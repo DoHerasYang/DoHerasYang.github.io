@@ -651,7 +651,9 @@ These techniques aim to fill in the missing entries of a user-item association m
 
 **Eigenvalues and Eigenvectors:**<br>
 $$
+\begin{equation}
 \mathbf{Ax = \lambda x}
+\end{equation}
 $$
 <br>The A is the $n×n$ real symmetric matrix, $x$ is the $n$ dimension vector, we would define that the value $\lambda$ is the eigenvalues of the matrix $A$, and $x$ is the corresponding eigenvectors.
 
