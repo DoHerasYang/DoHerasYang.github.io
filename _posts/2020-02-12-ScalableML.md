@@ -71,7 +71,7 @@ tags: Pyspark
 > export PATH="$PATH:$SPARK_HOME/bin:$PATH"
 > ```
 >
-> 3.Check the python version from your computer and You should add the the correspnding location information into the `~/.bash_profile` 
+> 3.Check the python version from your computer and You should add the the corresponding location information into the `~/.bash_profile` 
 >
 > ```shell
 > $ which python3
@@ -643,12 +643,6 @@ These techniques aim to fill in the missing entries of a user-item association m
 
 
 
-
-
-
-
-
-
 <br>
 
 #### 3.2 Principle
@@ -714,6 +708,101 @@ $$\sigma_i = \sqrt{\lambda_i} ⇒ \sigma_i = \sqrt{A^TA}$$
 
 
 ##### 3.2.2 K-Folds Vaildation
+
+
+
+
+
+
+
+### 4.K-means Clustering
+
+#### 4.1 Discussion
+
+##### Definition
+
++ The K-means clustering model is prototyped-based and partition.
++ Each cluster has the its centroid, but number of centroid is not limited.
++ Each point(data) is assigned to the cluster with the closest centroid.
++ K can be specified as the different number, and it can affect the final result(such as SSE).
+
+##### **Procedure**:
+
+1.Cluster the data set into groups of different density.
+
+2.Choose points in small cluster as candidate outliers.
+
+3.Computer the distance between **candidate points** and **non-candidate clusters**.
+
+4.If candidate points are **far from all other non-candidate points**, they are **outlines**.
+
+<br>
+
+##### **Two Approach to Generate the K-Means Cluster**：
+
+Partitional Clustering：
+
++ A simply a dicision of the set of data objects into **non-overlapping subsets**.
++ Each data object is in exactly **one subset**.
++ A hierarchical clustering can be viewed as a sequence of partitional clustering and a partition clustering can be obtained by taking any member of the that sequences by cutting the hierarchical tree at a particular level.
+
+Hierarchical Clustering:
+
++ Set of the nested clusters organized as a hierachical tree.
++ Each node in the tree is the union of its children(sub-clusters), and the root of the tree is the cluster containing all the objects
+
+#### 4.2 Types of Clusters
+
+##### Centre-Based (Prototype-based)
+
++ A cluster is a set of objects such that an object in a cluster is closer to the specific cluster centre than to the any other centres.
++ We call the centre of a cluster is **centroid**, which is the average of all the points in the cluster.
++ If the centroid is not meaningful, the most "representative" point of the cluster can be treated as **medoid**.
+
+##### Density-Based
+
++ The cluster is a dense region of points which is separated by low-density regions from other regions of high density.
++ Used when the cluster model is irregular and intertwined, and the noise and outliers of data set is prominent.
+
+#### 4.3 Lloyd Algorithm
+
++ Set the **K** arbitrary centres ${c_1,c_2,\dots,c_k}$
++ Performs an EM-type local search till convergence.
++ Advantages: **Simplicity,Scalability**
++ Disadvantages: many interactions; sensitive to initialisation; obtain two centres in the same clusters
+
+#### 4.3 K-means++
+
++ Spread out the centres
++ Choose first centre,$c_1$, uniformly at random from the data set.
++ Repeat for $2\le i \le k$ <br>
+  + Choose a $c_i$ to be equal to a data point $x_0$ which is from the distribution.<br>
+  + $\frac{d(x_0,C)^2}{\phi_X(C)} \propto d(x_0,C)^2$
++ Disadvantages:<br>
+  + Needs K passes over the data<br>
+  + The lager data set and K choice <br>
+  + Not scalable<br>
++ Resolution:<br>
+  + Oversample by sampling each point independently with a larger probability
+  + Intuitively equivalent to update the distribution much less frequently
+
+#### 4.4 K-means||
+
++ Choose L>1 , the L is the number of oversampling centroid.
++ Initialise C to an arbitrary set of points
++ For R iterations do: <br>
+  + Sample each point $x$ in $X$ independently with probability 
+  + Add all sampled points to C
++ Cluster the points in C to find the final centres
+
++ Benefits:<br>
+  + Overall approximation factor = O(log k)
+  + Harder than K-means++ to be affected by noisy outliers
+  + Reduce the number of iterations
+
+#### 4.5 K-means in Pyspark
+
+
 
 
 
