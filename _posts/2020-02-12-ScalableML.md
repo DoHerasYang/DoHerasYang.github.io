@@ -623,6 +623,8 @@ ML Pipelines: high-level APIs to create and tune machine learning pipelines.
 
 <br>
 
+---
+
 ### 3. Collaborative filtering in Machine Learning Usage
 
 #### 3.1 Description
@@ -638,8 +640,6 @@ These techniques aim to fill in the missing entries of a user-item association m
 **Collaborative filtering in `Pyspark - ALS`**
 
 `spark.ml` currently supports **model-based** collaborative filtering, in which users and products are described by a small set of latent factors that can be used to predict missing entries, using the **alternating least squares (ALS)** function.
-
-
 
 
 
@@ -704,8 +704,6 @@ $$ A = U\sum{V^T} ⇒ AV = U\sum{V^T}V ⇒ AV=U\sum ⇒ Au_i = \sigma_iv_i ⇒ \
 From the previous steps, we can conclude that 
 
 $$\sigma_i = \sqrt{\lambda_i} ⇒ \sigma_i = \sqrt{A^TA}$$
-
-
 
 ##### 3.2.2 K-Folds Vaildation
 
