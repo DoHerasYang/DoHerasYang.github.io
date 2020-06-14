@@ -3,8 +3,8 @@ layout: post
 title: 'ScalableML'
 date: 2020-02-10
 author: DoHerasYang
-color: rgb(255,102,32)
-cover: ''
+color: rgb(153,153,255)
+cover: '/Pictures/CoverPage/scalable_machine_learning.png'
 tags: Pyspark
 
 ---
@@ -799,6 +799,8 @@ Hierarchical Clustering:
   + Reduce the number of iterations
 
 #### 4.5 K-means in Pyspark
+
+In pyspark, the developers could rely on the 
 
 
 
