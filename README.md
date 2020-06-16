@@ -20,13 +20,13 @@ Quote the **Aaron Swartz** the Sentence which is very encouraging:
 
 + **Study and Work Experience**
 
-  + (2019.6 - now)    Master Postgraduate Student at the University of Sheffield.  
+  + **(2019.6 - now)**    Master Postgraduate Student at the University of Sheffield.  
 
-    Major:  Master of Computer Science - Artificial Intelligence and CyberSecurity
+    **Major**:  Master of Computer Science - Artificial Intelligence and CyberSecurity
 
-  + (2015.9 - 2019.6)   Undergraduate Student at the Nanjing University of Aeronautics and Astronautics. 
+  + **(2015.9 - 2019.6)**   Undergraduate Student at the Nanjing University of Aeronautics and Astronautics. 
 
-    Major: Information Security 
+    **Major**: Information Security of Bachelor
 
 + **Programming Skills**
 
@@ -39,21 +39,10 @@ Quote the **Aaron Swartz** the Sentence which is very encouraging:
   + HTML / CSS 
   + PHP
 
++ **Project Experience**
+  + 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-#### Page 
 
 
 
