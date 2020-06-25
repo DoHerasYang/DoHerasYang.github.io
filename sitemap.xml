@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://doherasyang.github.io/</loc>
+  <lastmod>2020-06-25T17:02:12+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://doherasyang.github.io/tags.html</loc>
+  <lastmod>2020-06-25T17:02:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://doherasyang.github.io/timeline.html</loc>
+  <lastmod>2020-06-25T17:02:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://doherasyang.github.io/about.html</loc>
+  <lastmod>2020-06-25T17:02:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://doherasyang.github.io/friendLink.html</loc>
+  <lastmod>2020-06-25T17:02:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://doherasyang.github.io/2020/02/10/ScalableML.html</loc>
+  <lastmod>2020-06-25T17:02:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://doherasyang.github.io/2020/01/13/TextProcessing.html</loc>
+  <lastmod>2020-06-25T17:02:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://doherasyang.github.io/2019/12/19/Digital-Forensics.html</loc>
+  <lastmod>2020-06-25T17:02:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://doherasyang.github.io/2019/12/16/Ruby-Rails.html</loc>
+  <lastmod>2020-06-25T17:02:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://doherasyang.github.io/2019/12/11/Sheffield-Machine-Learning.html</loc>
+  <lastmod>2020-06-25T17:02:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://doherasyang.github.io/page2/</loc>
+  <lastmod>2020-06-25T17:02:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://doherasyang.github.io/2019/12/11/Ruby.html</loc>
+  <lastmod>2020-06-25T17:02:12+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
+</urlset>
