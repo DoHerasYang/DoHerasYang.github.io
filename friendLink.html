@@ -2,7 +2,7 @@
 layout: default
 title: 友情链接
 page-title: friendLinks
-home-title: This is my friends.
+home-title: These are my friends/Colleges.
 description:
 ---
 
@@ -14,9 +14,12 @@ description:
         <li  class="fadeInUp animated">
           {% for friend in site.friends %}
             <span class="tag-name" >
-                <a href="{{ friend[1] }}">「&emsp;{{ friend[0] }}&emsp;」</a>
+                <a href="{{ friend[1] }}">「&#x2003;{{ friend[0] }}&#x2003;」</a>
             </span>
-                </br>
+                <br>
+            <span class="tag-name">
+                <a href="{{ friend[3} }">&emsp;「&#x2003;{{ friend[2] }}&#x2003;」</a>
+            </span>
           {% endfor %}
         </li>
     </ul>
