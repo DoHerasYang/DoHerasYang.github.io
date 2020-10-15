@@ -361,6 +361,45 @@ class Solution:
                 return False
 ```
 
+10.给你一个字符串 `s` 和一个字符规律 `p`，请你来实现一个支持 `'.'` 和 `'*'` 的正则表达式匹配。
+
+```python
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        if not p: return not s
+        # 第一个字母是否匹配
+        first_match = bool(s and p[0] in {s[0],'.'})
+        # 如果 p 第二个字母是 *
+        if len(p) >= 2 and p[1] == "*":
+            return self.isMatch(s, p[2:]) or \
+            first_match and self.isMatch(s[1:], p)
+        else:
+            return first_match and self.isMatch(s[1:], p[1:])
+```
+
+11.给你 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
+
+说明：你不能倾斜容器，且 n 的值至少为 2。
+
+```python
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        a, b = 0, len(height)-1
+        res = 0
+        while a < b:
+            area = min(height[a], height[b])*(b-a)
+            if area > res:
+                res = area
+            if height[a] > height[b]:
+                b -= 1
+            elif height[a] < height[b]:
+                a += 1
+            else:
+                a += 1
+                b -= 1
+        return res
+```
+
 
 
 
