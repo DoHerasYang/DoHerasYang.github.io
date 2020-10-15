@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'ScalableML'
+title: 'Leetcode'
 date: 2020-02-10
 author: DoHerasYang
 color: rgb(153,153,255)
