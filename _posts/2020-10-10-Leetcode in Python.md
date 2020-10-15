@@ -1,0 +1,369 @@
+---
+layout: post
+title: 'ScalableML'
+date: 2020-02-10
+author: DoHerasYang
+color: rgb(153,153,255)
+cover: '/Pictures/CoverPage/scalable_machine_learning.png'
+tags: Pyspark
+
+---
+
+# Leetcode
+
+>来源：力扣（LeetCode）
+
+1.给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。
+
+```
+给定 nums = [2, 7, 11, 15], target = 9
+
+因为 nums[0] + nums[1] = 2 + 7 = 9
+所以返回 [0, 1]
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/two-sum
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+```
+
+**解题思路:**
+
++ 在`python`中，字典类型的变量可以快速地找到对应的值及其下标——`（dict()）`，对于`List`类型，我们需要的快速地将List中的值及其对应下标可以快速地查找出来，第一个方法是将所有的List里的所有的值及其对应的下标存储到`Dictionary`类型中，第二个思路是使用`enumerate`函数生成一个迭代器。
+
++ 在本题中，如果想要找到对应的解，最暴力的方法是遍历到一个值，然后遍历剩下的数据结构看是否可以找到另外一个值，使其两者对应的和等于target。很明显这个方法的时间复杂度较高。
+
++ 第二个方法，就是使用一个字典类型存储`List`中的值以及对应的下标，并计算出当前遍历的值与目标值，最后在字典中找到对应的值。
+
++ ```python
+  class Solution(object):
+      def twoSum(self, nums, target):
+          """
+          :type nums: List[int]
+          :type target: int
+          :rtype: List[int]
+          """
+          dictionary = dict()
+          for i,num in enumerate(nums):
+            if dictionary.get(target-num) is not None:
+              return [i,dictionary.get(target-num)]
+            dictionary[num] = i
+          return []
+  ```
+
+2.给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
+
+如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和
+
+您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+
+```
+输入：(2 -> 4 -> 3) + (5 -> 6 -> 4)
+输出：7 -> 0 -> 8
+原因：342 + 465 = 807
+```
+
+**解题思路**：
+
++ 该题中，首先已经定义了一个链表的数据结构:
+
+  ```python
+  # Definition for singly-linked list.
+  # class ListNode(object):
+  #     def __init__(self, val=0, next=None):
+  #         self.val = val
+  #         self.next = next
+  ```
+
++ 必须要考虑的特殊情况是: 
+
+  ```python
+  # 一个链表有一个链表没有
+  # a = []
+  # b = [1,2,3]
+  
+  # 链表的长度不相等
+  # a = [1,2]
+  # b = [1,2,3]
+  
+  # 如果发生了进位的情况
+  # a = [1,1]
+  # b = [9,9]
+  # a+b = [0,1,1]
+  ```
+
++ ```python
+  # Definition for singly-linked list.
+  # class ListNode(object):
+  #     def __init__(self, val=0, next=None):
+  #         self.val = val
+  #         self.next = next
+  class Solution:
+      def addTwoNumbers(self, l1: ListNode, l2: ListNode)
+  			"""
+  			:type l1: ListNode
+  			:type l2: ListNode
+  			:rtype: ListNode
+  			"""
+        # 首先应该创建一个新的链表，链表有两部分一个是用来遍历的另外一个是用来遍历和存储最后结果的
+        dummy = p = ListNode(None)          
+        s = 0  # 初始化进位 s 为 0
+        while l1 or l2 or s:
+          # 如果 l1 或 l2 存在, 则取l1的值 + l2的值 + s(s初始为0, 如果下面有进位1, 下次加上)
+          # 如果存在位数不同的情况,则空位取零
+  				s += (l1.val if l1 else 0) + (l2.val if l2 else 0)  
+  				p.next = ListNode(s % 10)       # p.next 指向新链表, 用来创建一个新的链表
+  				p = p.next                      # p 向后遍历
+  				s //= 10                        # 有进位情况则取模, eg. s = 18, 18 // 10 = 1
+  				l1 = l1.next if l1 else None    # 如果l1存在, 则向后遍历, 否则为 None
+  				l2 = l2.next if l2 else None    # 如果l2存在, 则向后遍历, 否则为 None
+        return dummy.next   # 返回 dummy 的下一个节点, 因为 dummy 指向的是空的头结点, 下一个节点才是新建链表的后序节点
+  ```
+
+
+3. 给定一个字符串，请你找出其中不含有重复字符的 **最长子串** 的长度。 
+
+```python
+#输入: "abcabcbb"
+#输出: 3 
+#解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+#输入: "bbbbb"
+#输出: 1
+#解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。
+#输入: "pwwkew"
+#输出: 3
+#解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
+#     请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
+```
+
+**解题思路**：
+
++ 本题非常简单，并不需要第二次遍历或者穷举来解决问题，对于一个字符串可以看成一个链表，可以使用两个指针来表示字符串的子字符串位置，第一个指针用来记录当前字符串的位置，后边的指针用来进行遍历下一个字符并且准备记录，数据结构用来记录当前字符串和之前最大的字符串，实现起来非常简单。
+
+```python
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        string = ''
+        target = ''
+        for i in s:
+            # 如果没有
+            if i not in target:
+                target += i
+            else:
+                target = target[target.index(i)+1:]
+                target += i
+            if len(target) > len(string):
+                string = target
+        return len(string)        
+```
+
+4.给定两个大小为 m 和 n 的正序（从小到大）数组 `nums1` 和 `nums2`。请你找出并返回这两个正序数组的中位数。
+
+```python
+# 输入：nums1 = [1,3], nums2 = [2]
+# 输出：2.00000
+# 解释：合并数组 = [1,2,3] ，中位数 2
+
+# 输入：nums1 = [1,2], nums2 = [3,4]
+# 输出：2.50000
+# 解释：合并数组 = [1,2,3,4] ，中位数 (2 + 3) / 2 = 2.5
+
+# 输入：nums1 = [0,0], nums2 = [0,0]
+# 输出：0.00000
+
+# 输入：nums1 = [], nums2 = [1]
+# 输出：1.00000
+
+# 输入：nums1 = [2], nums2 = []
+# 输出：2.00000
+```
+
+**解题思路**：
+
++ 第k小数 -  使用递归的办法每次删掉有序数组的一半最后就可以得到中位数。
+
+```python
+class Solution:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        if len(nums1) == 0 and len(nums2) == 0:
+            return float(('%.5f' % 0))
+        list1 = nums1 + nums2
+        list1.sort()
+        length = len(list1)
+        a = length % 2
+        b = length // 2
+        if a == 0:
+            max = (list1[int(a + b) - 1] + list1[int(a + b)]) / 2
+            return float(('%.5f' % max))
+        else:
+            max = list1[int(a + b) - 1]
+            return float(('%.5f' % max))
+
+```
+
+5.给定一个字符串 `s`，找到 `s` 中最长的回文子串。你可以假设 `s` 的最大长度为 1000。
+
+```python
+# 输入: "babad"
+# 输出: "bab"
+# 注意: "aba" 也是一个有效答案。
+
+# 输入: "cbbd"
+# 输出: "bb"
+```
+
+**解题思路**:
+
++ 中心扩展算法
+
++ 每一个除了开头和结尾的字符都是可以扩散的中心，找出其中的状态转移链：
+
+  $ P(i, j) \leftarrow P(i+1, j-1) \leftarrow P(i+2, j-2) \leftarrow \cdots \leftarrow \text{某一边界情况}$
+
+```python
+class Solution:
+    def expandAroundCenter(self, s, left, right):
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            left -= 1
+            right += 1
+        return left + 1, right - 1
+
+    def longestPalindrome(self, s: str) -> str:
+        start, end = 0, 0
+        for i in range(len(s)):
+            left1, right1 = self.expandAroundCenter(s, i, i)
+            left2, right2 = self.expandAroundCenter(s, i, i + 1)
+            if right1 - left1 > end - start:
+                start, end = left1, right1
+            if right2 - left2 > end - start:
+                start, end = left2, right2
+        return s[start: end + 1]
+```
+
+6. 将一个给定字符串根据给定的行数，以从上往下、从左到右进行 Z 字形排列。
+
+比如输入字符串为 `"LEETCODEISHIRING"` 行数为 3 时，排列如下：
+
+```python
+L   C   I   R
+E T O E S I I G
+E   D   H   N
+```
+
+```
+输入: s = "LEETCODEISHIRING", numRows = 4
+输出: "LDREOEIIECIHNTSG"
+解释:
+
+L     D     R
+E   O E   I I
+E C   I H   N
+T     S     G
+
+```
+
++ 解题思路: 创建一个字符数组用来存储对应位置的字符，最后连接。
+
+```python
+class Solution:
+    def convert(self, s: str, numRows: int) -> str:
+        if numRows<2: return s
+        res = ["" for _ in range(numRows)]
+        sid = 0
+        flag = -1
+        for c in s:
+            res[sid] += c
+            if sid == 0 or sid == (numRows-1):
+                flag = -flag
+            sid += flag
+        return "".join(res)     
+```
+
+7.给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
+
+假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−2^31, 2^31 − 1]。请根据这个假设，如果反转后整数溢出那么就返回 0。
+
+```python
+class Solution:
+    def reverse(self, x: int) -> int:
+        y, res = abs(x), 0
+        # 则其数值范围为 [−2^31,  2^31 − 1]
+        boundry = (1<<31) -1 if x>0 else 1<<31
+        while y != 0:
+            res = res*10 +y%10
+            if res > boundry :
+                return 0
+            y //=10
+        return res if x >0 else -res
+```
+
+8.请你来实现一个 atoi 函数，使其能将字符串转换成整数。
+
+首先，该函数会根据需要丢弃无用的开头空格字符，直到寻找到第一个非空格的字符为止。接下来的转化规则如下：
+
+如果第一个非空字符为正或者负号时，则将该符号与之后面尽可能多的连续数字字符组合起来，形成一个有符号整数。
+假如第一个非空字符是数字，则直接将其与之后连续的数字字符组合起来，形成一个整数。
+该字符串在有效的整数部分之后也可能会存在多余的字符，那么这些字符可以被忽略，它们对函数不应该造成影响。
+注意：假如该字符串中的第一个非空格字符不是一个有效整数字符、字符串为空或字符串仅包含空白字符时，则你的函数不需要进行转换，即无法进行有效转换。
+
+在任何情况下，若函数不能进行有效的转换时，请返回 0 。
+
+```python
+import re
+class Solution:
+    def myAtoi(self, s: str) -> int:
+        INTMAX = 2147483647
+        INTMIN = -2147483648
+        string = s.lstrip()
+        num = re.findall(r"^[\+\-]?\d+",string)
+        num = int(*num)
+        return max(min(num,INTMAX),INTMIN)
+```
+
+9.判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。
+
+示例 1:
+
+输入: 121
+输出: true
+示例 2:
+
+输入: -121
+输出: false
+解释: 从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。
+示例 3:
+
+输入: 10
+输出: false
+解释: 从右向左读, 为 01 。因此它不是一个回文数。
+
+```python
+import math
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        if x == 0:
+            return True
+        elif x < 0:
+            return False
+        else:
+            num = 0
+            x_r = x
+            length = int(math.log(x,10))+1
+            for i in range(length,0,-1):
+                num += (x_r%10) * math.pow(10,i-1)
+                x_r = x_r//10
+            if num == x:
+                return True
+            else:
+                return False
+```
+
+
+
+
+
+
+
