@@ -4,8 +4,8 @@ title: 'Leetcode'
 date: 2020-02-10
 author: DoHerasYang
 color: rgb(153,153,255)
-cover: '/Pictures/CoverPage/scalable_machine_learning.png'
-tags: Pyspark
+cover: '/Pictures/CoverPage/leetcode.jpeg'
+tags: Python 
 
 ---
 
@@ -397,12 +397,154 @@ class Solution:
             else:
                 a += 1
                 b -= 1
-        return res
+        return re
 ```
 
+12.罗马数字包含以下七种字符： `I`， `V`， `X`， `L`，`C`，`D` 和 `M`。
 
+```markdown
+字符          数值
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+```
 
+例如， 罗马数字 2 写做 II ，即为两个并列的 1。12 写做 XII ，即为 X + II 。 27 写做  XXVII, 即为 XX + V + II 。
 
+通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做 IIII，而是 IV。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。同样地，数字 9 表示为 IX。这个特殊的规则只适用于以下六种情况：
 
+I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。
+X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。 
+C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
+给定一个整数，将其转为罗马数字。输入确保在 1 到 3999 的范围内。
 
+**解题思路**：
+
++ 使用贪心哈希表尽可能地匹配数字
+
+```python
+class Solution:
+    def intToRoman(self, num: int) -> str:
+        hashmap = {
+            1000:'M', 
+            900:'CM', 
+            500:'D', 
+            400:'CD', 
+            100:'C', 
+            90:'XC', 
+            50:'L', 
+            40:'XL', 
+            10:'X', 
+            9:'IX', 
+            5:'V', 
+            4:'IV', 
+            1:'I'
+        }
+        result = ""
+        for k in hashmap:
+            if num // k !=0:
+                count = num // k 
+                result += hashmap[k]*count
+                num %= k
+        return result
+```
+
+13.罗马数字包含以下七种字符: `I`， `V`， `X`， `L`，`C`，`D` 和 `M`。
+
+例如， 罗马数字 2 写做 II ，即为两个并列的 1。12 写做 XII ，即为 X + II 。 27 写做  XXVII, 即为 XX + V + II 。
+
+通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做 IIII，而是 IV。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。同样地，数字 9 表示为 IX。这个特殊的规则只适用于以下六种情况：
+
+I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。
+X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。 
+C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
+给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。
+
+```python
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        hashmap = {'I':1,'V':5,'X':10,'L':50,'C':100,'D':500,'M':1000}
+        result = 0
+        for index in range(len(s)-1):
+            if(hashmap[s[index]]<hashmap[s[index+1]]):
+                result -= hashmap[s[index]]
+            else:
+                result += hashmap[s[index]]
+        return result + hashmap[s[-1]]
+```
+
+14.编写一个函数来查找字符串数组中的最长公共前缀。
+
+如果不存在公共前缀，返回空字符串 ""。
+
+示例 1:
+
+输入: ["flower","flow","flight"]
+输出: "fl"
+示例 2:
+
+输入: ["dog","racecar","car"]
+输出: ""
+解释: 输入不存在公共前缀。
+
+```python
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        ans = ''
+        for i in zip(*strs):
+            if len(set(i)) == 1:
+                ans += i[0]
+            else:
+                break
+        return ans
+```
+
+15.给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有满足条件且不重复的三元组。
+
+注意：答案中不可以包含重复的三元组。
+
+示例：
+
+给定数组 nums = [-1, 0, 1, 2, -1, -4]，
+
+满足要求的三元组集合为：
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+
+**解题思路**：
+
++ 首先需要对数组进行排序，这样方便下一步的进行处理
++ 双指针进行运算，第一个指针是选定数字的下一个数字，另外一个指针在从后往前进行遍历。
+
+```python
+class Solution:
+    def threeSum(self, nums: [int]) -> [[int]]:
+        nums.sort()
+        res, k = [], 0
+        for k in range(len(nums) - 2):
+            if nums[k] > 0: break # 1. because of j > i > k.
+            if k > 0 and nums[k] == nums[k - 1]: continue # 2. skip the same `nums[k]`.
+            i, j = k + 1, len(nums) - 1
+            while i < j: # 3. double pointer
+                s = nums[k] + nums[i] + nums[j]
+                if s < 0:
+                    i += 1
+                    while i < j and nums[i] == nums[i - 1]: i += 1
+                elif s > 0:
+                    j -= 1
+                    while i < j and nums[j] == nums[j + 1]: j -= 1
+                else:
+                    res.append([nums[k], nums[i], nums[j]])
+                    i += 1
+                    j -= 1
+                    while i < j and nums[i] == nums[i - 1]: i += 1
+                    while i < j and nums[j] == nums[j + 1]: j -= 1
+        return res
+```
 
