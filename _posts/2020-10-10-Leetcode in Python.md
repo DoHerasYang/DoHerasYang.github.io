@@ -519,7 +519,7 @@ class Solution:
 
 **解题思路**：
 
-+ 首先需要对数组进行排序，这样方便下一步的进行处理
++ 首先需要对数组进行排序，这样方便下一步的进行双指针处理,双指针可以减少枚举的范围。
 + 双指针进行运算，第一个指针是选定数字的下一个数字，另外一个指针在从后往前进行遍历。
 
 ```python
@@ -547,4 +547,145 @@ class Solution:
                     while i < j and nums[j] == nums[j + 1]: j -= 1
         return res
 ```
+
+16.给定一个仅包含数字 `2-9` 的字符串，返回所有它能表示的字母组合。给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+
+```python
+#                '2':['a','b','c'],
+#                '3':['d','e','f'],
+#                '4':['g','h','i'],
+#                '5':['j','k','l'],
+#                '6':['m','n','o'],
+#                '7':['p','q','r','s'],
+#                '8':['t','u','v'],
+#                '9':['w','x','y','z']
+```
+
+**解题思路**:
+
++ 对于处理多个排列组合，第一反应应该是递归，选择一个数字然后尽可能地去寻找之后的所有排列组合。
+
+```python
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        if len(digits) == 0 :
+            return []
+        phone = {
+                '2':['a','b','c'],
+                '3':['d','e','f'],
+                '4':['g','h','i'],
+                '5':['j','k','l'],
+                '6':['m','n','o'],
+                '7':['p','q','r','s'],
+                '8':['t','u','v'],
+                '9':['w','x','y','z']}
+        
+        def backTrack(combination,nextdigital):
+          	#组合可能性的结束，就是所有的数字结束
+            if len(nextdigital) == 0:
+                ans.append(combination)
+            else:
+                for i in phone[nextdigital[0]]:
+                    backTrack(combination+i,nextdigital[1:])
+        ans = list()
+        backTrack('',digits)
+        return ans
+```
+
+17.给定一个包含 n 个整数的数组 nums 和一个目标值 target，判断 nums 中是否存在四个元素 a，b，c 和 d ，使得 a + b + c + d 的值与 target 相等？找出所有满足条件且不重复的四元组。
+
+注意：
+
+答案中不可以包含重复的四元组。
+
+```python
+    def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        ans = []
+        nums.sort()
+        length = len(nums)
+        # 构建一个用来hash的表
+        hashtable = {value:index for index,value in enumerate(nums)}
+        # 枚举
+        for i in range(length-3):
+            if i>0 and nums[i] == nums[i-1]: continue
+            if nums[i] * 4 > target: break
+            if nums[i] + 3 * nums[-1] < target: continue
+            for j in range(i+1, length-2):
+                if j>i+1 and nums[j] == nums[j-1]: continue
+                if nums[i] + 3*nums[j] > target: break
+                if nums[i] + nums[j] + 2*nums[-1] < target:
+                    continue
+                for k in range(j+1,length-1):
+                    if k>j+1 and nums[k] == nums[k-1]: continue
+                    key = target-nums[i]-nums[j]-nums[k]
+                    if hashtable.get(key,-1)>k:
+                        ans.append([nums[i], nums[j], nums[k], key])
+        return ans
+```
+
+18.给定一个链表，删除链表的倒数第 *n* 个节点，并且返回链表的头结点。
+
+**示例：**
+
+```
+给定一个链表: 1->2->3->4->5, 和 n = 2.
+
+当删除了倒数第二个节点后，链表变为 1->2->3->5.
+```
+
+**解题思路**:
+
++ 普通方法很好想到，首先第一次遍历先返回整个链表的大小长度，第二次遍历整个链表将倒数第N个节点跳过并重新归置链表。
++ 进阶的办法，即使用快慢指针，即我们并不需要重复遍历整个链表，即只需要将快指针前n个，两个指针同时开始遍历整个链表，每次向前迭代1个节点，当快指针指向整个链表的末尾节点时，慢指针跳过当前节点，最后返回整个链表。
++ 回溯法比较巧妙，就是每次回溯的时候来计算整个链表的长度，当然，这个长度是对于整个链表从后到前的长度，当长度等于n时，将该节点删除。
+
+```python
+class Solution:  
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        if not head: 
+            self.count = 0
+            return head
+        head.next = self.removeNthFromEnd(head.next, n) # 递归调用
+        self.count += 1 # 回溯时进行节点计数
+        return head.next if self.count == n else head
+```
+
+19.给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+
+有效字符串需满足：
+
+左括号必须用相同类型的右括号闭合。
+左括号必须以正确的顺序闭合。
+注意空字符串可被认为是有效字符串。
+
+```python
+class Solution:
+    def isValid(self, s: str) -> bool:
+      	if len(s) % 2 == 1:
+          return False
+        dic = {'{': '}',  '[': ']', '(': ')', '?': '?'}
+        stack = ["?"]
+        for c in s:
+            if c in dic: stack.append(c)
+            elif dic[stack.pop()] != c: return False 
+        return len(stack) == 1
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
