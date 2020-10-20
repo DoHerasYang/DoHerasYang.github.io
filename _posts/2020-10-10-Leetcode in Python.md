@@ -700,7 +700,132 @@ public:
 };
 ```
 
+21.输入一棵二叉树的根节点，判断该树是不是平衡二叉树。如果某二叉树中任意节点的左右子树的深度相差不超过1，那么它就是一棵平衡二叉树。
 
+**示例 1:**
+
+给定二叉树 `[3,9,20,null,null,15,7]`
+
+```
+    3
+   / \
+  9  20
+    /  \
+   15   7
+```
+
+返回true
+
+示例 2:
+
+给定二叉树 [1,2,2,3,3,null,null,4,4]
+
+```
+       1
+      / \
+     2   2
+    / \
+   3   3
+  / \
+ 4   4
+ 返回false
+```
+
+**解题代码**：
+
+```c++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isBalanced(TreeNode* root) {
+      if(!root) return True; // 如果是空的那一定是平衡的
+      if(abs(depth(root->left),depth(root->right))>1) return False;
+      return isBalanced(root->left) && isBalanced(root->right);
+    }
+  	int depth(TreeNode* tree){
+      if(!tree) return 0;
+      int leftheight = depth(tree->left);
+      int rightheight = depth(tree->right);
+      return leftheight>rightleft? leftheight+1:rightleft+1;
+    }
+```
+
+```c++
+class Solution {
+public:
+    bool isBalanced(TreeNode* root) {
+        return !root ? true : abs(depth(root->left) - depth(root->right)) <= 1 && isBalanced(root->left) && isBalanced(root->right);
+    }
+    int depth(TreeNode* cur) { //计算二叉树的最大深度
+        return !cur ? 0 : max(depth(cur->left), depth(cur->right)) + 1;
+    }
+};
+```
+
+22.将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
+
+示例：
+
+输入：1->2->4, 1->3->4
+输出：1->1->2->3->4->4
+
+```C++
+// 一般方法  C++ 迭代
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+
+        ListNode* ans = new ListNode(0);
+        ListNode* cur = ans;
+
+        while(l1!=nullptr && l2!= nullptr){
+            ListNode** temp = (l1->val < l2->val)? &l1:&l2;
+            ans->next = *temp;
+            ans = ans->next;
+            *temp = (*temp)->next; // 指针的指针指向
+        }
+        ans->next = (l1 == nullptr)? l2:l1;
+        ListNode* result = new ListNode(0);
+        result = cur->next;
+      	delete ans;
+      	delete cur;
+        return result;
+    }
+};
+```
+
+```c++
+// 递归
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+
+        if(l1 == nullptr){
+            return l2;
+        }
+        if (l2 == nullptr){
+            return l1;
+        }
+        if(l1->val < l2->val){
+            l1->next = mergeTwoLists(l1->next,l2);
+            return l1;
+        }else{
+            l2->next = mergeTwoLists(l1,l2->next);
+            return l2;
+        }
+    }
+};
+```
+
+23.
 
 
 
