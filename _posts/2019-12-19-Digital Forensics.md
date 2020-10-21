@@ -5,7 +5,7 @@ date: 2019-12-19
 author: DoHerasYang
 color: rgb(255,210,32)
 cover: '/Pictures/CoverPage/forensics.jpg'
-tags: Lectures
+tags: Lecture-Course
 
 ---
 
