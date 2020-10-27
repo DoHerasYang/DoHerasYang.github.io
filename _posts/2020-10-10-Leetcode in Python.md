@@ -70,7 +70,133 @@ tags: Python C/C++ JavaScript Chinese
 + 表长度变换大难以确定存储空间容量
 + 容易造成存储空间碎片
 
-### 2.1.1 链式存储结构
+### 2.1.2 链式存储结构
+
+**存储特点**是利用任意一组的存储单元存储线性表的数据元素。这组存储单元可以是连续的，也可以是不连续的。意味着这些元素可以存在内存未被占用的任意位置。
+
+**结构特点**:
+
++ 数据域：存储数据元素信息的域。
++ 指针域：存储直接后继位置的域被称为指针域。指针的存放时需要空间的。
+
+**头指针与头节点的区别**
+
+> **头指针**
+>
+> + 是指链表指向第一个节点的指针，若链表有头节点，那么就是指向头节点的指针。
+> + 头指针不能为空
+>
+> **头节点**
+>
+> + 数据域一般是没有意义的。
+> + 方便在第一个节点进行插入和删除。
+
+**遍历一个链式结构**
+
+> ```c++
+> typedef struct Node
+> {
+>   int data;
+>   struct Node *next;
+> }Node;
+> typedef struct Node *LinkList
+> 
+> bool getItemInChain(LinkList *L, int i, int *e){
+>   int j;
+>   LinkList p;
+>   p = L->next;
+>   j = 1;
+>   while(p && j<1){
+>     p = p->next;
+>     j++;
+>   }
+>   *e = p->data;
+>   return true;
+> }
+> ```
+
+**插入删除**
+
+> ```c++
+> // 算法思想是在插入的位置记录一个指针，然后一个计数器设为 i ， 记录依次插入
+> bool insertItemChain(LinkList *L, int i, int e){
+>   int j = 1;
+>   LinkList p,s;
+>   p = *L;
+>   // 开始遍历查找插入的节点地址
+>   while(p && j<i){
+>     p = p->next;
+>     j++;
+>   }
+>   if(!p || j>i){
+>     return ERROR;
+>   }
+>   s = (LinkList)malloc(sizeof(Node));
+>   s->data = e;
+>   s->next = p->next;
+>   p->next = s;
+>   return true;
+> }
+> ```
+>
+> 时间复杂度 $O(n)$,  优势是如果知道了插入位置，那么插入就变的非常的简单。
+>
+> ```c++
+> // 删除与插入类似，找到需要删除的节点的上一个位置即可。
+> bool deleteItemChain(LinkList *L, int i, int *e){
+>   int j = 1;
+>   LinkList p,q;
+>  	p = *L;
+>   while(p->next && j<i){
+>     p = p->next;
+>     j++;
+>   }
+>   if(!(p->next) || j>i)
+>     return false;
+>   q = p->next;
+>   p->next = q->next;
+>   *e = q->data;
+>   free(q);
+>   return true;
+> }
+> ```
+>
+> 
+
+## 3.栈与队列
+
+### 3.1 栈
+
+**定义**
+
++ 先进后出的一种数据结构。LIFO
++ 仅仅限定在表尾进行插入和删除的线性表。
++ 允许插入和删除的那一端被称为栈顶，另一端被称为栈底，不含任何数据元素的栈被称为空栈。
+
+```c++
+// 定义栈的数据结构
+typedef struct
+{
+  int data[MAXSIZE]; //记录一个数组来存放栈中的元素
+  int top; // 设定一个栈顶指针
+}
+```
+
+**出栈的方式(可能的次数)**
+
++ 方法的总数为	$C(n,2n) / n+1 $     其中 n 为出入栈的元素个数。 卡特兰数公式
++ https://leetcode-cn.com/circle/article/lWYCzv/
++ 进栈出栈的时间复杂度为 $O(1)$
+
+#### 3.1.1 两栈共享空间
+
+
+
+
+
+
+
+
 
 
 
