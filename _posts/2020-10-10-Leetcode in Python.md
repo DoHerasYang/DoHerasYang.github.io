@@ -190,6 +190,138 @@ typedef struct
 
 #### 3.1.1 两栈共享空间
 
+思路：
+
++ 定义一个新的结构体，新的结构体中定义一个数组元素是来模拟栈。有两个指针，第一个是第一栈指针，用来指向第一栈的栈顶，第二个用来指向第二栈的栈顶，最后两个指针进行判断栈是否满了。
+
+```c++
+typedef struct{
+  int data[MAXSIZE];
+  int top1;
+  int top2;
+}SqDoubleStack;
+
+bool Push( SqDoubleStack *S, int *e, int stackNumber){
+  if(S->top1+1 == S->top2){
+    return false;
+  }
+  if (StackNumber == 1)	S->data[++S->top1] = e;
+  if (StackNumber == 2)	S->data[--S->top2] = e;
+  return true;
+}
+
+bool Pop(SqDoubleStack *S, int *e, int stackNumber){
+  if (StackNumber == 1){
+    if(S->top1 == -1) return false;
+    *e = S->data[S->top1--];
+  }else if (StackNumer == 2){
+    if(S->top2 == MAXSIZE) return false;
+    *e = S->data[S->top2++];
+  }
+  return true;
+}
+```
+
+#### 3.1.2 链式栈存储结构以及实现
+
+```c++
+// 定义一个链式的存储结构
+typedef struct StackNode{
+  int data;
+  struct StackNode *next;
+}StackNode, *LinkStackPtr;
+
+// 用来指示栈的当前栈顶的位置
+typedef struct LinkStack{
+  LinkStackPtr top; // 这个结构指向栈顶的地址空间
+  int count; // 栈的大小
+}
+
+// 入栈操作
+bool Push( LinkStack *S, int e){
+  LinkStackPtr s = (LinkStackPtr)malloc(sizeof(StackNode));
+  s->data = e;
+  s->next = S->top;
+  S->top = s; // 将栈顶的空间复制给新创建的s
+  S->count++;
+  return true;
+}
+
+// 出栈操作
+bool Pop( LinkStack *S, int *e){
+  // 定义一个指针
+  LinkStackPtr p;
+  if(*S == null) return false;
+  *e = S->top->e;
+  p = S->top;
+  S->top = S->top->next;
+  free(p);
+  S->count--;
+  return true;
+}
+
+// 时间复杂度都是 O(1) 因为是线性的问题。
+```
+
+#### 3.1.3 栈的应用 后缀表示法
+
+举个例子:            $9+(3-1)\times{3}+10\div2$       中缀表达式
+
+**怎么转换成后缀表达式**
+
++ 从左到右遍历中缀表达式的每个数字和符号，如果是数字就输出成为后缀表达式。
++ 如果是符号的话，判断其与栈顶的符号的优先级大小，如果遇到括号或者优先级低于栈顶符号，则栈顶的符号元素依次出站并输出，并将当前符号进栈。
+
+**图例**
+
++ 数字为 9， 因此
+
+  第一次栈的状态为  +   
+
+  后缀表达式的状态为 9
+
++ 当表达式读取到了左括号，因为没有匹配到右括号，所以继续进栈，此时状态为
+
+  栈：  + （  -
+
+  后缀表达式： 9 3 1
+
++ 当栈收到了右括号进栈，就将除了括号的所有中间的符号输出
+
+  栈： +
+
+  后缀表达式: 9 3 1 -
+
++ 接下来是乘号，因为乘号的复杂度要大于加号，所以不输出，
+
+  栈： + $\times$
+
+  后缀表达式:  9 3 1 - 3
+
++ 当遇到了另一个加号+，此时加号的优先级是小于乘号的，因此原先栈的全部符号出栈，然后新的加号进栈。此时的状态为
+
+  栈： +
+
+  后缀表达式: 9 3 1 - 3 $\times$ + 10
+
++ 最后是除号，因为除号的优先级是大于加号的，因为是最后一个符号所以全部出栈
+
+  栈: null
+
+  后缀表达式: 9 3 1 - 3 $\times$ + 10 $\div$ +
+
+### 3.2 队列
+
+
+
+
+
+
+
+
+
+
+
 
 
 
