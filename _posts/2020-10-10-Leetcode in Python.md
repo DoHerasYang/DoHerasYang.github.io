@@ -1,4 +1,3 @@
----
 layout: post
 title: 'Leetcode'
 date: 2020-10-15
@@ -6,8 +5,6 @@ author: DoHerasYang
 color: rgb(153,153,255)
 cover: '/Pictures/CoverPage/leetcode.jpeg'
 tags: Python C/C++ JavaScript Chinese
-
----
 
 # Leetcode
 
@@ -161,7 +158,18 @@ tags: Python C/C++ JavaScript Chinese
 > }
 > ```
 >
-> 
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## 3.栈与队列
 
@@ -312,29 +320,106 @@ bool Pop( LinkStack *S, int *e){
 
 ### 3.2 队列
 
+#### 3.2.1 定义
 
+队列是一种只允许在一端进行插入操作，而在另一端进行删除的线性遍，它遵循先进先出的调度顺序，其中队头允许删除，而队尾允许插入。
 
+#### 3.2.2 循环队列
 
+假设有一个队列有n个元素，则顺序存储的队列可以建立一个大于n的数组。对于一个数组来说，循环队列的实现可以突破数组的实际大小。可以引入两个指针，第一是 front 指针用来指向数组的第一个元素，rear 用来指向最后一个节点。
 
+**假溢出**
 
+如果 rear 指针指向了数组的最后一个位置，且这个时候队列进行了插入操作，这个时候看起来队列已经满了，如果队列之前经过出队列的操作，那么会存在之前数组的空闲位置。这时候就是假的溢出。
 
+**定义**
 
+解决假溢出的方式就是，后面的数组满了，但是前边的数组位置却是空的，这个时候可以把新的元素存储到数组的最前头，也就是形成了头尾相接的循环。 这种头尾相接的顺序被称为循环队列。
 
+**怎么判断循环队列是否满**
 
+当队列为空的时候，指针front == gear，当循环队列满的时候，也是 gear == front 这个时候就出现了冲突。
 
++ 第一个方法是设置一个label用来区分是第一次相等还是第二次相等。
++ 第二个方法是 预留一个 空的位置 来表示队列已经满了
 
+**计算循环队列的长度**
 
+$$ (rear - font + QueueSize) \% QueueSize$$
 
+```c++
+// 我们来定义队列的数据结构
 
+typedef struct{
+  int data[MAXSIZE];
+  int front;
+  int rear;
+}SqQueue;
 
+bool InitQueue(SqQueue *Q){
+  Q->front = 0;
+  Q->rear = 0;
+  return true;
+}
 
+bool EnQueue (SqQueue *Q, int e){
+  if((Q->rear+1)%MAXSIZE == Q->front) return false;
+  Q->data[Q->rear] = e;
+ 	Q->rear = (Q->rear+1) % MAXSIZE;
+  return true;
+}
 
+bool DeQueue (SqQueue *Q, QElemType *e){
+  if (Q->front == Q->rear) return false;
+  *e = Q->data[Q->front];
+  Q->front = (Q->front+1) %MAXSIZE;
+  return true;
+}
 
+```
 
+### 3.2.3 队列的链式存储结构以及实现
 
+对于一个链式的存储队列来说，需要一个头指针来指向队列的头部。需要一个指针来指向队列的尾部。
 
+```c++
+typedef struct QNode{
+  int data;
+  struct QNode *next;
+}QNode,*QueuePtr;
 
+typedef struct
+{
+  QueuePtr front,rear;
+}LinkQueue;
 
+// 插入队列
+bool EnQueue(LinkQueue *Q, int e){
+  QueuePtr s = (QueuePtr) malloc(sizeof(QNode));
+  if(!s) exit(OVERFLOW);
+  s->data = e;
+  s->next = null;
+  Q->rear->next = s;
+  Q->rear = s;
+  return true;
+}
+
+// 出队列
+bool DeQueue(LinkQueue *Q, int *e){
+  QueuePtr = s;
+  if(Q->front == Q->rear) return false;
+  p = Q->front->next;
+  *e = p->data;
+  Q->front->next = p->next;
+  if(Q->rear == p) Q->rear = Q->front;
+  free(p);
+  return true;
+}
+```
+
+## 4 串
+
+### 4.1 定义
 
 
 
@@ -1152,11 +1237,97 @@ public:
 
 23.
 
+# 华为机试练习题
 
+1.获取字符串的最后一个单词的长度
 
+> 题目描述
+> 计算字符串最后一个单词的长度，单词以空格隔开。
+>
+> 输入描述:
+> 输入一行，代表要计算的字符串，非空，长度小于5000。
+>
+> 输出描述:
+> 输出一个整数，表示输入字符串最后一个单词的长度。
+>
+> 输入
+>
+> ```
+> hello nowcoder
+> ```
+>
+> 输出
+>
+> ```
+> 8
+> ```
 
+**解题思路**
 
+```c++
+#include <iostream>
+#include <string.h>
+using namespace std;
+char str[5000];
+int main(){
+    cin.get(str,5000);
+    int length =strlen(str);
+    if(length==0) cout<<0<<endl;
+    int ans = 0;
+    while(str[length-1]!=' '&&length>0){
+        length--;
+        ans++;
+    }
+    cout<<ans<<endl;
+    return 0;
+}
+```
 
+2.计算字符串个数
+
+> 题目描述
+> 写出一个程序，接受一个由字母和数字组成的字符串，和一个字符，然后输出输入字符串中含有该字符的个数。不区分大小写。
+>
+> 输入描述:
+> 第一行输入一个有字母和数字以及空格组成的字符串，第二行输入一个字符。
+>
+> 输出描述:
+> 输出输入字符串中含有该字符的个数。
+>
+> 输入
+>
+> ```
+> ABCDEF
+> A
+> ```
+>
+> 输出
+>
+> ```
+> 1
+> ```
+
+**解题思路**
+
+```c++
+#include<iostream>
+#include<string.h>
+using namespace std;
+int main(){
+    char str[2000];
+    char target_char;
+    cin.get(str,2000);
+    cin>>target_char;
+    int length = strlen(str);
+    int ans = 0;
+    while(length>0){
+        if(str[length-1] == target_char || str[length-1] == tolower(target_char) || str[length-1] == toupper(target_char)) ans++;
+        length--;
+    }
+    cout<<ans<<endl;
+    return 0;
+}
+```
 
 
 
