@@ -1,3 +1,4 @@
+---
 layout: post
 title: 'Leetcode'
 date: 2020-10-15
@@ -5,6 +6,7 @@ author: DoHerasYang
 color: rgb(153,153,255)
 cover: '/Pictures/CoverPage/leetcode.jpeg'
 tags: Python C/C++ JavaScript Chinese
+---
 
 # Leetcode
 
