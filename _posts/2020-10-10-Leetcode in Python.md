@@ -90,51 +90,53 @@ tags: Python C/C++ JavaScript Chinese
 > + 数据域一般是没有意义的。
 > + 方便在第一个节点进行插入和删除。
 
-**遍历一个链式结构**
+#### 2.1.2.1 单链表
+
+**遍历一个链式结构(单链表)**
 
 > ```c++
 > typedef struct Node
 > {
->   int data;
->   struct Node *next;
+>   	int data;
+>   	struct Node *next;
 > }Node;
-> typedef struct Node *LinkList
+> typedef struct Node *LinkList; // 定义一个头指针变量
 > 
 > bool getItemInChain(LinkList *L, int i, int *e){
->   int j;
->   LinkList p;
->   p = L->next;
->   j = 1;
->   while(p && j<1){
->     p = p->next;
->     j++;
->   }
->   *e = p->data;
->   return true;
+>   	int j;
+>   	LinkList p;
+>   	p = L->next;
+>   	j = 1;
+>   	while(p && j<1){
+>     		p = p->next;
+>     		j++;
+>   	}
+>   	*e = p->data;
+>   	return true;
 > }
 > ```
 
-**插入删除**
+**插入删除-单链表**
 
 > ```c++
 > // 算法思想是在插入的位置记录一个指针，然后一个计数器设为 i ， 记录依次插入
 > bool insertItemChain(LinkList *L, int i, int e){
->   int j = 1;
->   LinkList p,s;
->   p = *L;
+>   	int j = 1;
+>   	LinkList p,s;
+>   	p = *L;
 >   // 开始遍历查找插入的节点地址
->   while(p && j<i){
->     p = p->next;
->     j++;
->   }
->   if(!p || j>i){
->     return ERROR;
->   }
->   s = (LinkList)malloc(sizeof(Node));
->   s->data = e;
->   s->next = p->next;
->   p->next = s;
->   return true;
+>   	while(p && j<i){
+>     		p = p->next;
+>     		j++;
+>   	}
+>   	if(!p || j>i){
+>     	return ERROR;
+>   	}
+>   	s = (LinkList)malloc(sizeof(Node));
+>   	s->data = e;
+>   	s->next = p->next;
+>   	p->next = s;
+>   	return true;
 > }
 > ```
 >
@@ -143,35 +145,105 @@ tags: Python C/C++ JavaScript Chinese
 > ```c++
 > // 删除与插入类似，找到需要删除的节点的上一个位置即可。
 > bool deleteItemChain(LinkList *L, int i, int *e){
->   int j = 1;
->   LinkList p,q;
+>   	int j = 1;
+>   	LinkList p,q;
 >  	p = *L;
->   while(p->next && j<i){
->     p = p->next;
->     j++;
+>   	while(p->next && j<i){
+>     		p = p->next;
+>     		j++;
+>   	}
+>   	if(!(p->next) || j>i)	return false;
+>    	q = p->next;
+>   	p->next = q->next;
+>   	*e = q->data;
+>   	free(q);
+>   	return true;
 >   }
->   if(!(p->next) || j>i)
->     return false;
->   q = p->next;
->   p->next = q->next;
->   *e = q->data;
->   free(q);
->   return true;
-> }
 > ```
->
+> 
+
+**单链表的整体创建**
+
+```c++
+// 只插入到当前头节点的后边
+void CreateListHead(LinkList *L, int n){
+  LinkList p;
+  int i;
+  srand(time(0));
+  // 给新的头节点分配存储空间
+  *L = (LinkList)malloc(sizeof(Node));
+  (*L)->next = null;
+  for(i=0;i<n;i++){
+    p = (LinkList)malloc(sizeof(Node));
+    p->data = rand()%1024+1;
+    p->next = (*L)->next;
+    (*L)->next = p;
+  }
+}
+
+// 尾插法 插入到单链表的末端
+void CreateListTail(LinkList *L, int n){
+  LinkList p,r;
+  int i;
+  srand(time(0));
+  // 创建整个线性表的存储空间
+  *L = (LinkList)malloc(sizeof(Node));
+  r = *L;
+  for(i=0;i<n;i++){
+    p = (Node*)malloc(sizeof(Node)); //注意这个部分
+    p->data = rand()%1024+1;
+    r->next = p;
+    r = p;
+  }
+  r->next = null;
+}
+```
+
+**单链表的整表删除**
+
+```c++
+bool ClearList(LinkList *L){
+  LinkList p,q;
+  p = (*L)->next;
+  while(p){
+    q = p->next;
+    free(p);
+    p = q;
+  }
+  (*L)->next = null;
+  return true;
+}
+```
+
+#### 2.1.2.1 静态链表
+
+用数组描述的链表叫做 **静态链表**。
+
+数据结构定义如下
+
+```c++
+typedef struct{
+  int data;
+  int cur; //相当于动态链表中的next
+}Component,StaticLinkList[MAXSIZ];
+```
+
+详细地静态链表操作如下：
+
+```c++
+// 初始化一个静态链表
+bool InitList(StaticLinkList space){
+  int i ;
+  for(i=0;i<MAXSIZE-1;i++){
+    space[i].cur = i+1;
+  }
+  space[MAXSIZE-1] = 0;
+  return true;
+}
+//
 
 
-
-
-
-
-
-
-
-
-
-
+```
 
 ## 3.栈与队列
 
@@ -422,6 +494,20 @@ bool DeQueue(LinkQueue *Q, int *e){
 ## 4 串
 
 ### 4.1 定义
+
+串由零个或者多个字符组成的有限序列，又名叫字符串。
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1331,13 +1417,302 @@ int main(){
 }
 ```
 
+3.随机数输入排序和去重
 
+输入描述:
 
+```
+注意：输入可能有多组数据。每组数据都包括多行，第一行先输入随机整数的个数N，接下来的N行再输入相应个数的整数。具体格式请看下面的"示例"。
+```
 
+```
+3
+2
+2
+1
+11
+10
+20
+40
+32
+67
+40
+20
+89
+300
+400
+15
+```
 
+输出描述:
 
+```
+返回多行，处理后的结果
+```
 
+```
+1
+2
+10
+15
+20
+32
+40
+67
+89
+300
+400
+```
 
+解题思路:
 
+```c++
+#include<iostream>
+#include<set>
+using namespace std;
 
+int main(){
+    int N,n;
+    set<int> ans;
+    while(cin>>N){
+        ans.clear();
+        while(N--){
+            cin>>n;
+            ans.insert(n);
+        }
+        for(set<int>::iterator it=ans.begin();it!=ans.end();it++){
+            cout<<*it<<endl;
+        }
+    }
+    return 0;
+}
+```
 
+4.•连续输入字符串，请按长度为8拆分每个字符串后输出到新的字符串数组；•长度不是8整数倍的字符串请在后面补数字0，空字符串不处理。
+
+输入描述:
+
+```
+连续输入字符串(输入2次,每个字符串长度小于100)
+
+abc
+123456789
+```
+
+输出描述:
+
+```
+abc00000
+12345678
+90000000
+```
+
+**解题思路**:
+
+```c++
+#include<iostream>
+using namespace std;
+
+void Deal(string s){
+    if(s.size()<=8){
+        int judge= 8-s.size();
+        for(int i=0; i<judge;i++){
+            s += '0';
+        }
+        cout<<s<<endl;
+    }else{
+        string next(s,0,8);
+        cout<<next<<endl;
+        s.erase(s.begin(),s.begin()+8);
+        Deal(s);
+    }
+}
+
+int main(){
+    string str1;
+    string str2;
+    cin>>str1;
+    cin>>str2;
+    Deal(str1);
+    Deal(str2);
+    return 0;
+}
+```
+
+```python
+while True:
+    try:
+        strs = input()
+        if len(strs)<8:
+            ans = strs+ '0'*(8-len(strs))
+            print(ans)
+        else:
+            inter_time = int(len(strs)//8)
+            if len(strs) % 8 == 0:
+                for i in range(inter_time):
+                    print(strs[i*8:i*8+8])
+            else:
+                for i in range(inter_time):
+                    print(strs[i*8:i*8+8])
+                print(strs[inter_time*8:]+'0'*(8-len(strs[inter_time*8:])))
+    except:
+        break
+```
+
+5.写出一个程序，接受一个十六进制的数，输出该数值的十进制表示。
+
+输入
+
+```
+0xA
+0xAA
+```
+
+输出
+
+```
+10
+170
+```
+
+**解题思路**
+
+```python
+import math
+while True:
+    try:
+        hex_str = input()
+        hex_tobin = {
+            "0": "0000",
+            "1": "0001",
+            "2": "0010",
+            "3": "0011",
+            "4": "0100",
+            "5": "0101",
+            "6": "0110",
+            "7": "0111",
+            "8": "1000",
+            "9": "1001",
+            "A": "1010",
+            "B": "1011",
+            "C": "1100",
+            "D": "1101",
+            "E": "1110",
+            "F": "1111",
+        }
+        bin_num = ''
+        bin_list = []
+        ans = 0
+        for i in range(len(hex_str)):
+            if i==0 or i==1:
+                continue
+            if hex_str[i] in hex_tobin:
+                bin_list.append(hex_tobin[hex_str[i]])   
+        for j in range(len(bin_list)):
+            bin_num = bin_num + bin_list[j]
+        length = len(bin_num)
+        for k in range(length):
+            if bin_num[k] == "1":
+                ans=math.pow(2,length-k-1)+ans
+        print(int(ans))
+    except:
+        break
+```
+
+```c++
+#include<iostream>
+#include<string>
+#include<cmath>
+using namespace std;
+
+int main(){
+    string hex_value;
+    while(cin>>hex_value){
+        int bit=0;
+        int ans=0;
+        for(int i=hex_value.length()-1;i>1;i--){
+            if(hex_value[i]>='0'&& hex_value[i]<='9')
+                ans += (hex_value[i]-'0')*pow(16,bit++);
+            else if(hex_value[i]>='A'&&hex_value[i]<='F')
+                ans += (hex_value[i]-'A'+10)*pow(16,bit++);
+        }
+        cout<<ans<<endl;
+    }
+    return 0;
+}
+```
+
+6.功能:输入一个正整数，按照从小到大的顺序输出它的所有质数的因子（如180的质数因子为2 2 3 3 5 ）
+
+输入描述
+
+```
+180
+```
+
+输出描述
+
+```
+2 2 3 3 5
+```
+
+```c++
+#include<iostream>
+#include<string>
+using namespace std;
+
+int main(){
+    long int num;
+    cin>> num;
+    for(int i=2;i<num+1;i++){
+        while(num%i==0){
+            cout<<i<<' ';
+            num/=i;
+        }
+    }
+    cout<<endl;
+    return 0;
+}
+```
+
+7.写出一个程序，接受一个正浮点数值，输出该数值的近似整数值。如果小数点后数值大于等于5,向上取整；小于5，则向下取整。
+
+输入描述
+
+```
+输入一个正浮点数值
+
+5.5
+```
+
+输出描述
+
+```
+输出该数值的近似整数值
+
+6
+```
+
+**解题思路**
+
+```c++
+#include<iostream>
+using namespace std;
+
+int main(){
+    
+    float num;
+    cin>> num;
+    int integar = num / 1.0;
+    float decimal = num - integar;
+    
+    if(decimal<0.5){
+        cout<<(integar)<<endl;
+    }else{
+        cout<<(integar+1)<<endl;
+    }
+    return 0;
+}
+```
+
+8.
