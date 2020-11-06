@@ -495,7 +495,97 @@ bool DeQueue(LinkQueue *Q, int *e){
 
 ### 4.1 定义
 
-串由零个或者多个字符组成的有限序列，又名叫字符串。
+串由零个或者多个字符组成的有限序列，又名叫字符串。每一个构成字符串的字符都可以是单个的。
+
+### 4.2 存储结构
+
+#### 4.2.1 顺序存储结构
+
+串的顺序存储结构是用一组地址连续的存储单元来存储串中的字符序列。必须为每一个定义的串变量分配一个固定长度的存储区。一般用长数组来定义。
+
+在C语言中，`malloc()`和`free()`函数用来分配存储空间。
+
+#### 4.2.2 链式存储结构
+
+串的链式存储与线性表相似，每一个串的末尾指向新的串的开始位置，串的末尾位置制为`\0`。
+
+### 4.3 多模匹配
+
+#### 4.3.1 定义
+
+子串的定位操作通常被称做串的模式匹配，作为串的基本操作之一。
+
+基本的串的操作
+
+```c++
+int Index(String S, String T, int pos){
+  
+  int i = pos;
+  int j = 1;
+  
+  while(i<=S[0] && j<=T[0])
+  {
+    if( S[i] == T[j]){
+      ++i;
+      ++j;
+    }
+    else
+    {
+      i = i-j+2;
+      j = 1;
+    }
+    if( j>T[0])
+      return i-T[0];
+    else
+      return 0;
+  }
+}
+
+// 时间复杂度 最好的情况下就是 O(1)  比较差的情况是 O(n+m)
+// 比较差的情况是 O((n-m+1)*m)
+```
+
+#### 4.3.2 KMP模式匹配算法 克努特-莫里斯-普拉特算法
+
+[还没看懂............]
+
+
+
+## 5 二叉树
+
+### 5.1 定义
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1540,6 +1630,7 @@ int main(){
 ```
 
 ```python
+# Python Version
 while True:
     try:
         strs = input()
@@ -1578,6 +1669,7 @@ while True:
 **解题思路**
 
 ```python
+# Python
 import math
 while True:
     try:
@@ -1620,6 +1712,7 @@ while True:
 ```
 
 ```c++
+// C++
 #include<iostream>
 #include<string>
 #include<cmath>
@@ -1663,7 +1756,7 @@ using namespace std;
 
 int main(){
     long int num;
-    cin>> num;
+    cin>>num;
     for(int i=2;i<num+1;i++){
         while(num%i==0){
             cout<<i<<' ';
@@ -1673,6 +1766,7 @@ int main(){
     cout<<endl;
     return 0;
 }
+// Python 与此思想相似不予举例
 ```
 
 7.写出一个程序，接受一个正浮点数值，输出该数值的近似整数值。如果小数点后数值大于等于5,向上取整；小于5，则向下取整。
@@ -1700,12 +1794,10 @@ int main(){
 using namespace std;
 
 int main(){
-    
     float num;
     cin>> num;
     int integar = num / 1.0;
     float decimal = num - integar;
-    
     if(decimal<0.5){
         cout<<(integar)<<endl;
     }else{
@@ -1715,4 +1807,91 @@ int main(){
 }
 ```
 
-8.
+8.数据表记录包含表索引和数值（int范围的整数），请对表索引相同的记录进行合并，即将相同索引的数值进行求和运算，输出按照key值升序进行输出。
+
+输入描述:
+
+```
+先输入键值对的个数
+然后输入成对的index和value值，以空格隔开
+4
+0 1
+0 2
+1 2
+3 4
+```
+
+输出描述:
+
+```
+输出合并后的键值对（多行）
+0 3
+1 2
+3 4
+```
+
+```c++
+#include <iostream>
+#include <set>
+#include <map>
+using namespace std;
+
+int main(){
+    int num;
+    map<int, int> m;
+    cin>>num;
+    for(int i=0;i<num;i++){
+      	//输入成对使用pair关键字
+        pair<int,int> arr;
+        cin>>arr.first;
+        cin>>arr.second;
+        if((m.find(arr.first))!=m.end())
+            m[arr.first] += arr.second;
+        else
+            m[arr.first] = arr.second;
+    }
+    for(auto it=m.begin();it!=m.end();it++)
+        cout<<it->first<<" "<<it->second<<endl;
+    return 0;
+}
+```
+
+```python
+while True:
+    try:
+        num = int(input())
+        mn = dict()
+        for i in range(num):
+            line = input().split(" ")
+            key = int(line[0])
+            value = int(line[-1])
+            if key not in mn:
+                mn[key] = value
+            elif key in mn:
+                mn[key] += value
+        for each in sorted(mn.keys()):
+            print(each,mn[each])
+    except:
+        exit(0)
+```
+
+9.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
