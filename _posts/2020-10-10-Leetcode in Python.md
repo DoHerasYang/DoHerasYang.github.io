@@ -1505,7 +1505,130 @@ public:
 };
 ```
 
-23.
+23.用两个栈实现一个队列。队列的声明如下，请实现它的两个函数 appendTail 和 deleteHead ，分别完成在队列尾部插入整数和在队列头部删除整数的功能。(若队列中没有元素，deleteHead 操作返回 -1 )
+
+```c++
+#include <stack>
+class CQueue {
+public:
+    stack<int> stack1;
+    stack<int> stack2;
+    CQueue() {
+
+    }
+    
+    void appendTail(int value) {
+        stack1.push(value);
+    }
+    
+  	// 需要出队列的是 stack2 的栈顶元素或者是stack1的栈底元素 没出去一个元素就要pop掉
+    int deleteHead() {
+        int ans;
+        if(stack1.empty() && stack2.empty()) return -1;
+        if(!stack2.empty()){
+            ans = stack2.top();
+            stack2.pop();
+            return ans;
+        }else if(!stack1.empty()){
+            while(!stack1.empty()){
+                stack2.push(stack1.top());
+                stack1.pop();
+            }
+            ans = stack2.top();
+            stack2.pop();
+            return ans;
+        }
+        return ans;
+    }
+};
+
+/**
+ * Your CQueue object will be instantiated and called as such:
+ * CQueue* obj = new CQueue();
+ * obj->appendTail(value);
+ * int param_2 = obj->deleteHead();
+ */
+```
+
+24.输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如，序列 {1,2,3,4,5} 是某栈的压栈序列，序列 {4,5,3,2,1} 是该压栈序列对应的一个弹出序列，但 {4,3,5,1,2} 就不可能是该压栈序列的弹出序列。
+
+```c++
+class Solution {
+public:
+    bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
+        stack<int>s;
+        int length = pushed.size();
+        int j = 0;
+        for(int i=0;i<length;i++){
+            s.push(pushed[i]);
+            while(j<length && j<=i && s.top() == popped[j] ){
+                    s.pop();
+                    j++;
+            }
+        }
+        if(s.empty())
+            return true;
+        else
+            return false;
+    }
+};
+```
+
+25.定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的 min 函数在该栈中，调用 min、push 及 pop 的时间复杂度都是 O(1)。
+
+```c++
+class MinStack {
+public:
+    /** initialize your data structure here. */
+    stack <int> inStack;
+    stack <int> outStack;
+    MinStack() {
+
+    }
+    
+    void push(int x) {
+        inStack.push(x);
+        if(outStack.empty() || outStack.top()>=x)outStack.push(x);
+    }
+    
+    void pop() {
+        if(inStack.top() == outStack.top()) outStack.pop();
+        inStack.pop();
+        
+    }
+    
+    int top() {
+        return inStack.top();
+    }
+    
+    int min() {
+        return outStack.top();
+    }
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(x);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->min();
+ */
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+----
 
 # 华为机试练习题
 
@@ -1967,13 +2090,238 @@ while True:
         exit(0)
 ```
 
-9.
+9.字符串按8位输出，不足8位的补0输出 参见力扣的相关练习题，这里只给出代码:
+
+```c++
+#include <iostream>
+#include <string>
+using namespace std;
+int main()
+{
+   // cout << "hello" << endl;
+    int n;
+    while(cin >> n) {
+        while(n--) {
+            string str1;
+            cin >> str1;
+            while(str1.size() > 8) {
+                cout << str1.substr(0, 8) << endl;
+                str1 = str1.substr(8);
+            }
+            while(str1.size() != 8) {
+                str1 += '0';
+            }
+            cout << str1 << endl;
+        }
+ 
+   }
+}
+```
+
+10.计算字符串最后一个单词的长度，单词以空格隔开。c
+
+```c++
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main(){
+    string str;
+    getline(cin,str);
+    int count = 0;
+    int len = str.length();
+    for(int i=len-1;i>=0;i--){
+        if(str[i]!=' ') count++;
+        else break;
+    }
+    cout<<count;
+    return 0;
+}
+```
+
+11.给定一个正整数N代表火车数量，0<N<10，接下来输入火车入站的序列，一共N辆火车，每辆火车以数字1-9编号，火车站只有一个方向进出，同时停靠在火车站的列车中，只有后进站的出站了，先进站的才能出站。要求以字典序排序输出火车出站的序列号。
+
+```c++
+#include <iostream>
+#include <stack>
+#include <algorithm>
+using namespace std;
+
+bool checkPoPRule(int* pop, int* push, int len){
+    if(pop == NULL || push == NULL || len<=0) return false;
+    stack<int>Stack;
+    int i=0,j=0;
+    for(i = 0; i<len; i++){
+        Stack.push(push[i]);
+        while(j<len && Stack.size() !=0 && pop[j]==Stack.top())
+        {
+            Stack.pop();
+            j++;
+        }
+    }
+    return Stack.empty();
+}
+
+int main(){
+    int N;
+    while (cin>>N){
+        int *pop = new int [N];
+        int *push = new int [N];
+        for(int i=0; i<N; i++){
+            cin>>push[i];
+            pop[i] = push[i];
+        }
+        // 结束后为pop做一次排序来保证初始化的完全性
+        sort(pop,pop+N);
+        // 为输出预测的pop进行一次全排列
+        do {
+            if(checkPoPRule(pop,push,N)){
+                for (int i = 0; i < N-1; ++i) {
+                    cout<<pop[i]<<' ';
+                }
+                cout<<pop[N-1]<<endl;
+            }
+
+        }while (next_permutation(pop,pop+N));
+    }
+    return 0;
+}
+```
+
+12.对字符串中的所有单词进行倒排。
+
+说明：
+
+1、构成单词的字符只有26个大写或小写英文字母；
+
+2、非构成单词的字符均视为单词间隔符；
+
+3、要求倒排后的单词间隔符以一个空格表示；如果原字符串中相邻单词间有多个间隔符时，倒排转换后也只允许出现一个空格间隔符；
+
+4、每个单词最长20个字母；
+
+```java
+// Java
+import java.util.*
+public class Main{
+    public String reverse(String str){
+        String[] items = str.split("[^A-Za-z]");
+        StringBuilder ans  = new StringBuilder();
+        for(int i=items.length-1;i>=0;i--){
+            ans.append(items[i]).append(" ");
+        }
+        return ans.toString().trim();
+    }
+    
+    public static void main (String[] args){
+        Main solution = new Main();
+        Scanner in = new Scanner(System.in);
+        while(in.hasNextLine()){
+            String str = in.nextLine();
+            String ans = solution.reverse(str);
+            System.out.println(ans);
+        }
+    }
+}
+```
+
+13.题目描述
+
+输入一个链表，反转链表后，输出新链表的表头。
+
+```c++
+/*
+struct ListNode {
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+			val(x), next(NULL) {
+	}
+};*/
+class Solution {
+public:
+  	// 用栈反转链表
+    ListNode* ReverseList(ListNode* pHead) {
+      if(pHead == nullptr || pHead->next == nullptr)
+        return pHead;
+      ListNode* p = pHead;
+      stack<ListNode*>s;
+      // 先进栈
+      while(p->next){
+        s.push(p);
+        p = p->next;
+      }
+      p->next = nullptr;
+      // 再出栈
+      ListNode* q = p; // q 为头指针
+      while(!s.empty()){
+        p->next = s.top();
+        p = p->next;
+        s.pop();
+      }
+      p->next = nullptr;
+      return q;
+	}
+  
+  // 递归方法
+  ListNode* ReverseList_Recursion(ListNode* pHead){
+    if(pHead == nullptr || pHead->next == nullptr) return pHead;
+    // 先进行反转 
+    ListNode* ReverserNodes = ReverseList_Recursion(pHead->next);
+    // 再将当前节点设置为后面节点的后续节点
+		pHead->next->next = pHead;
+    pHead->next = nullptr;
+    return RecerserNodes;
+  }
+}
+```
 
 
 
 
 
 
+
+
+
+# 经典算法及其实现
+
+## 1 快速排序法
+
+```c++
+#include <iostream>
+using namespace std;
+void quick_sort(int a[], int start, int end)
+{
+    if(start < end) {
+        int base = a[start];
+        int i = start;
+        int j = end;
+        while (i < j) {
+            while (i < j && base <= a[j]) j--;
+            if (i < j) a[i++] = a[j];
+            while (i < j && base >= a[i]) i++;
+            if (i < j) a[j--] = a[i];
+        }
+        a[i] = base;
+        quick_sort(a, start, i - 1);
+        quick_sort(a, i + 1, end);
+    }
+}
+
+int main()
+{
+    int a[]={5,3,2,0,6,8,9,10,15,7};
+    int length = sizeof(a) / sizeof(int);
+    quick_sort(a,0,length-1);
+    for (int i = 0; i < length; i++) {
+        cout<<a[i]<<' ';
+    }
+    return 0;
+}
+```
+
+## 2. 冒泡排序法
 
 
 
