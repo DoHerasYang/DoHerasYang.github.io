@@ -368,7 +368,7 @@ bool Pop( LinkStack *S, int *e){
 **怎么转换成后缀表达式**
 
 + 从左到右遍历中缀表达式的每个数字和符号，如果是数字就输出成为后缀表达式。
-+ 如果是符号的话，判断其与栈顶的符号的优先级大小，如果遇到括号或者优先级低于栈顶符号，则栈顶的符号元素依次出站并输出，并将当前符号进栈。
++ 如果是符号的话，判断其与栈顶的符号的优先级大小，如果遇到右括号或者优先级低于栈顶符号，则栈顶的符号元素依次出站并输出，并将当前符号进栈。
 
 **图例**
 
@@ -577,7 +577,7 @@ int Index(String S, String T, int pos){
 
 #### 4.3.2 KMP模式匹配算法 克努特-莫里斯-普拉特算法
 
-[还没看懂............]
+[还没看懂............] 【笔试刚刚考我人都傻了哈哈哈】
 
 
 
@@ -614,80 +614,74 @@ int Index(String S, String T, int pos){
 + 对于任何一棵二叉树，如果终端结点数为 $n_0$, 度数为2的结点数为 $n_2$, 那么 $n_0 = n_2+1$
 + 二叉树的访问规则: （下标从0开始）
   + 对于一个父结点 $i$ 来说，其左子节点的序号为 $2*i+1$ , 右子节点的访问序号为 $2*i+2$.
-  + 对于一个节点 $i$ 来说，其父结点的坐标为 $（i-1）/2$ 向下取整。
-+ 
+  + 对于一个节点 $i$ 来说，其父结点的坐标为 $（i-1）/2$ 向下取整
 
 
 
-**堆排序**
+### 5.4 树的遍历以及存储结构
 
+```c++
+// 二叉树的表结点的结构定义
+
+typedef struct BiTNode
+{
+  int data;
+  struct BiTNodde *lchild, *rchild;
+} BiTNode, *BiTree;
 ```
-#include<cstdio>
-#include<iostream>
-#include<cstring>
-#include<algorithm>
-using namespace std;
 
-void adjust(int arr[], int len, int index)
-{
-    int left = 2*index + 1;
-    int right = 2*index + 2;
-    int maxIdx = index;
-    if(left<len && arr[left] > arr[maxIdx]) maxIdx = left;
-    if(right<len && arr[right] > arr[maxIdx]) maxIdx = right;  // maxIdx是3个数中最大数的下标
-    if(maxIdx != index)                 // 如果maxIdx的值有更新
-    {
-        swap(arr[maxIdx], arr[index]);
-        adjust(arr, len, maxIdx);       // 递归调整其他不满足堆性质的部分
-    }
+**前序遍历二叉树**：
 
-}
-void heapSort(int arr[], int size)
-{
-    for(int i=size/2 - 1; i >= 0; i--)  // 对每一个非叶结点进行堆调整(从最后一个非叶结点开始)
-    {
-        adjust(arr, size, i);
-    }
-    for(int i = size - 1; i >= 1; i--)
-    {
-        swap(arr[0], arr[i]);           // 将当前最大的放置到数组末尾
-        adjust(arr, i, 0);              // 将未完成排序的部分继续进行堆排序
-    }
-}
++ 先遍历根节点，再遍历左子树，最后访问右子树。
 
-int main()
+```c++
+void PreOrderTraverse(BiTree T)
 {
-    int array[8] = {8, 1, 14, 3, 21, 5, 7, 10};
-    heapSort(array, 8);
-    for(auto it: array)
-    {
-        cout<<it<<endl;
-    }
-    return 0;
+  if(T == NULL)
+    return;
+  print("%d", T->data);
+  PreOrderTraverse(T->lchild);
+  PreOrderTraverse(T->rchild);
 }
 ```
 
+**中序遍历**：
+
++ 先遍历左子树，再访问根节点，再访问右子树。
+
+```c++
+void PreOrderTraverse(BiTree T)
+{
+  if(T == NULL)
+    return;
+  PreOrderTraverse(T->lchild);
+  print("%d", T->data);
+  PreOrderTraverse(T->rchild);
+}
+```
+
+**后序遍历**：
+
++ 先遍历左子树，再遍历右子树，最后访问根节点
+
+```c++
+void PreOrderTraverse(BiTree T)
+{
+  if(T == NULL)
+    return;
+  PreOrderTraverse(T->lchild);
+  PreOrderTraverse(T->rchild);
+  print("%d", T->data);
+}
+```
+
+### 5.5 二叉树操作
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# LeetCode习题
 
 ---
 
@@ -1583,7 +1577,6 @@ public:
     stack <int> inStack;
     stack <int> outStack;
     MinStack() {
-
     }
     
     void push(int x) {
@@ -1594,7 +1587,6 @@ public:
     void pop() {
         if(inStack.top() == outStack.top()) outStack.pop();
         inStack.pop();
-        
     }
     
     int top() {
@@ -2276,17 +2268,82 @@ public:
 }
 ```
 
+14.判断一个IP地址是否合法
 
+```c++
+#include <iostream>
+#include <stack>
+#include <string>
+#include <vector>
+#include <list>
+#include <cmath>
+using namespace std;
 
+bool CheckIpV4(string &str){
+    stack<char>s1;
+    double num = 0;
+    int length;
+    int count = 0;
+    string c;
+    if(str.empty()) return false;
+    for(auto i: str){
+        if(i != '.') {
+            s1.push(i);
+        }
+        else{
+            length  = s1.size();
+            count++;
+            if(count>3 || length>3) return false;
+            for(int j=0; j<length; j++){
+                c = s1.top();
+                num += (stoi(c))*(pow(10,j));
+                s1.pop();
+            }
+            if(num<0.0 || num>255.0) return false;
+            num = 0;
+        }
+    }
+    return true;
+}
 
+int main(){
+    bool label = false;
+    string s1 = "192.168.1.1";
+    label = CheckIpV4(s1);
+    cout<<label<<endl;
+    return 0;
+}
+```
 
+15.重载一个类的赋值运算符，要求是不能连续赋值。
 
+```c++
+class CMyString{
+public:
+ 	CMyString(char* pData = nullptr);
+  CMyString(const CMyString& str);
+  ~CMyString(void);
+private:
+  char *m_pData
+}
+
+CMyString& CMyString::operator = (const CMyString &str)
+{
+  if(this != &str){
+    CMyString strTemp(str);
+    char *pTemp = strTemp.m_pData;
+    strTemp.m_pData = m_pData; //自动调用析构函数来释放内存
+    m_pData = pTemp; // 赋值新的数据
+  }
+  return *this;
+}
+```
 
 
 
 # 经典算法及其实现
 
-## 1 快速排序法
+## 1.快速排序法
 
 ```c++
 #include <iostream>
@@ -2321,9 +2378,163 @@ int main()
 }
 ```
 
-## 2. 冒泡排序法
+## 2.冒泡排序法
+
+```c++
+#include <iostream>
+#include <stack>
+#include <string>
+#include <vector>
+#include <list>
+#include <cmath>
+#include <sstream>
+using namespace std;
+
+int main(){
+    int a[10] = {45,32,25,65,26,75,21,98,51,12};
+    int length = sizeof(a) / sizeof(int);
+    int temp;
+    for (int i = 0; i < length; ++i) {
+        int flag  = 0;
+        for(int j=0; j < length-i; j++){
+            if(a[j]>a[j+1]) {
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+                flag = 1;
+            }
+        }
+        if(flag == 0) break;
+    }
+    for (int j = 0; j < length; ++j) {
+        cout<<a[j]<<' ';
+    }
+    return 0;
+}
+```
+
+## 3. 堆排序
+
+```c++
+void adjust(int arr[], int len, int index)
+{
+    int left = 2*index + 1;
+    int right = 2*index + 2;
+    int maxIdx = index;
+    if(left<len && arr[left] > arr[maxIdx]) maxIdx = left;
+    if(right<len && arr[right] > arr[maxIdx]) maxIdx = right;  // maxIdx是3个数中最大数的下标
+    if(maxIdx != index)                 // 如果maxIdx的值有更新
+    {
+        swap(arr[maxIdx], arr[index]);
+        adjust(arr, len, maxIdx);       // 递归调整其他不满足堆性质的部分
+    }
+}
+
+void heapSort(int arr[], int size)
+{
+    for(int i=size/2 - 1; i >= 0; i--)  // 对每一个非叶结点进行堆调整(从最后一个非叶结点开始)
+    {
+        adjust(arr, size, i);
+    }
+    for(int i = size - 1; i >= 1; i--)
+    {
+        swap(arr[0], arr[i]);           // 将当前最大的放置到数组末尾
+        adjust(arr, i, 0);              // 将未完成排序的部分继续进行堆排序
+    }
+}
+
+int main()
+{
+    int array[8] = {8, 1, 14, 3, 21, 5, 7, 10};
+    heapSort(array, 8);
+    for(auto it: array)
+    {
+        cout<<it<<endl;
+    }
+    return 0;
+}
+```
+
+## 4.插入排序
+
+```c++
+#include <iostream>
+#include <stack>
+#include <string>
+#include <vector>
+#include <list>
+#include <cmath>
+#include <sstream>
+
+using namespace std;
 
 
+int main(){
+    int a[10] = {45,32,25,65,26,75,21,98,51,12};
+    int length = sizeof(a) / sizeof(int);
+    
+    //
+    for (int i = 0; i < length; ++i) {
+        int key = a[i];
+        int j = i-1;
+        while( j>=0 && a[j]>key)
+        {
+            a[j+1] = a[j];
+            --j;
+        }
+        a[j+1] = key;
+    }
+
+    //
+    for (int j = 0; j < length; ++j) {
+        cout<<a[j]<<' ';
+    }
+    return 0;
+}
+```
+
+## 5. 选择排序
+
+```c++
+#include <iostream>
+#include <stack>
+#include <string>
+#include <vector>
+#include <list>
+#include <cmath>
+#include <sstream>
+
+using namespace std;
+
+
+int main(){
+
+    int a[10] = {45,32,25,65,26,75,21,98,51,12};
+    int length = sizeof(a) / sizeof(int);
+    int minIndex = 0;
+    int temp;
+
+    //
+    for (int i = 0; i < length; ++i) {
+        minIndex = i;
+        for (int j = i+1; j < length; ++j) {
+            if(a[j]<a[i])
+                minIndex = j;
+        }
+        if(minIndex != i){
+            temp = a[minIndex];
+            a[minIndex] = a[i];
+            a[i] = temp;
+        }
+    }
+
+    //
+    for (int j = 0; j < length; ++j) {
+        cout<<a[j]<<' ';
+    }
+    return 0;
+}
+```
 
 
 
