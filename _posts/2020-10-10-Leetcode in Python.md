@@ -660,6 +660,37 @@ void PreOrderTraverse(BiTree T)
 }
 ```
 
+```c++
+//中序遍历非递归版
+void InOrderWithoutRecursion1(BTNode* root)
+{
+    //空树
+    if (root == NULL)
+        return;
+    //树非空
+    BTNode* p = root;
+    stack<btnode*> s;
+    while (!s.empty() || p)
+    {
+        //一直遍历到左子树最下边，边遍历边保存根节点到栈中
+        while (p)
+        {
+            s.push(p);
+            p = p->lchild;
+        }
+        //当p为空时，说明已经到达左子树最下边，这时需要出栈了
+        if (!s.empty())
+        {
+            p = s.top();
+            s.pop();
+            cout << setw(4) << p->data;
+            //进入右子树，开始新的一轮左子树遍历(这是递归的自我实现)
+            p = p->rchild;
+        }
+    }
+}</btnode*>
+```
+
 **后序遍历**：
 
 + 先遍历左子树，再遍历右子树，最后访问根节点
@@ -1608,7 +1639,180 @@ public:
  */
 ```
 
+26.合并K个链表
 
+给你一个链表数组，每个链表都已经按升序排列。
+
+请你将所有链表合并到一个升序链表中，返回合并后的链表。
+
+```c++
+// 优先队列
+#include <iostream>
+#include <stdlib.h>
+#include <stack>
+#include <list>
+#include <random>
+#include <queue>
+using namespace std;
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+
+struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode() : val(0), next(nullptr) {}
+     ListNode(int x) : val(x), next(nullptr) {}
+     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ };
+
+class Solution {
+public:
+    struct cmp{
+        bool operator()(ListNode*a, ListNode*b){
+            return a->val>b->val;
+        }
+    };
+
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<ListNode*, vector<ListNode*>, cmp>(pri_queue);
+        for(auto item: lists)
+            pri_queue.push(item);
+        //设定一个哨兵节点
+        ListNode dummy(-1);
+        ListNode* q = &dummy;
+        while(!pri_queue.empty()){
+            ListNode* top = pri_queue.top();
+            pri_queue.pop();
+            q->next= top;
+            q = top;
+            if(top->next) pri_queue.push(top->next);
+        }
+        return dummy.next;
+    }
+};
+```
+
+```c++
+class Solution {
+public:
+    // 小根堆的回调函数
+    ListNode* merge(ListNode* p1, ListNode* p2){
+        if(!p1) return p2;
+        if(!p2) return p1;
+
+        if(p1->val <= p2->val){
+            p1->next = merge(p1->next, p2);
+            return p1;
+        }else{
+            p2->next = merge(p1, p2->next);
+            return p2;
+        }
+    }
+
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if(lists.size() == 0) return nullptr;
+        ListNode* head = lists[0];
+        for(int i=0; i<lists.size(); i++){
+            if(lists[i])
+                head = merge(head,lists[i]);
+        }
+        return head;
+    }
+};
+```
+
+27.给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
+
+为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。注意，pos 仅仅是用于标识环的情况，并不会作为参数传递到函数中。
+
+说明：不允许修改给定的链表。
+
+进阶：
+
+你是否可以使用 O(1) 空间解决此题？
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        //快慢指针
+        ListNode* slow = head;
+        ListNode* fast = head;
+        //开始进行第一次来回指针
+        while( fast != nullptr && fast->next != nullptr){
+            slow = slow->next;
+            fast = fast->next->next;
+            if(slow == fast){
+                fast = head;
+                while(slow != fast){
+                    slow = slow->next;
+                    fast = fast->next;
+                }
+                return fast;
+            }
+        }
+        return nullptr;
+    }
+};
+```
+
+```c++
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        //快慢指针
+        ListNode* slow = head;
+        ListNode* fast = head;
+        vector<ListNode*> list;
+        //开始进行第一次来回指针
+        while( slow->next!=nullptr && fast != nullptr && fast->next != nullptr && fast->next->next != nullptr){
+            slow = slow->next;
+            fast = fast->next->next;
+            //使用堆栈的方式
+            if(slow == fast){
+                while(find(list.begin(),list.end(),slow) == list.end())
+                {
+                    list.push_back(slow);
+                    slow = slow->next;
+                }
+                ListNode* temp = head;
+                while(find(list.begin(),list.end(),temp) == list.end()){
+                    temp = temp->next;
+                }
+                return temp;
+            }
+        }
+        return nullptr;
+    }
+};
+```
+
+28.
 
 
 
@@ -2339,7 +2543,120 @@ CMyString& CMyString::operator = (const CMyString &str)
 }
 ```
 
+16.实现一个底数的次方运算
 
+```c++
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <queue>
+using namespace std;
+
+double Power(int base, int exponent){
+
+    bool negative_label = false;
+    if(base == 0 && exponent == 0) return 0;
+    if(exponent == 0) return 1;
+
+    // 如果底数是0且指数小于零
+    if(base == 0 && exponent < 0){
+        negative_label = true;
+        return 0;
+    }
+
+    // 如果是指数小于零
+    unsigned int abs_exponent;
+    if(exponent < 0){
+        abs_exponent = static_cast<unsigned int>(-exponent);
+    }else{
+        abs_exponent = static_cast<unsigned int>(exponent);
+    }
+    double result = 1 ;
+    for(int i=0; i<abs_exponent; i++)
+        result *= base;
+    if(exponent <  0)
+        return 1.0/result;
+    return result;
+}
+
+int main(){
+    int base,exponent;
+    cin>>base>>exponent;
+    cout<<Power(base,exponent);
+    return 0;
+}
+```
+
+了解一下移位运算符，和其中的递归思路
+
+```c++
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <queue>
+using namespace std;
+
+double recursion_Power(int base, int exponent){
+    if(exponent == 0) return 1;
+    if(exponent == 1) return base;
+    double result = recursion_Power(base, exponent>>1);
+    result *= result;
+    if((exponent&0x1) == 1){
+        result *= base;
+    }
+    return result;
+}
+
+
+int main(){
+    int base,exponent;
+    cin>>base>>exponent;
+    int result = recursion_Power(base,exponent);
+    cout<<result;
+    return 0;
+}
+```
+
+17.删除一个链表中的节点。
+
+```c++
+void DeleteNode(ListNode** head, ListNode* pToBeDeleted){
+    if(!head || !pToBeDeleted) return ;
+    //如果不是尾节点
+    if(pToBeDeleted->next!= nullptr){
+        ListNode* pNext = pToBeDeleted->next;
+        pToBeDeleted->value = pNext->value;
+        pToBeDeleted->next = pNext->next;
+        delete []pNext;
+        pNext = nullptr;
+    }
+    //如果只考虑一个节点
+    else if(*head == pToBeDeleted){
+        delete []pToBeDeleted;
+        pToBeDeleted = nullptr;
+        *head == nullptr;
+    }
+    else{
+        //下来就需要进行遍历
+        ListNode* pNode = *head;
+        while(pNode->next!= pToBeDeleted)
+            pNode = pNode->next;
+        pNode->next = nullptr;
+        delete []pToBeDeleted;
+        delete []pNode;
+        pToBeDeleted = nullptr;
+        pNode = nullptr;
+    }
+}
+```
+
+
+
+
+
+
+
+---
 
 # 经典算法及其实现
 
